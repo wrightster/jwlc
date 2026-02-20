@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { listings, getListingImages } from '../../data/listings';
+import { team } from '../../data/team';
 import type { GetStaticPaths } from 'astro';
 export const prerender = true;
 
@@ -14,6 +15,7 @@ export const getStaticPaths = (() => {
 const { listing } = Astro.props;
 const images = getListingImages(listing);
 const otherListings = listings.filter((l) => l.id !== listing.id).slice(0, 3);
+const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker) : undefined;
 ---
 
 <Layout
@@ -155,11 +157,20 @@ const otherListings = listings.filter((l) => l.id !== listing.id).slice(0, 3);
 
             {listing.broker && (
               <div class="flex items-center gap-4 mb-6 pb-6 border-b border-earth-100">
-                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-forest-600 to-forest-800 flex items-center justify-center flex-shrink-0">
-                  <span class="font-display text-base text-white">
-                    {listing.broker.split(' ').map((n) => n[0]).join('')}
-                  </span>
-                </div>
+                {brokerMember ? (
+                  <img
+                    src={brokerMember.photo}
+                    alt={listing.broker}
+                    class="w-12 h-12 rounded-full object-cover flex-shrink-0 border border-earth-200"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="w-12 h-12 rounded-full bg-gradient-to-br from-forest-600 to-forest-800 flex items-center justify-center flex-shrink-0">
+                    <span class="font-display text-base text-white">
+                      {listing.broker.split(' ').map((n: string) => n[0]).join('')}
+                    </span>
+                  </div>
+                )}
                 <div>
                   <p class="font-semibold text-earth-900 text-sm">{listing.broker}</p>
                   <p class="text-xs text-earth-500">Listing Broker</p>

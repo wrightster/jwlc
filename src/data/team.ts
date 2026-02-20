@@ -5,6 +5,7 @@ export interface TeamMember {
   phone: string;
   email: string;
   specialties: string[];
+  photo: string;
 }
 
 export const team: TeamMember[] = [
@@ -15,6 +16,7 @@ export const team: TeamMember[] = [
     phone: "(919) 632-8264",
     email: "juliannawright@gmail.com",
     specialties: ["Land Brokerage", "Estate Planning", "Investment Properties"],
+    photo: "/images/team/julie-wright.jpg",
   },
   {
     name: "Alex Bailey",
@@ -23,6 +25,7 @@ export const team: TeamMember[] = [
     phone: "(919) 741-7575",
     email: "alextbailey@icloud.com",
     specialties: ["Residential Development", "Commercial Development", "Site Planning"],
+    photo: "/images/team/alex-bailey.jpg",
   },
   {
     name: "Robert Powell",
@@ -31,6 +34,7 @@ export const team: TeamMember[] = [
     phone: "(919) 691-1663",
     email: "robert@powellox.com",
     specialties: ["Real Estate Sales", "Mortgage Finance", "Community Development"],
+    photo: "/images/team/robert-powell.jpg",
   },
   {
     name: "Rusty Ammons",
@@ -39,6 +43,7 @@ export const team: TeamMember[] = [
     phone: "(919) 270-2100",
     email: "rusty@ammonsrealty.com",
     specialties: ["New Home Development", "Residential Projects", "Triangle Area"],
+    photo: "/images/team/rusty-ammons.jpg",
   },
   {
     name: "Jeff Hunter",
@@ -47,5 +52,6 @@ export const team: TeamMember[] = [
     phone: "(919) 730-9420",
     email: "jeffnhunter@aol.com",
     specialties: ["Community Development", "Financial Strategy", "Land Development"],
+    photo: "/images/team/jeff-hunter.jpg",
   },
 ];

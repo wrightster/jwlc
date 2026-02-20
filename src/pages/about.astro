@@ -75,10 +75,12 @@ export const prerender = true;
           <div class="bg-white rounded-sm border border-earth-100 shadow-sm overflow-hidden" id={member.name.toLowerCase().replace(/\s/g, '-')}>
             <div class="p-8 lg:p-10">
               <div class="flex flex-col md:flex-row md:items-start gap-8">
-                <!-- Avatar placeholder -->
-                <div class="w-20 h-20 rounded-full bg-gradient-to-br from-forest-600 to-forest-800 flex items-center justify-center flex-shrink-0">
-                  <span class="font-display text-2xl text-white">{member.name.split(' ').map(n => n[0]).join('')}</span>
-                </div>
+                <img
+                  src={member.photo}
+                  alt={member.name}
+                  class="w-24 h-24 rounded-full object-cover flex-shrink-0 border-2 border-earth-200 shadow-sm"
+                  loading="lazy"
+                />
 
                 <div class="flex-1">
                   <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
