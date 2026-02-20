@@ -1,0 +1,218 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Julie Wright Land Company',
+  description = 'Specializing in Raleigh, NC and Triangle Area land brokerage, sales, and investment properties for over 40 years.',
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/listings', label: 'Listings' },
+  { href: '/services', label: 'Services' },
+  { href: '/testimonials', label: 'Testimonials' },
+  { href: '/contact', label: 'Contact' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Libre+Franklin:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" id="site-header">
+      <div class="absolute inset-0 bg-earth-50/90 backdrop-blur-md border-b border-earth-200/60 opacity-0 transition-opacity duration-500" id="header-bg"></div>
+      <nav class="relative max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
+        <a href="/" class="relative group">
+          <span class="font-display text-xl md:text-2xl text-earth-900 tracking-tight">Julie Wright</span>
+          <span class="block text-[10px] uppercase tracking-[0.3em] text-copper-500 font-semibold -mt-0.5">Land Company</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <ul class="hidden lg:flex items-center gap-1">
+          {navLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class:list={[
+                  'relative px-4 py-2 text-sm font-medium tracking-wide transition-colors duration-300',
+                  currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))
+                    ? 'text-forest-700'
+                    : 'text-earth-700 hover:text-earth-900',
+                ]}
+              >
+                {link.label}
+                {(currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))) && (
+                  <span class="absolute bottom-0 left-4 right-4 h-0.5 bg-forest-600 rounded-full" />
+                )}
+              </a>
+            </li>
+          ))}
+          <li class="ml-4">
+            <a href="/contact" class="btn-primary text-sm">Get in Touch</a>
+          </li>
+        </ul>
+
+        <!-- Mobile Menu Button -->
+        <button
+          class="lg:hidden relative w-10 h-10 flex items-center justify-center"
+          id="mobile-menu-btn"
+          aria-label="Toggle navigation menu"
+        >
+          <span class="sr-only">Menu</span>
+          <div class="w-6 flex flex-col gap-1.5 transition-all" id="hamburger">
+            <span class="block h-0.5 w-6 bg-earth-800 transition-all duration-300 origin-center" id="bar1"></span>
+            <span class="block h-0.5 w-6 bg-earth-800 transition-all duration-300" id="bar2"></span>
+            <span class="block h-0.5 w-4 bg-earth-800 transition-all duration-300 origin-center ml-auto" id="bar3"></span>
+          </div>
+        </button>
+      </nav>
+
+      <!-- Mobile Menu -->
+      <div class="lg:hidden fixed inset-0 top-20 bg-earth-50/98 backdrop-blur-lg -translate-x-full transition-transform duration-500 ease-out" id="mobile-menu">
+        <ul class="flex flex-col items-center justify-center h-full gap-6 -mt-20">
+          {navLinks.map((link, i) => (
+            <li style={`animation-delay: ${i * 80}ms`} class="mobile-nav-item">
+              <a
+                href={link.href}
+                class:list={[
+                  'text-2xl font-display tracking-wide transition-colors',
+                  currentPath === link.href ? 'text-forest-700' : 'text-earth-800',
+                ]}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+          <li class="mt-4 mobile-nav-item" style="animation-delay: 480ms">
+            <a href="/contact" class="btn-primary">Get in Touch</a>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 pt-20">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-earth-900 text-earth-300 mt-auto">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+          <!-- Brand -->
+          <div class="lg:col-span-1">
+            <a href="/" class="inline-block mb-5">
+              <span class="font-display text-2xl text-earth-50">Julie Wright</span>
+              <span class="block text-[10px] uppercase tracking-[0.3em] text-copper-400 font-semibold -mt-0.5">Land Company</span>
+            </a>
+            <p class="text-sm leading-relaxed text-earth-400 max-w-xs">
+              Specializing in Triangle area land brokerage, sales, and investment properties for over 40 years.
+            </p>
+          </div>
+
+          <!-- Quick Links -->
+          <div>
+            <h4 class="font-display text-lg text-earth-100 mb-5">Navigate</h4>
+            <ul class="space-y-3">
+              {navLinks.map((link) => (
+                <li>
+                  <a href={link.href} class="text-sm text-earth-400 hover:text-earth-100 transition-colors duration-300">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Services -->
+          <div>
+            <h4 class="font-display text-lg text-earth-100 mb-5">Services</h4>
+            <ul class="space-y-3 text-sm text-earth-400">
+              <li>Land Brokerage & Sales</li>
+              <li>Appraisal Services</li>
+              <li>Land Planning</li>
+              <li>Estate Sales</li>
+              <li>1031 Exchanges</li>
+              <li>Timber Management</li>
+            </ul>
+          </div>
+
+          <!-- Contact -->
+          <div>
+            <h4 class="font-display text-lg text-earth-100 mb-5">Contact</h4>
+            <address class="not-italic space-y-3 text-sm text-earth-400">
+              <p>10931 Strickland Rd, Suite 111<br />Raleigh, NC 27615</p>
+              <p>
+                <a href="tel:9198475731" class="hover:text-earth-100 transition-colors">(919) 847-5731</a>
+              </p>
+              <p>
+                <a href="mailto:juliannawright@gmail.com" class="hover:text-earth-100 transition-colors">juliannawright@gmail.com</a>
+              </p>
+            </address>
+          </div>
+        </div>
+
+        <div class="mt-16 pt-8 border-t border-earth-800 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p class="text-xs text-earth-500">&copy; {new Date().getFullYear()} Julie Wright Land Company. All rights reserved.</p>
+          <p class="text-xs text-earth-600">Raleigh, NC &middot; Serving the Triangle for 40+ Years</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Header scroll effect
+      const header = document.getElementById('site-header');
+      const headerBg = document.getElementById('header-bg');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 40) {
+          headerBg?.classList.replace('opacity-0', 'opacity-100');
+        } else {
+          headerBg?.classList.replace('opacity-100', 'opacity-0');
+        }
+      });
+
+      // Mobile menu
+      const menuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const bar1 = document.getElementById('bar1');
+      const bar2 = document.getElementById('bar2');
+      const bar3 = document.getElementById('bar3');
+      let menuOpen = false;
+
+      menuBtn?.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        if (menuOpen) {
+          mobileMenu?.classList.replace('-translate-x-full', 'translate-x-0');
+          bar1?.classList.add('rotate-45', 'translate-y-[4px]');
+          bar2?.classList.add('opacity-0');
+          bar3?.classList.add('-rotate-45', '-translate-y-[4px]', 'w-6');
+          document.body.style.overflow = 'hidden';
+        } else {
+          mobileMenu?.classList.replace('translate-x-0', '-translate-x-full');
+          bar1?.classList.remove('rotate-45', 'translate-y-[4px]');
+          bar2?.classList.remove('opacity-0');
+          bar3?.classList.remove('-rotate-45', '-translate-y-[4px]', 'w-6');
+          document.body.style.overflow = '';
+        }
+      });
+    </script>
+  </body>
+</html>

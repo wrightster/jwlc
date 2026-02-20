@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { testimonials } from '../data/testimonials';
+---
+
+<Layout title="Testimonials — Julie Wright Land Company" description="Hear from our clients about their experience working with Julie Wright Land Company.">
+  <!-- Page Header -->
+  <section class="relative py-20 lg:py-28 bg-earth-900 overflow-hidden">
+    <svg class="absolute inset-0 w-full h-full opacity-[0.05]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" preserveAspectRatio="none">
+      {[...Array(15)].map((_, i) => (
+        <ellipse cx={600} cy={200} rx={80 + i * 40} ry={30 + i * 15} fill="none" stroke="white" stroke-width="0.6" />
+      ))}
+    </svg>
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+      <p class="section-label !text-copper-400">Client Stories</p>
+      <h1 class="font-display text-4xl md:text-6xl text-earth-50 leading-tight mt-3">
+        What Our Clients <span class="italic text-forest-300">Say</span>
+      </h1>
+      <p class="text-earth-400 mt-5 max-w-2xl text-lg">
+        Real words from real people we've had the privilege of working with over the years.
+      </p>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8">
+      <div class="space-y-8">
+        {testimonials.map((t, i) => (
+          <blockquote class="relative bg-white border border-earth-100 rounded-sm p-8 lg:p-10 shadow-sm">
+            <div class="absolute -top-4 left-8 w-8 h-8 bg-forest-700 rounded-full flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H0z" />
+              </svg>
+            </div>
+            <p class="text-earth-700 leading-relaxed text-lg italic font-light">
+              "{t.quote}"
+            </p>
+            <footer class="mt-6 pt-5 border-t border-earth-100 flex items-center gap-4">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-earth-300 to-earth-400 flex items-center justify-center flex-shrink-0">
+                <span class="text-sm font-semibold text-white">{t.author.split(' ').slice(0, 2).map(n => n[0]).join('')}</span>
+              </div>
+              <cite class="not-italic">
+                <span class="block text-sm font-semibold text-earth-900">{t.author}</span>
+              </cite>
+            </footer>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 bg-earth-100/50 border-t border-earth-200">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+      <h2 class="font-display text-3xl text-earth-900">Ready to Write Your Own Story?</h2>
+      <p class="text-earth-600 mt-4">
+        Join the hundreds of satisfied clients who have trusted us with their land needs.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 mt-8">
+        <a href="/contact" class="btn-primary">Get Started</a>
+        <a href="/listings" class="btn-secondary">Browse Listings</a>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,113 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { services } from '../data/services';
+---
+
+<Layout title="Services — Julie Wright Land Company" description="Land brokerage, appraisals, estate planning, 1031 exchanges, timber management, and development services.">
+  <!-- Page Header -->
+  <section class="relative py-20 lg:py-28 bg-earth-900 overflow-hidden">
+    <svg class="absolute inset-0 w-full h-full opacity-[0.05]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" preserveAspectRatio="none">
+      {[...Array(15)].map((_, i) => (
+        <ellipse cx={800} cy={200} rx={80 + i * 40} ry={30 + i * 15} fill="none" stroke="white" stroke-width="0.6" />
+      ))}
+    </svg>
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+      <p class="section-label !text-copper-400">What We Do</p>
+      <h1 class="font-display text-4xl md:text-6xl text-earth-50 leading-tight mt-3">
+        Our <span class="italic text-forest-300">Services</span>
+      </h1>
+      <p class="text-earth-400 mt-5 max-w-2xl text-lg">
+        Comprehensive land services backed by 40+ years of experience and relationships across the Triangle.
+      </p>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {services.map((service, i) => (
+          <div class="group relative bg-white border border-earth-100 rounded-sm p-8 lg:p-10 shadow-sm hover:shadow-lg transition-all duration-500 hover:-translate-y-1">
+            <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-forest-500 to-forest-700 rounded-l-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="flex items-start gap-5">
+              <div class="w-12 h-12 rounded-sm bg-forest-50 flex items-center justify-center flex-shrink-0 group-hover:bg-forest-100 transition-colors">
+                {service.icon === 'handshake' && (
+                  <svg class="w-6 h-6 text-forest-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                  </svg>
+                )}
+                {service.icon === 'clipboard' && (
+                  <svg class="w-6 h-6 text-forest-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                  </svg>
+                )}
+                {service.icon === 'map' && (
+                  <svg class="w-6 h-6 text-forest-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
+                  </svg>
+                )}
+                {service.icon === 'scroll' && (
+                  <svg class="w-6 h-6 text-forest-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                  </svg>
+                )}
+                {service.icon === 'arrows' && (
+                  <svg class="w-6 h-6 text-forest-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+                  </svg>
+                )}
+                {service.icon === 'trees' && (
+                  <svg class="w-6 h-6 text-forest-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3L4 14h5.5l-2 7L20 10h-5.5l2-7z" />
+                  </svg>
+                )}
+              </div>
+              <div>
+                <h3 class="font-display text-xl text-earth-900 mb-3">{service.title}</h3>
+                <p class="text-earth-600 leading-relaxed">{service.description}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Networks -->
+  <section class="py-16 lg:py-20 bg-earth-100/50 border-t border-earth-200">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <p class="section-label">Our Networks</p>
+        <h2 class="section-heading">Connected to the Right People</h2>
+        <p class="text-earth-600 mt-4 max-w-2xl mx-auto">
+          Over four decades, we've built deep relationships with the professionals who make projects happen.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {['Local Custom Builder Network', 'Local Developer Network', 'Local Contractor Network'].map((network) => (
+          <div class="bg-white border border-earth-100 rounded-sm p-8 text-center">
+            <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-earth-100 flex items-center justify-center">
+              <svg class="w-7 h-7 text-forest-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+              </svg>
+            </div>
+            <h3 class="font-display text-lg text-earth-900">{network}</h3>
+            <p class="text-sm text-earth-500 mt-2">Access to trusted professionals through decades of partnership.</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 bg-earth-900">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+      <h2 class="font-display text-3xl text-earth-50">Inquire About Our Development Portfolio</h2>
+      <p class="text-earth-400 mt-4">
+        Let's discuss how our 40+ years of experience can help with your next project.
+      </p>
+      <a href="/contact" class="btn-primary mt-8 !bg-forest-600 hover:!bg-forest-500">Schedule a Consultation</a>
+    </div>
+  </section>
+</Layout>

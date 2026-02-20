@@ -1,0 +1,395 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { listings, getListingImages } from '../../data/listings';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (() => {
+  return listings.map((listing) => ({
+    params: { id: listing.id },
+    props: { listing },
+  }));
+}) satisfies GetStaticPaths;
+
+const { listing } = Astro.props;
+const images = getListingImages(listing);
+const otherListings = listings.filter((l) => l.id !== listing.id).slice(0, 3);
+---
+
+<Layout
+  title={`${listing.title} — Julie Wright Land Company`}
+  description={listing.description}
+>
+  <!-- Back Link -->
+  <div class="bg-earth-50 border-b border-earth-100">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-4">
+      <a
+        href="/listings"
+        class="inline-flex items-center gap-2 text-sm text-earth-500 hover:text-earth-800 transition-colors"
+      >
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back to All Listings
+      </a>
+    </div>
+  </div>
+
+  <!-- Image Gallery -->
+  <section class="bg-earth-900">
+    <div class="max-w-7xl mx-auto">
+      <!-- Main Image -->
+      <div class="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden cursor-pointer" id="main-image-wrap">
+        <img
+          src={images[0]}
+          alt={listing.title}
+          class="w-full h-full object-cover transition-opacity duration-500"
+          id="main-image"
+          loading="eager"
+        />
+        <!-- Gradient overlay at bottom -->
+        <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-earth-900/60 to-transparent pointer-events-none"></div>
+        <!-- Image counter -->
+        <div class="absolute bottom-4 right-4 flex items-center gap-2 bg-earth-900/70 backdrop-blur-sm text-earth-100 text-sm px-4 py-2 rounded-sm">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.41a2.25 2.25 0 013.182 0l2.909 2.91M3.75 21h16.5a2.25 2.25 0 002.25-2.25V5.25a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 003.75 21z" />
+          </svg>
+          <span id="image-counter">1 / {images.length}</span>
+        </div>
+        <!-- Click to open lightbox hint -->
+        {images.length > 1 && (
+          <div class="absolute bottom-4 left-4 bg-earth-900/70 backdrop-blur-sm text-earth-300 text-xs px-3 py-1.5 rounded-sm">
+            Click to view gallery
+          </div>
+        )}
+      </div>
+
+      <!-- Thumbnail Strip -->
+      {images.length > 1 && (
+        <div class="px-4 py-3 overflow-x-auto">
+          <div class="flex gap-2" id="thumb-strip">
+            {images.map((img, i) => (
+              <button
+                class:list={[
+                  'thumb-btn flex-shrink-0 w-20 h-14 md:w-24 md:h-16 rounded-sm overflow-hidden border-2 transition-all duration-200 hover:opacity-100',
+                  i === 0 ? 'border-copper-400 opacity-100' : 'border-transparent opacity-60',
+                ]}
+                data-index={i}
+                data-src={img}
+              >
+                <img src={img} alt={`${listing.title} photo ${i + 1}`} class="w-full h-full object-cover" loading="lazy" />
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Property Details -->
+  <section class="py-12 lg:py-16">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid lg:grid-cols-3 gap-12 lg:gap-16">
+        <!-- Main Content -->
+        <div class="lg:col-span-2">
+          <!-- Header -->
+          <div class="mb-8">
+            <div class="flex flex-wrap items-center gap-3 mb-3">
+              <span class="px-3 py-1 bg-forest-50 text-forest-700 text-xs font-semibold uppercase tracking-widest rounded-sm">
+                {listing.status === 'available' ? 'Available' : listing.status}
+              </span>
+              <span class="text-xs text-earth-500 uppercase tracking-widest">{listing.county}</span>
+            </div>
+            <h1 class="font-display text-3xl md:text-4xl lg:text-5xl text-earth-900 leading-tight">
+              {listing.title}
+            </h1>
+            {listing.address && (
+              <p class="text-earth-500 mt-3 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                </svg>
+                {listing.address}
+              </p>
+            )}
+          </div>
+
+          <!-- Key Stats -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-10 pb-10 border-b border-earth-200">
+            <div class="bg-earth-50 rounded-sm p-5">
+              <p class="text-[11px] uppercase tracking-[0.2em] text-earth-500 font-semibold">Price</p>
+              <p class="font-display text-2xl text-forest-700 mt-1">{listing.price}</p>
+            </div>
+            <div class="bg-earth-50 rounded-sm p-5">
+              <p class="text-[11px] uppercase tracking-[0.2em] text-earth-500 font-semibold">Acreage</p>
+              <p class="font-display text-2xl text-earth-900 mt-1">{listing.acreage}</p>
+            </div>
+            <div class="bg-earth-50 rounded-sm p-5">
+              <p class="text-[11px] uppercase tracking-[0.2em] text-earth-500 font-semibold">Location</p>
+              <p class="font-display text-lg text-earth-900 mt-1">{listing.location}</p>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="prose-earth">
+            <h2 class="font-display text-2xl text-earth-900 mb-5">About This Property</h2>
+            <div class="space-y-4 text-earth-700 leading-relaxed">
+              {(listing.fullDescription || listing.description).split('. ').reduce((acc: string[][], sentence, i) => {
+                const paragraphIndex = Math.floor(i / 3);
+                if (!acc[paragraphIndex]) acc[paragraphIndex] = [];
+                acc[paragraphIndex].push(sentence);
+                return acc;
+              }, []).map((sentences) => (
+                <p>{sentences.join('. ')}{sentences[sentences.length - 1]?.endsWith('.') ? '' : '.'}</p>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="lg:col-span-1 space-y-6">
+          <!-- Contact Card -->
+          <div class="bg-white border border-earth-200 rounded-sm p-7 shadow-sm sticky top-28">
+            <h3 class="font-display text-lg text-earth-900 mb-1">Interested in this property?</h3>
+            <p class="text-sm text-earth-500 mb-6">Contact the listing broker for details, showings, or to make an offer.</p>
+
+            {listing.broker && (
+              <div class="flex items-center gap-4 mb-6 pb-6 border-b border-earth-100">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-forest-600 to-forest-800 flex items-center justify-center flex-shrink-0">
+                  <span class="font-display text-base text-white">
+                    {listing.broker.split(' ').map((n) => n[0]).join('')}
+                  </span>
+                </div>
+                <div>
+                  <p class="font-semibold text-earth-900 text-sm">{listing.broker}</p>
+                  <p class="text-xs text-earth-500">Listing Broker</p>
+                </div>
+              </div>
+            )}
+
+            <div class="space-y-3">
+              <a
+                href={`tel:${(listing.brokerPhone || '9198475731').replace(/\D/g, '')}`}
+                class="btn-primary w-full text-sm"
+              >
+                <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                </svg>
+                Call {listing.brokerPhone || '(919) 847-5731'}
+              </a>
+              <a href="/contact" class="btn-secondary w-full text-sm">
+                <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+                Send a Message
+              </a>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-earth-100">
+              <p class="text-xs text-earth-400">
+                Office: <a href="tel:9198475731" class="hover:text-earth-700 transition-colors">(919) 847-5731</a><br />
+                Fax: (919) 847-7182
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Other Listings -->
+  <section class="py-12 lg:py-16 bg-earth-100/50 border-t border-earth-200">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <h2 class="font-display text-2xl text-earth-900 mb-8">More Properties</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {otherListings.map((other, i) => {
+          const otherImages = getListingImages(other);
+          const colorVariants = [
+            'from-forest-800 to-forest-950',
+            'from-earth-700 to-earth-900',
+            'from-copper-600 to-earth-900',
+          ];
+          return (
+            <a href={`/listings/${other.id}`} class="group block bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
+              <div class="relative h-44 overflow-hidden">
+                <img
+                  src={otherImages[0]}
+                  alt={other.title}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-earth-900/40 to-transparent"></div>
+                <span class="absolute top-3 right-3 px-2.5 py-1 bg-white/20 backdrop-blur-sm rounded-sm text-[11px] uppercase tracking-widest text-white font-semibold">
+                  {other.county}
+                </span>
+              </div>
+              <div class="p-5">
+                <h3 class="font-display text-lg text-earth-900 leading-snug mb-2 group-hover:text-forest-700 transition-colors">{other.title}</h3>
+                <div class="flex items-center justify-between pt-3 border-t border-earth-100">
+                  <span class="font-display text-xl text-forest-700">{other.price}</span>
+                  <span class="text-xs text-earth-400">{other.acreage}</span>
+                </div>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+      <div class="text-center mt-8">
+        <a href="/listings" class="btn-secondary text-sm">View All Properties</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div
+    id="lightbox"
+    class="fixed inset-0 z-[100] bg-earth-950/95 backdrop-blur-sm hidden items-center justify-center"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Image gallery"
+  >
+    <button
+      id="lb-close"
+      class="absolute top-4 right-4 z-10 w-12 h-12 flex items-center justify-center text-white/70 hover:text-white transition-colors"
+      aria-label="Close gallery"
+    >
+      <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <button
+      id="lb-prev"
+      class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
+      aria-label="Previous image"
+    >
+      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+
+    <button
+      id="lb-next"
+      class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
+      aria-label="Next image"
+    >
+      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+
+    <div class="max-w-6xl max-h-[85vh] mx-auto px-16">
+      <img
+        id="lb-image"
+        src=""
+        alt=""
+        class="max-w-full max-h-[85vh] object-contain mx-auto transition-opacity duration-300"
+      />
+    </div>
+
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/60 text-sm" id="lb-counter"></div>
+  </div>
+
+  <script define:vars={{ imageList: images, totalImages: images.length }}>
+    let currentIndex = 0;
+
+    // === Thumbnail strip & main image ===
+    const mainImage = document.getElementById('main-image');
+    const mainWrap = document.getElementById('main-image-wrap');
+    const counter = document.getElementById('image-counter');
+    const thumbs = document.querySelectorAll('.thumb-btn');
+
+    function setMainImage(index) {
+      currentIndex = index;
+      if (mainImage) {
+        mainImage.style.opacity = '0';
+        setTimeout(() => {
+          mainImage.src = imageList[index];
+          mainImage.style.opacity = '1';
+        }, 150);
+      }
+      if (counter) counter.textContent = `${index + 1} / ${totalImages}`;
+      thumbs.forEach((t, i) => {
+        if (i === index) {
+          t.classList.add('border-copper-400', 'opacity-100');
+          t.classList.remove('border-transparent', 'opacity-60');
+        } else {
+          t.classList.remove('border-copper-400', 'opacity-100');
+          t.classList.add('border-transparent', 'opacity-60');
+        }
+      });
+    }
+
+    thumbs.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const i = parseInt(btn.dataset.index);
+        setMainImage(i);
+      });
+    });
+
+    // === Lightbox ===
+    const lightbox = document.getElementById('lightbox');
+    const lbImage = document.getElementById('lb-image');
+    const lbCounter = document.getElementById('lb-counter');
+    const lbClose = document.getElementById('lb-close');
+    const lbPrev = document.getElementById('lb-prev');
+    const lbNext = document.getElementById('lb-next');
+
+    function openLightbox(index) {
+      currentIndex = index;
+      updateLightbox();
+      lightbox?.classList.remove('hidden');
+      lightbox?.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox?.classList.add('hidden');
+      lightbox?.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    function updateLightbox() {
+      if (lbImage) {
+        lbImage.style.opacity = '0';
+        setTimeout(() => {
+          lbImage.src = imageList[currentIndex];
+          lbImage.alt = `Photo ${currentIndex + 1}`;
+          lbImage.style.opacity = '1';
+        }, 100);
+      }
+      if (lbCounter) lbCounter.textContent = `${currentIndex + 1} / ${totalImages}`;
+      // Update main image and thumbs too
+      setMainImage(currentIndex);
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % totalImages;
+      updateLightbox();
+    }
+
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+      updateLightbox();
+    }
+
+    mainWrap?.addEventListener('click', () => openLightbox(currentIndex));
+    lbClose?.addEventListener('click', closeLightbox);
+    lbPrev?.addEventListener('click', prevImage);
+    lbNext?.addEventListener('click', nextImage);
+
+    // Click outside image to close
+    lightbox?.addEventListener('click', (e) => {
+      if (e.target === lightbox || e.target?.parentElement === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox?.classList.contains('flex')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    });
+  </script>
+</Layout>

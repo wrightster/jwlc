@@ -1,0 +1,105 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ListingCard from '../components/ListingCard.astro';
+import { listings } from '../data/listings';
+---
+
+<Layout title="Listings — Julie Wright Land Company" description="Browse available land, lots, and investment properties across the North Carolina Triangle area.">
+  <!-- Page Header -->
+  <section class="relative py-20 lg:py-28 bg-earth-900 overflow-hidden">
+    <svg class="absolute inset-0 w-full h-full opacity-[0.05]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" preserveAspectRatio="none">
+      {[...Array(15)].map((_, i) => (
+        <ellipse cx={600} cy={200} rx={80 + i * 40} ry={30 + i * 15} fill="none" stroke="white" stroke-width="0.6" />
+      ))}
+    </svg>
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+      <p class="section-label !text-copper-400">Browse Properties</p>
+      <h1 class="font-display text-4xl md:text-6xl text-earth-50 leading-tight mt-3">
+        Available <span class="italic text-forest-300">Listings</span>
+      </h1>
+      <p class="text-earth-400 mt-5 max-w-2xl text-lg">
+        Land, lots, and investment properties across Wake, Durham, Granville, Franklin, Nash, and Vance counties.
+      </p>
+    </div>
+  </section>
+
+  <!-- Listings Grid -->
+  <section class="py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <!-- Filter bar -->
+      <div class="flex flex-wrap items-center gap-3 mb-12 pb-6 border-b border-earth-200">
+        <span class="text-sm font-medium text-earth-600 mr-2">Filter by county:</span>
+        <button class="county-filter active px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded-sm border border-earth-300 text-earth-700 bg-earth-100 transition-all hover:bg-forest-700 hover:text-white hover:border-forest-700" data-county="all">
+          All
+        </button>
+        {[...new Set(listings.map(l => l.county))].sort().map((county) => (
+          <button class="county-filter px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded-sm border border-earth-200 text-earth-500 transition-all hover:bg-forest-700 hover:text-white hover:border-forest-700" data-county={county}>
+            {county}
+          </button>
+        ))}
+      </div>
+
+      <!-- Results count -->
+      <p class="text-sm text-earth-500 mb-8">
+        Showing <span id="count" class="font-semibold text-earth-800">{listings.length}</span> properties
+      </p>
+
+      <!-- Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8" id="listings-grid">
+        {listings.map((listing, i) => (
+          <div class="listing-item" data-county={listing.county} id={listing.id}>
+            <ListingCard listing={listing} index={i} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 bg-earth-100/50 border-t border-earth-200">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+      <h2 class="font-display text-3xl text-earth-900">Don't See What You're Looking For?</h2>
+      <p class="text-earth-600 mt-4">
+        We have access to off-market properties and upcoming listings. Tell us what you need and we'll find it.
+      </p>
+      <a href="/contact" class="btn-primary mt-8">Contact Us</a>
+    </div>
+  </section>
+
+  <script>
+    const filters = document.querySelectorAll('.county-filter');
+    const items = document.querySelectorAll('.listing-item');
+    const countEl = document.getElementById('count');
+
+    filters.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filters.forEach(f => f.classList.remove('active', 'bg-forest-700', 'text-white', 'border-forest-700', 'bg-earth-100', 'text-earth-700'));
+        filters.forEach(f => f.classList.add('text-earth-500', 'border-earth-200'));
+        btn.classList.add('active', 'bg-forest-700', 'text-white', 'border-forest-700');
+        btn.classList.remove('text-earth-500', 'border-earth-200');
+
+        const county = (btn as HTMLElement).dataset.county;
+        let visible = 0;
+
+        items.forEach(item => {
+          const el = item as HTMLElement;
+          if (county === 'all' || el.dataset.county === county) {
+            el.style.display = '';
+            visible++;
+          } else {
+            el.style.display = 'none';
+          }
+        });
+
+        if (countEl) countEl.textContent = String(visible);
+      });
+    });
+
+    // Set initial active state
+    const allBtn = document.querySelector('[data-county="all"]');
+    if (allBtn) {
+      allBtn.classList.add('bg-forest-700', 'text-white', 'border-forest-700');
+      allBtn.classList.remove('text-earth-500', 'border-earth-200');
+    }
+  </script>
+</Layout>
