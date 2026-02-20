@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { listings, getListingImages } from '../../data/listings';
 import type { GetStaticPaths } from 'astro';
+export const prerender = true;
 
 export const getStaticPaths = (() => {
   return listings.map((listing) => ({
