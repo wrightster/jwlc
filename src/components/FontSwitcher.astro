@@ -1,0 +1,354 @@
+---
+const isDev = import.meta.env.DEV;
+
+const displayFonts = [
+  { name: 'DM Serif Display (current)', family: "'DM Serif Display', Georgia, serif", google: 'DM+Serif+Display:ital@0;1' },
+  { name: 'Playfair Display',           family: "'Playfair Display', Georgia, serif",  google: 'Playfair+Display:ital,wght@0,400;0,700;1,400' },
+  { name: 'Cormorant Garamond',         family: "'Cormorant Garamond', Georgia, serif", google: 'Cormorant+Garamond:ital,wght@0,400;0,600;1,400' },
+  { name: 'Lora',                       family: "'Lora', Georgia, serif",              google: 'Lora:ital,wght@0,400;0,600;1,400' },
+  { name: 'Merriweather',               family: "'Merriweather', Georgia, serif",      google: 'Merriweather:ital,wght@0,300;0,400;1,300' },
+  { name: 'EB Garamond',                family: "'EB Garamond', Georgia, serif",       google: 'EB+Garamond:ital,wght@0,400;0,600;1,400' },
+  { name: 'Libre Baskerville',          family: "'Libre Baskerville', Georgia, serif", google: 'Libre+Baskerville:ital,wght@0,400;0,700;1,400' },
+  { name: 'Crimson Pro',                family: "'Crimson Pro', Georgia, serif",       google: 'Crimson+Pro:ital,wght@0,400;0,600;1,400' },
+  { name: 'Spectral',                   family: "'Spectral', Georgia, serif",          google: 'Spectral:ital,wght@0,300;0,400;1,300' },
+  { name: 'Yeseva One',                 family: "'Yeseva One', Georgia, serif",        google: 'Yeseva+One' },
+];
+
+const bodyFonts = [
+  { name: 'Libre Franklin (current)', family: "'Libre Franklin', system-ui, sans-serif",   google: 'Libre+Franklin:wght@300;400;500;600;700' },
+  { name: 'Inter',                    family: "'Inter', system-ui, sans-serif",             google: 'Inter:wght@300;400;500;600;700' },
+  { name: 'DM Sans',                  family: "'DM Sans', system-ui, sans-serif",           google: 'DM+Sans:wght@300;400;500;600;700' },
+  { name: 'Plus Jakarta Sans',        family: "'Plus Jakarta Sans', system-ui, sans-serif", google: 'Plus+Jakarta+Sans:wght@300;400;500;600;700' },
+  { name: 'Jost',                     family: "'Jost', system-ui, sans-serif",              google: 'Jost:wght@300;400;500;600;700' },
+  { name: 'Nunito Sans',              family: "'Nunito Sans', system-ui, sans-serif",       google: 'Nunito+Sans:wght@300;400;500;600;700' },
+  { name: 'Raleway',                  family: "'Raleway', system-ui, sans-serif",           google: 'Raleway:wght@300;400;500;600;700' },
+  { name: 'Outfit',                   family: "'Outfit', system-ui, sans-serif",            google: 'Outfit:wght@300;400;500;600;700' },
+  { name: 'Source Sans 3',            family: "'Source Sans 3', system-ui, sans-serif",     google: 'Source+Sans+3:wght@300;400;500;600;700' },
+  { name: 'Lato',                     family: "'Lato', system-ui, sans-serif",              google: 'Lato:wght@300;400;700' },
+];
+
+// Each token: id for DOM, label, primary cssVar for chaining, all CSS vars to update together, default value
+const colorTokens = [
+  { id: 'primary',   label: 'Primary Red',    cssVar: '--color-brand-primary', vars: ['--color-brand-primary', '--color-crimson-700'], value: '#be3528' },
+  { id: 'dark',      label: 'Dark Red',       cssVar: '--color-brand-dark',    vars: ['--color-brand-dark', '--color-crimson-900'],    value: '#612827' },
+  { id: 'accent',    label: 'Light Accent',   cssVar: '--color-brand-light',   vars: ['--color-brand-light'],                          value: '#faca83' },
+  { id: 'light',     label: 'Light Text',     cssVar: '--color-light-text',    vars: ['--color-light-text'],                           value: '#ffffff' },
+  { id: 'bg',        label: 'Background',     cssVar: '--color-brand-bg',      vars: ['--color-brand-bg', '--color-earth-50'],         value: '#f8f8f2' },
+  { id: 'altbg',     label: 'Alt Background', cssVar: '--color-brand-altbg',   vars: ['--color-brand-altbg', '--color-earth-100'],     value: '#f3e7c9' },
+  { id: 'darkbrown', label: 'Dark Brown',     cssVar: '--color-earth-900',     vars: ['--color-earth-900'],                            value: '#3d3225' },
+  { id: 'medtext',   label: 'Medium Text',    cssVar: '--color-earth-400',     vars: ['--color-earth-400'],                            value: '#bb9d72' },
+  { id: 'darktext',  label: 'Dark Text',      cssVar: '--color-earth-600',     vars: ['--color-earth-600'],                            value: '#8d7350' },
+];
+---
+
+{isDev && (
+  <div id="fs-root" style="position:fixed;bottom:24px;right:24px;z-index:9999;font-family:system-ui,-apple-system,sans-serif;">
+
+    <!-- Panel -->
+    <div id="fs-panel" style="display:none;width:284px;background:#fff;border:1px solid #e8d9bb;border-radius:8px;box-shadow:0 12px 40px rgba(0,0,0,0.18);margin-bottom:10px;overflow:hidden;">
+
+      <!-- Header with tabs -->
+      <div style="background:#3d3225;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;gap:2px;">
+          <button id="fs-tab-fonts"   style="padding:5px 10px;background:#f8f8f2;color:#3d3225;border:none;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;">Fonts</button>
+          <button id="fs-tab-colors"  style="padding:5px 10px;background:transparent;color:#bb9d72;border:none;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;">Colors</button>
+        </div>
+        <button id="fs-close" style="color:#bb9d72;background:none;border:none;cursor:pointer;font-size:22px;line-height:1;padding:0;">×</button>
+      </div>
+
+      <!-- ── Fonts Tab ──────────────────────────────────────────── -->
+      <div id="fs-fonts-content" style="padding:14px 14px 0;">
+
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#a48a63;margin-bottom:5px;">Display / Headings</label>
+          <select id="fs-display-select" style="width:100%;padding:6px 8px;border:1px solid #e8d9bb;border-radius:4px;font-size:12px;color:#3d3225;background:#f8f8f2;cursor:pointer;outline:none;">
+            {displayFonts.map((f, i) => <option value={i}>{f.name}</option>)}
+          </select>
+          <div id="fs-display-preview" style="margin-top:8px;font-size:21px;color:#3d3225;line-height:1.25;padding-bottom:10px;border-bottom:1px solid #f3e7c9;">
+            Julie Wright Land Co.
+          </div>
+        </div>
+
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#a48a63;margin-bottom:5px;">Body / Copy</label>
+          <select id="fs-body-select" style="width:100%;padding:6px 8px;border:1px solid #e8d9bb;border-radius:4px;font-size:12px;color:#3d3225;background:#f8f8f2;cursor:pointer;outline:none;">
+            {bodyFonts.map((f, i) => <option value={i}>{f.name}</option>)}
+          </select>
+          <div id="fs-body-preview" style="margin-top:8px;font-size:12px;color:#8d7350;line-height:1.6;padding-bottom:10px;border-bottom:1px solid #f3e7c9;">
+            Land brokerage, appraisals, and estate planning across the Triangle for over 40 years.
+          </div>
+        </div>
+
+        <div style="margin-bottom:14px;padding-top:12px;border-top:1px solid #f3e7c9;">
+          <label style="display:block;font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#a48a63;margin-bottom:5px;">Import Any Google Font</label>
+          <input id="fs-custom-input" type="text" placeholder="e.g. Cinzel, Bitter, Raleway…" style="width:100%;padding:6px 8px;border:1px solid #e8d9bb;border-radius:4px;font-size:12px;color:#3d3225;background:#f8f8f2;outline:none;box-sizing:border-box;" />
+          <div style="display:flex;gap:6px;margin-top:6px;">
+            <button id="fs-custom-disp" style="flex:1;padding:6px;background:#3d3225;color:#f8f8f2;border:none;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">→ Display</button>
+            <button id="fs-custom-body" style="flex:1;padding:6px;background:#3d3225;color:#f8f8f2;border:none;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">→ Body</button>
+          </div>
+          <div id="fs-custom-error" style="display:none;margin-top:5px;font-size:10px;color:#be3528;">Font not found — check the spelling on fonts.google.com</div>
+        </div>
+
+      </div>
+
+      <!-- ── Colors Tab ─────────────────────────────────────────── -->
+      <div id="fs-colors-content" style="display:none;padding:14px 14px 0;">
+
+        <!-- Nav column headers aligned over the radio buttons -->
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:3px;">
+          <div style="width:34px;flex-shrink:0;"></div>
+          <div style="flex:1;"></div>
+          <div style="width:60px;display:flex;justify-content:space-around;flex-shrink:0;">
+            <span style="font-size:8px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#a48a63;text-align:center;">BG</span>
+            <span style="font-size:8px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#a48a63;text-align:center;">Acc</span>
+            <span style="font-size:8px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#a48a63;text-align:center;">Mn</span>
+          </div>
+        </div>
+
+        {colorTokens.map(token => (
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <input
+              type="color"
+              id={"fs-color-" + token.id}
+              value={token.value}
+              style="width:34px;height:34px;padding:2px;border:1px solid #e8d9bb;border-radius:4px;cursor:pointer;flex-shrink:0;background:none;"
+            />
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:11px;font-weight:600;color:#3d3225;line-height:1.3;">{token.label}</div>
+              <div id={"fs-color-" + token.id + "-hex"} style="font-size:10px;color:#a48a63;font-family:monospace;">{token.value}</div>
+            </div>
+            <div style="width:60px;display:flex;justify-content:space-around;flex-shrink:0;align-items:center;">
+              <input type="radio" name="nav-bg"     value={token.id} checked={token.id === 'bg'}        style="accent-color:#be3528;cursor:pointer;" />
+              <input type="radio" name="nav-accent" value={token.id} checked={token.id === 'primary'}   style="accent-color:#be3528;cursor:pointer;" />
+              <input type="radio" name="nav-menu"   value={token.id} checked={token.id === 'darkbrown'} style="accent-color:#be3528;cursor:pointer;" />
+            </div>
+          </div>
+        ))}
+
+        <div style="margin-top:6px;margin-bottom:12px;">
+          <button id="fs-reset-colors" style="width:100%;padding:7px;background:#f3e7c9;color:#3d3225;border:1px solid #e8d9bb;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;">
+            Reset to Defaults
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Panel footer (always visible) -->
+      <div style="padding:0 14px 12px;">
+        <button id="fs-copy-btn" style="width:100%;padding:8px;background:#be3528;color:#fff;border:none;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;">
+          Copy Config
+        </button>
+      </div>
+    </div>
+
+    <!-- Toggle button -->
+    <button id="fs-toggle" title="Design Tester" style="display:flex;align-items:center;justify-content:center;width:46px;height:46px;background:#be3528;color:#fff;border:none;border-radius:50%;font-size:15px;font-weight:700;font-family:Georgia,serif;cursor:pointer;box-shadow:0 4px 14px rgba(190,53,40,0.4);margin-left:auto;">
+      Aa
+    </button>
+
+    <script define:vars={{ displayFonts, bodyFonts, colorTokens }}>
+      const panel         = document.getElementById('fs-panel');
+      const toggleBtn     = document.getElementById('fs-toggle');
+      const closeBtn      = document.getElementById('fs-close');
+      const tabFonts      = document.getElementById('fs-tab-fonts');
+      const tabColors     = document.getElementById('fs-tab-colors');
+      const fontsContent  = document.getElementById('fs-fonts-content');
+      const colorsContent = document.getElementById('fs-colors-content');
+      const dispSelect    = document.getElementById('fs-display-select');
+      const bodySelect    = document.getElementById('fs-body-select');
+      const dispPrev      = document.getElementById('fs-display-preview');
+      const bodyPrev      = document.getElementById('fs-body-preview');
+      const copyBtn       = document.getElementById('fs-copy-btn');
+      const customInput   = document.getElementById('fs-custom-input');
+      const customDisp    = document.getElementById('fs-custom-disp');
+      const customBody    = document.getElementById('fs-custom-body');
+      const customError   = document.getElementById('fs-custom-error');
+      const resetBtn      = document.getElementById('fs-reset-colors');
+
+      let currentDisplay = displayFonts[0];
+      let currentBody    = bodyFonts[0];
+
+      // ── Tabs ─────────────────────────────────────────────────────
+      function setTab(tab) {
+        const isFonts = tab === 'fonts';
+        fontsContent.style.display  = isFonts ? 'block' : 'none';
+        colorsContent.style.display = isFonts ? 'none'  : 'block';
+        tabFonts.style.background   = isFonts ? '#f8f8f2' : 'transparent';
+        tabFonts.style.color        = isFonts ? '#3d3225' : '#bb9d72';
+        tabColors.style.background  = isFonts ? 'transparent' : '#f8f8f2';
+        tabColors.style.color       = isFonts ? '#bb9d72' : '#3d3225';
+      }
+      tabFonts.addEventListener('click',  () => setTab('fonts'));
+      tabColors.addEventListener('click', () => setTab('colors'));
+
+      // ── Font helpers ──────────────────────────────────────────────
+      function loadFont(google) {
+        const id = 'gf-' + google.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+        if (document.getElementById(id)) return;
+        const link = document.createElement('link');
+        link.id   = id;
+        link.rel  = 'stylesheet';
+        link.href = 'https://fonts.googleapis.com/css2?family=' + google + '&display=swap';
+        document.head.appendChild(link);
+      }
+
+      function applyDisplay(font) {
+        loadFont(font.google);
+        document.documentElement.style.setProperty('--font-display', font.family);
+        dispPrev.style.fontFamily = font.family;
+        currentDisplay = font;
+      }
+
+      function applyBody(font) {
+        loadFont(font.google);
+        document.documentElement.style.setProperty('--font-body', font.family);
+        bodyPrev.style.fontFamily = font.family;
+        currentBody = font;
+      }
+
+      function addCustomOption(select, font) {
+        let opt = select.querySelector('[data-custom]');
+        if (!opt) {
+          opt = document.createElement('option');
+          opt.setAttribute('data-custom', '');
+          select.insertBefore(opt, select.firstChild);
+        }
+        opt.value = 'custom';
+        opt.textContent = font.name;
+        select.value = 'custom';
+      }
+
+      function applyCustomFont(target) {
+        const name = customInput.value.trim();
+        if (!name) return;
+        customError.style.display = 'none';
+        const urlName   = name.replace(/\s+/g, '+');
+        const google    = urlName + ':ital,wght@0,400;0,700;1,400';
+        const isDisplay = target === 'display';
+        const family    = "'" + name + "', " + (isDisplay ? 'Georgia, serif' : 'system-ui, sans-serif');
+        const font      = { name: 'Custom: ' + name, family, google };
+        const existingId = 'gf-' + google.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+        if (document.getElementById(existingId)) {
+          if (isDisplay) { applyDisplay(font); addCustomOption(dispSelect, font); }
+          else            { applyBody(font);    addCustomOption(bodySelect, font); }
+        } else {
+          const testLink = document.createElement('link');
+          testLink.id   = existingId;
+          testLink.rel  = 'stylesheet';
+          testLink.href = 'https://fonts.googleapis.com/css2?family=' + google + '&display=swap';
+          testLink.onerror = () => { customError.style.display = 'block'; };
+          testLink.onload  = () => {
+            if (isDisplay) { applyDisplay(font); addCustomOption(dispSelect, font); }
+            else            { applyBody(font);    addCustomOption(bodySelect, font); }
+          };
+          document.head.appendChild(testLink);
+        }
+      }
+
+      dispSelect.addEventListener('change', (e) => applyDisplay(displayFonts[parseInt(e.target.value)]));
+      bodySelect.addEventListener('change', (e) => applyBody(bodyFonts[parseInt(e.target.value)]));
+      customDisp.addEventListener('click', () => applyCustomFont('display'));
+      customBody.addEventListener('click', () => applyCustomFont('body'));
+      customInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') applyCustomFont('display'); });
+
+      // ── Color helpers ─────────────────────────────────────────────
+      colorTokens.forEach(token => {
+        const input    = document.getElementById('fs-color-' + token.id);
+        const hexLabel = document.getElementById('fs-color-' + token.id + '-hex');
+        input.addEventListener('input', (e) => {
+          const val = e.target.value;
+          token.vars.forEach(v => document.documentElement.style.setProperty(v, val));
+          hexLabel.textContent = val;
+        });
+      });
+
+      resetBtn.addEventListener('click', () => {
+        colorTokens.forEach(token => {
+          const input    = document.getElementById('fs-color-' + token.id);
+          const hexLabel = document.getElementById('fs-color-' + token.id + '-hex');
+          token.vars.forEach(v => document.documentElement.style.removeProperty(v));
+          input.value = token.value;
+          hexLabel.textContent = token.value;
+        });
+        ['--color-nav-bg', '--color-nav-accent', '--color-nav-menu'].forEach(v =>
+          document.documentElement.style.removeProperty(v)
+        );
+        const bgR     = document.querySelector('input[name="nav-bg"][value="bg"]');
+        const accentR = document.querySelector('input[name="nav-accent"][value="primary"]');
+        const menuR   = document.querySelector('input[name="nav-menu"][value="darkbrown"]');
+        if (bgR)     bgR.checked = true;
+        if (accentR) accentR.checked = true;
+        if (menuR)   menuR.checked = true;
+      });
+
+      // ── Nav color radios ──────────────────────────────────────────
+      function applyNavColor(cssVar, tokenId) {
+        const token = colorTokens.find(t => t.id === tokenId);
+        if (token) document.documentElement.style.setProperty(cssVar, 'var(' + token.cssVar + ')');
+      }
+      // Apply defaults on load
+      applyNavColor('--color-nav-bg',     'bg');
+      applyNavColor('--color-nav-accent', 'primary');
+      applyNavColor('--color-nav-menu',   'darkbrown');
+
+      document.querySelectorAll('input[name="nav-bg"]').forEach(r =>
+        r.addEventListener('change', e => applyNavColor('--color-nav-bg', e.target.value))
+      );
+      document.querySelectorAll('input[name="nav-accent"]').forEach(r =>
+        r.addEventListener('change', e => applyNavColor('--color-nav-accent', e.target.value))
+      );
+      document.querySelectorAll('input[name="nav-menu"]').forEach(r =>
+        r.addEventListener('change', e => applyNavColor('--color-nav-menu', e.target.value))
+      );
+
+      // ── Panel open/close ──────────────────────────────────────────
+      toggleBtn.addEventListener('click', () => {
+        panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+      });
+      closeBtn.addEventListener('click', () => {
+        panel.style.display = 'none';
+      });
+
+      // ── Copy Config ───────────────────────────────────────────────
+      copyBtn.addEventListener('click', () => {
+        const googleUrl =
+          'https://fonts.googleapis.com/css2?family=' +
+          currentDisplay.google + '&family=' + currentBody.google + '&display=swap';
+
+        const colorLines = colorTokens
+          .map(t => t.vars.map(v => v + ': ' + document.getElementById('fs-color-' + t.id).value + ';').join('\n'))
+          .join('\n');
+
+        const navVarMap = { '--color-nav-bg': 'nav-bg', '--color-nav-accent': 'nav-accent', '--color-nav-menu': 'nav-menu' };
+        const navLines = Object.entries(navVarMap).map(([navVar, radioName]) => {
+          const checked = document.querySelector('input[name="' + radioName + '"]:checked');
+          const tokenId = checked ? checked.value : '';
+          const token = colorTokens.find(t => t.id === tokenId);
+          return navVar + ': var(' + (token ? token.cssVar : '') + ');';
+        }).join('\n');
+
+        const config = [
+          '// src/styles/global.css — inside @theme {}',
+          '',
+          '// Fonts:',
+          '--font-display: ' + currentDisplay.family + ';',
+          '--font-body:    ' + currentBody.family + ';',
+          '',
+          '// Colors:',
+          colorLines,
+          '',
+          '// Nav bar:',
+          navLines,
+          '',
+          '// src/layouts/Layout.astro — replace the Google Fonts <link>',
+          '<link href="' + googleUrl + '" rel="stylesheet" />',
+        ].join('\n');
+
+        navigator.clipboard.writeText(config).then(() => {
+          copyBtn.textContent = 'Copied!';
+          setTimeout(() => { copyBtn.textContent = 'Copy Config'; }, 2000);
+        });
+      });
+    </script>
+  </div>
+)}

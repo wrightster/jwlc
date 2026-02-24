@@ -7,11 +7,11 @@ export const prerender = true;
 <Layout title="About Us — Julie Wright Land Company" description="Meet the experienced team behind Julie Wright Land Company. Over 40 years of Triangle area land expertise.">
   <!-- Page Header -->
   <section class="relative py-20 lg:py-24 bg-earth-900 overflow-hidden">
-    <img src="/FallsLakeTopoContours.svg" class="topo-bg opacity-[0.09]" style="filter: invert(1);" alt="" aria-hidden="true" />
+    <img src="/FallsLakeTopoContours.svg" class="topo-bg opacity-[0.045]" style="filter: invert(1);" alt="" aria-hidden="true" />
     <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
-      <p class="section-label text-white/70">Our Story</p>
-      <h1 class="font-display text-4xl md:text-6xl text-earth-50 leading-tight mt-3">
-        About <span class="italic text-[#faca83]">Our Team</span>
+      <p class="section-label text-light-text/70">Our Story</p>
+      <h1 class="font-display text-4xl md:text-6xl text-light-text leading-tight mt-3">
+        About <span class="italic text-brand-light">Our Team</span>
       </h1>
       <p class="text-earth-400 mt-5 max-w-2xl text-lg">
         A dedicated team of brokers and developers with deep roots in North Carolina's Triangle region.
@@ -48,7 +48,7 @@ export const prerender = true;
             { label: 'Core Values', value: '—', detail: 'Integrity, Knowledge, Relationships' },
           ].map((stat) => (
             <div class="bg-earth-100/60 border border-earth-200 rounded-sm p-6">
-              <p class="text-xs uppercase tracking-[0.2em] text-[#be3528] font-semibold">{stat.label}</p>
+              <p class="text-xs uppercase tracking-[0.2em] text-crimson-700 font-semibold">{stat.label}</p>
               <p class="font-display text-3xl text-earth-900 mt-1">{stat.value !== '—' ? stat.value : ''}</p>
               <p class="text-sm text-earth-600 mt-1">{stat.detail}</p>
             </div>
@@ -68,20 +68,20 @@ export const prerender = true;
 
       <div class="space-y-8">
         {team.map((member, i) => (
-          <div class="bg-white rounded-sm border border-earth-100 shadow-sm overflow-hidden" id={member.name.toLowerCase().replace(/\s/g, '-')}>
+          <div class="bg-white rounded-sm border border-earth-100 overflow-hidden" id={member.name.toLowerCase().replace(/\s/g, '-')}>
             <div class="p-8 lg:p-10">
               <div class="flex flex-col md:flex-row md:items-start gap-8">
                 <img
                   src={member.photo}
                   alt={member.name}
-                  class="w-24 h-24 rounded-full object-cover flex-shrink-0 border-2 border-earth-200 shadow-sm"
+                  class="w-24 h-24 rounded-full object-cover flex-shrink-0 border-2 border-earth-200"
                   loading="lazy"
                 />
 
                 <div class="flex-1">
                   <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                     <h3 class="font-display text-2xl text-earth-900">{member.name}</h3>
-                    <span class="text-xs uppercase tracking-widest text-[#be3528] font-semibold">{member.role}</span>
+                    <span class="text-xs uppercase tracking-widest text-crimson-700 font-semibold">{member.role}</span>
                   </div>
                   <p class="text-earth-600 leading-relaxed mt-4">{member.bio}</p>
 
@@ -117,7 +117,7 @@ export const prerender = true;
   <!-- CTA -->
   <section class="py-14 bg-earth-900">
     <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
-      <h2 class="font-display text-3xl text-earth-50">Work With Our Team</h2>
+      <h2 class="font-display text-3xl text-light-text">Work With Our Team</h2>
       <p class="text-earth-400 mt-4">
         Ready to discuss your land needs? We'd love to hear from you.
       </p>

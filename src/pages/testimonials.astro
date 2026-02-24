@@ -7,11 +7,11 @@ export const prerender = true;
 <Layout title="Testimonials — Julie Wright Land Company" description="Hear from our clients about their experience working with Julie Wright Land Company.">
   <!-- Page Header -->
   <section class="relative py-20 lg:py-24 bg-earth-900 overflow-hidden">
-    <img src="/FallsLakeTopoContours.svg" class="topo-bg opacity-[0.09]" style="filter: invert(1);" alt="" aria-hidden="true" />
+    <img src="/FallsLakeTopoContours.svg" class="topo-bg opacity-[0.045]" style="filter: invert(1);" alt="" aria-hidden="true" />
     <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
-      <p class="section-label text-white/70">Client Stories</p>
-      <h1 class="font-display text-4xl md:text-6xl text-earth-50 leading-tight mt-3">
-        What Our Clients <span class="italic text-[#faca83]">Say</span>
+      <p class="section-label text-light-text/70">Client Stories</p>
+      <h1 class="font-display text-4xl md:text-6xl text-light-text leading-tight mt-3">
+        What Our Clients <span class="italic text-brand-light">Say</span>
       </h1>
       <p class="text-earth-400 mt-5 max-w-2xl text-lg">
         Real words from real people we've had the privilege of working with over the years.
@@ -24,7 +24,7 @@ export const prerender = true;
     <div class="max-w-5xl mx-auto px-6 lg:px-8">
       <div class="space-y-8">
         {testimonials.map((t, i) => (
-          <blockquote class="relative bg-white border border-earth-100 rounded-sm p-8 lg:p-10 shadow-sm">
+          <blockquote class="relative bg-white border border-earth-100 rounded-sm p-8 lg:p-10">
             <div class="absolute -top-4 left-8 w-8 h-8 bg-crimson-700 rounded-full flex items-center justify-center">
               <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H0z" />

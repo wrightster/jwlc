@@ -8,11 +8,11 @@ export const prerender = true;
 <Layout title="Listings — Julie Wright Land Company" description="Browse available land, lots, and investment properties across the North Carolina Triangle area.">
   <!-- Page Header -->
   <section class="relative py-20 lg:py-24 bg-earth-900 overflow-hidden">
-    <img src="/FallsLakeTopoContours.svg" class="topo-bg opacity-[0.09]" style="filter: invert(1);" alt="" aria-hidden="true" />
+    <img src="/FallsLakeTopoContours.svg" class="topo-bg opacity-[0.045]" style="filter: invert(1);" alt="" aria-hidden="true" />
     <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
-      <p class="section-label text-white/70">Browse Properties</p>
-      <h1 class="font-display text-4xl md:text-6xl text-earth-50 leading-tight mt-3">
-        Available <span class="italic text-[#faca83]">Listings</span>
+      <p class="section-label text-light-text/70">Browse Properties</p>
+      <h1 class="font-display text-4xl md:text-6xl text-light-text leading-tight mt-3">
+        Available <span class="italic text-brand-light">Listings</span>
       </h1>
       <p class="text-earth-400 mt-5 max-w-2xl text-lg">
         Land, lots, and investment properties across Wake, Durham, Granville, Franklin, Nash, and Vance counties.
@@ -30,14 +30,14 @@ export const prerender = true;
           All
         </button>
         {[...new Set(listings.map(l => l.county))].sort().map((county) => (
-          <button class="county-filter px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded-sm border border-earth-200 text-earth-500 transition-all hover:bg-crimson-700 hover:text-white hover:border-crimson-700" data-county={county}>
+          <button class="county-filter px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded-sm border border-earth-200 text-light-text0 transition-all hover:bg-crimson-700 hover:text-white hover:border-crimson-700" data-county={county}>
             {county}
           </button>
         ))}
       </div>
 
       <!-- Results count -->
-      <p class="text-sm text-earth-500 mb-8">
+      <p class="text-sm text-light-text0 mb-8">
         Showing <span id="count" class="font-semibold text-earth-800">{listings.length}</span> properties
       </p>
 
@@ -71,9 +71,9 @@ export const prerender = true;
     filters.forEach(btn => {
       btn.addEventListener('click', () => {
         filters.forEach(f => f.classList.remove('active', 'bg-crimson-700', 'text-white', 'border-crimson-700', 'bg-earth-100', 'text-earth-700'));
-        filters.forEach(f => f.classList.add('text-earth-500', 'border-earth-200'));
+        filters.forEach(f => f.classList.add('text-light-text0', 'border-earth-200'));
         btn.classList.add('active', 'bg-crimson-700', 'text-white', 'border-crimson-700');
-        btn.classList.remove('text-earth-500', 'border-earth-200');
+        btn.classList.remove('text-light-text0', 'border-earth-200');
 
         const county = (btn as HTMLElement).dataset.county;
         let visible = 0;
@@ -96,7 +96,7 @@ export const prerender = true;
     const allBtn = document.querySelector('[data-county="all"]');
     if (allBtn) {
       allBtn.classList.add('bg-crimson-700', 'text-white', 'border-crimson-700');
-      allBtn.classList.remove('text-earth-500', 'border-earth-200');
+      allBtn.classList.remove('text-light-text0', 'border-earth-200');
     }
   </script>
 </Layout>

@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import FontSwitcher from '../components/FontSwitcher.astro';
 
 interface Props {
   title?: string;
@@ -38,10 +39,10 @@ const navLinks = [
   <body class="min-h-screen flex flex-col">
     <!-- Navigation -->
     <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" id="site-header">
-      <div class="absolute inset-0 bg-[#f8f8f2]/94 backdrop-blur-md border-b border-earth-200/60 opacity-0 transition-opacity duration-500" id="header-bg"></div>
+      <div class="absolute inset-0 border-b border-earth-200/60" id="header-bg" style="background-color: var(--color-nav-bg)"></div>
       <nav class="relative max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
         <a href="/" class="relative group flex items-center">
-          <img src="/JWLC_icon.svg" alt="Julie Wright Land Company" class="h-9 w-auto" />
+          <div class="h-9" style="aspect-ratio:43.24/38.47;background-color:var(--color-nav-accent);-webkit-mask-image:url('/JWLC_icon.svg');mask-image:url('/JWLC_icon.svg');-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;" role="img" aria-label="Julie Wright Land Company"></div>
         </a>
 
         <!-- Desktop Nav -->
@@ -52,20 +53,20 @@ const navLinks = [
                 href={link.href}
                 class:list={[
                   'relative px-4 py-2 text-sm font-medium tracking-wide transition-colors duration-300',
-                  currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))
-                    ? 'text-crimson-700'
-                    : 'text-earth-700 hover:text-earth-900',
+                  (currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)))
+                    ? 'nav-link-active'
+                    : 'nav-link-inactive',
                 ]}
               >
                 {link.label}
                 {(currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))) && (
-                  <span class="absolute bottom-0 left-4 right-4 h-0.5 bg-crimson-700 rounded-full" />
+                  <span class="absolute bottom-0 left-4 right-4 h-0.5 rounded-full" style="background-color: var(--color-nav-accent)" />
                 )}
               </a>
             </li>
           ))}
           <li class="ml-4">
-            <a href="/contact" class="btn-primary text-sm">Get in Touch</a>
+            <a href="/contact" class="btn-nav text-sm">Get in Touch</a>
           </li>
         </ul>
 
@@ -77,15 +78,15 @@ const navLinks = [
         >
           <span class="sr-only">Menu</span>
           <div class="w-6 flex flex-col gap-1.5 transition-all" id="hamburger">
-            <span class="block h-0.5 w-6 bg-earth-800 transition-all duration-300 origin-center" id="bar1"></span>
-            <span class="block h-0.5 w-6 bg-earth-800 transition-all duration-300" id="bar2"></span>
-            <span class="block h-0.5 w-4 bg-earth-800 transition-all duration-300 origin-center ml-auto" id="bar3"></span>
+            <span class="block h-0.5 w-6 transition-all duration-300 origin-center" id="bar1" style="background-color: var(--color-nav-menu)"></span>
+            <span class="block h-0.5 w-6 transition-all duration-300" id="bar2" style="background-color: var(--color-nav-menu)"></span>
+            <span class="block h-0.5 w-4 transition-all duration-300 origin-center ml-auto" id="bar3" style="background-color: var(--color-nav-menu)"></span>
           </div>
         </button>
       </nav>
 
       <!-- Mobile Menu -->
-      <div class="lg:hidden fixed inset-0 top-20 bg-[#f8f8f2]/98 backdrop-blur-lg -translate-x-full transition-transform duration-500 ease-out" id="mobile-menu">
+      <div class="lg:hidden fixed inset-0 top-20 backdrop-blur-lg -translate-x-full transition-transform duration-500 ease-out" id="mobile-menu" style="background-color: var(--color-nav-bg)">
         <ul class="flex flex-col items-center justify-center h-full gap-6 -mt-20">
           {navLinks.map((link, i) => (
             <li style={`animation-delay: ${i * 80}ms`} class="mobile-nav-item">
@@ -93,7 +94,7 @@ const navLinks = [
                 href={link.href}
                 class:list={[
                   'text-2xl font-display tracking-wide transition-colors',
-                  currentPath === link.href ? 'text-crimson-700' : 'text-earth-800',
+                  currentPath === link.href ? 'nav-link-active' : 'nav-link-inactive',
                 ]}
               >
                 {link.label}
@@ -101,11 +102,13 @@ const navLinks = [
             </li>
           ))}
           <li class="mt-4 mobile-nav-item" style="animation-delay: 480ms">
-            <a href="/contact" class="btn-primary">Get in Touch</a>
+            <a href="/contact" class="btn-nav">Get in Touch</a>
           </li>
         </ul>
       </div>
     </header>
+
+    <FontSwitcher />
 
     <!-- Main Content -->
     <main class="flex-1 pt-20">
@@ -113,13 +116,14 @@ const navLinks = [
     </main>
 
     <!-- Footer -->
-    <footer class="bg-earth-900 text-earth-300 mt-auto">
-      <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
+    <footer class="relative bg-earth-900 text-earth-300 mt-auto overflow-hidden">
+      <img src="/FallsLakeTopoContours.svg" class="topo-bg opacity-[0.035]" style="filter: invert(1);" alt="" aria-hidden="true" />
+      <div class="relative max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           <!-- Brand -->
           <div class="lg:col-span-1">
             <a href="/" class="inline-block mb-5">
-              <img src="/JWLC_1C.svg" alt="Julie Wright Land Company" class="h-12 w-auto" style="filter: brightness(0) invert(1);" />
+              <div class="h-12" style="aspect-ratio:254.92/122.12;background-color:var(--color-light-text);-webkit-mask-image:url('/JWLC_1C.svg');mask-image:url('/JWLC_1C.svg');-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;" role="img" aria-label="Julie Wright Land Company"></div>
             </a>
             <p class="text-sm leading-relaxed text-earth-400 max-w-xs">
               Specializing in Triangle area land brokerage, sales, and investment properties for over 40 years.
@@ -176,33 +180,24 @@ const navLinks = [
     </footer>
 
     <script>
-      const headerBg = document.getElementById('header-bg');
-
-      // Header scroll state
-      function applyScrollState() {
-        const scrolled = window.scrollY > 40;
-        headerBg?.classList.toggle('opacity-0', !scrolled);
-        headerBg?.classList.toggle('opacity-100', scrolled);
-      }
-
       // Topo SVG parallax
       function updateParallax() {
         document.querySelectorAll('.topo-bg').forEach(el => {
           const section = el.parentElement;
           if (!section) return;
           const rect = section.getBoundingClientRect();
+          // Anchor SVG to viewport center so adjacent dark sections share the same
+          // slice of the pattern, making them appear visually seamless.
           const relativeToCenter = rect.top + rect.height / 2 - window.innerHeight / 2;
-          const offset = relativeToCenter * 0.15;
+          const offset = -relativeToCenter;
           el.style.transform = `translateX(-50%) translateY(calc(-50% + ${offset}px))`;
         });
       }
 
       // Init
-      applyScrollState();
       updateParallax();
 
       window.addEventListener('scroll', () => {
-        applyScrollState();
         updateParallax();
       }, { passive: true });
 

@@ -32,6 +32,13 @@
   --color-forest-900: #283622;
   --color-forest-950: #131d0f;
 
+  --color-light-text: #ffffff;
+
+  /* Nav bar — driven by radio selectors in the dev FontSwitcher */
+  --color-nav-bg:     #f8f8f2;
+  --color-nav-accent: #be3528;
+  --color-nav-menu:   #3d3225;
+
   --font-display: 'DM Serif Display', Georgia, serif;
   --font-body:    'Libre Franklin', system-ui, sans-serif;
 }
@@ -69,14 +76,23 @@
   .section-heading {
     @apply font-display text-4xl md:text-5xl text-earth-900 leading-tight;
   }
-  .topo-bg {
-    position: absolute;
-    width: 115vw;
-    left: 50%;
-    top: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    pointer-events: none;
-    user-select: none;
+  .btn-nav {
+    @apply inline-flex items-center justify-center px-7 py-3 font-medium tracking-wide rounded-sm transition-all duration-300;
+    background-color: var(--color-nav-accent);
+    color: var(--color-nav-bg);
+  }
+  .btn-nav:hover {
+    filter: brightness(0.88);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  }
+  .nav-link-active {
+    color: var(--color-nav-accent);
+  }
+  .nav-link-inactive {
+    color: var(--color-nav-menu);
+  }
+  .nav-link-inactive:hover {
+    color: var(--color-nav-accent);
   }
 }
 
@@ -91,3 +107,14 @@
 
 .animate-fade-up  { animation: fadeUp  0.65s ease-out both; }
 .animate-fade-in  { animation: fadeIn  0.55s ease-out both; }
+
+.topo-bg {
+  position: absolute;
+  width: 230vw;
+  max-width: none;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  pointer-events: none;
+  user-select: none;
+}

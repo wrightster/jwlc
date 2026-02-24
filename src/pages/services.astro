@@ -7,11 +7,11 @@ export const prerender = true;
 <Layout title="Services — Julie Wright Land Company" description="Land brokerage, appraisals, estate planning, 1031 exchanges, timber management, and development services.">
   <!-- Page Header -->
   <section class="relative py-20 lg:py-24 bg-earth-900 overflow-hidden">
-    <img src="/FallsLakeTopoContours.svg" class="topo-bg opacity-[0.09]" style="filter: invert(1);" alt="" aria-hidden="true" />
+    <img src="/FallsLakeTopoContours.svg" class="topo-bg opacity-[0.045]" style="filter: invert(1);" alt="" aria-hidden="true" />
     <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
-      <p class="section-label text-white/70">What We Do</p>
-      <h1 class="font-display text-4xl md:text-6xl text-earth-50 leading-tight mt-3">
-        Our <span class="italic text-[#faca83]">Services</span>
+      <p class="section-label text-light-text/70">What We Do</p>
+      <h1 class="font-display text-4xl md:text-6xl text-light-text leading-tight mt-3">
+        Our <span class="italic text-brand-light">Services</span>
       </h1>
       <p class="text-earth-400 mt-5 max-w-2xl text-lg">
         Comprehensive land services backed by 40+ years of experience and relationships across the Triangle.
@@ -24,8 +24,8 @@ export const prerender = true;
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         {services.map((service, i) => (
-          <div class="group relative bg-white border border-earth-100 rounded-sm p-8 lg:p-10 shadow-sm hover:shadow-lg transition-all duration-500 hover:-translate-y-1">
-            <div class="absolute top-0 left-0 w-1 h-full bg-[#be3528] rounded-l-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="group relative bg-white rounded-sm p-8 lg:p-10 transition-all duration-300 after:absolute after:inset-0 after:rounded-sm after:pointer-events-none after:shadow-[inset_0_0_0_1px_var(--color-earth-200)] after:transition-all after:duration-300 hover:after:shadow-[inset_0_0_0_3px_var(--color-crimson-700)]">
+            <div class="absolute top-0 left-0 w-1 h-full bg-crimson-700 rounded-l-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div class="flex items-start gap-5">
               <div class="w-12 h-12 rounded-sm bg-forest-50 flex items-center justify-center flex-shrink-0 group-hover:bg-forest-100 transition-colors">
                 {service.icon === 'handshake' && (
@@ -90,7 +90,7 @@ export const prerender = true;
               </svg>
             </div>
             <h3 class="font-display text-lg text-earth-900">{network}</h3>
-            <p class="text-sm text-earth-500 mt-2">Access to trusted professionals through decades of partnership.</p>
+            <p class="text-sm text-light-text0 mt-2">Access to trusted professionals through decades of partnership.</p>
           </div>
         ))}
       </div>
@@ -100,7 +100,7 @@ export const prerender = true;
   <!-- CTA -->
   <section class="py-14 bg-earth-900">
     <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
-      <h2 class="font-display text-3xl text-earth-50">Inquire About Our Development Portfolio</h2>
+      <h2 class="font-display text-3xl text-light-text">Inquire About Our Development Portfolio</h2>
       <p class="text-earth-400 mt-4">
         Let's discuss how our 40+ years of experience can help with your next project.
       </p>
