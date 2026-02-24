@@ -7,16 +7,12 @@ export const prerender = true;
 
 <Layout title="Listings — Julie Wright Land Company" description="Browse available land, lots, and investment properties across the North Carolina Triangle area.">
   <!-- Page Header -->
-  <section class="relative py-20 lg:py-28 bg-earth-900 overflow-hidden">
-    <svg class="absolute inset-0 w-full h-full opacity-[0.05]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" preserveAspectRatio="none">
-      {[...Array(15)].map((_, i) => (
-        <ellipse cx={600} cy={200} rx={80 + i * 40} ry={30 + i * 15} fill="none" stroke="white" stroke-width="0.6" />
-      ))}
-    </svg>
+  <section class="relative py-20 lg:py-24 bg-earth-900 overflow-hidden">
+    <img src="/FallsLakeTopoContours.svg" class="topo-bg opacity-[0.09]" style="filter: invert(1);" alt="" aria-hidden="true" />
     <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
-      <p class="section-label !text-copper-400">Browse Properties</p>
+      <p class="section-label text-white/70">Browse Properties</p>
       <h1 class="font-display text-4xl md:text-6xl text-earth-50 leading-tight mt-3">
-        Available <span class="italic text-forest-300">Listings</span>
+        Available <span class="italic text-[#faca83]">Listings</span>
       </h1>
       <p class="text-earth-400 mt-5 max-w-2xl text-lg">
         Land, lots, and investment properties across Wake, Durham, Granville, Franklin, Nash, and Vance counties.
@@ -30,11 +26,11 @@ export const prerender = true;
       <!-- Filter bar -->
       <div class="flex flex-wrap items-center gap-3 mb-12 pb-6 border-b border-earth-200">
         <span class="text-sm font-medium text-earth-600 mr-2">Filter by county:</span>
-        <button class="county-filter active px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded-sm border border-earth-300 text-earth-700 bg-earth-100 transition-all hover:bg-forest-700 hover:text-white hover:border-forest-700" data-county="all">
+        <button class="county-filter active px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded-sm border border-earth-300 text-earth-700 bg-earth-100 transition-all hover:bg-crimson-700 hover:text-white hover:border-crimson-700" data-county="all">
           All
         </button>
         {[...new Set(listings.map(l => l.county))].sort().map((county) => (
-          <button class="county-filter px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded-sm border border-earth-200 text-earth-500 transition-all hover:bg-forest-700 hover:text-white hover:border-forest-700" data-county={county}>
+          <button class="county-filter px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded-sm border border-earth-200 text-earth-500 transition-all hover:bg-crimson-700 hover:text-white hover:border-crimson-700" data-county={county}>
             {county}
           </button>
         ))}
@@ -74,9 +70,9 @@ export const prerender = true;
 
     filters.forEach(btn => {
       btn.addEventListener('click', () => {
-        filters.forEach(f => f.classList.remove('active', 'bg-forest-700', 'text-white', 'border-forest-700', 'bg-earth-100', 'text-earth-700'));
+        filters.forEach(f => f.classList.remove('active', 'bg-crimson-700', 'text-white', 'border-crimson-700', 'bg-earth-100', 'text-earth-700'));
         filters.forEach(f => f.classList.add('text-earth-500', 'border-earth-200'));
-        btn.classList.add('active', 'bg-forest-700', 'text-white', 'border-forest-700');
+        btn.classList.add('active', 'bg-crimson-700', 'text-white', 'border-crimson-700');
         btn.classList.remove('text-earth-500', 'border-earth-200');
 
         const county = (btn as HTMLElement).dataset.county;
@@ -99,7 +95,7 @@ export const prerender = true;
     // Set initial active state
     const allBtn = document.querySelector('[data-county="all"]');
     if (allBtn) {
-      allBtn.classList.add('bg-forest-700', 'text-white', 'border-forest-700');
+      allBtn.classList.add('bg-crimson-700', 'text-white', 'border-crimson-700');
       allBtn.classList.remove('text-earth-500', 'border-earth-200');
     }
   </script>

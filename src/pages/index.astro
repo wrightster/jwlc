@@ -8,167 +8,192 @@ export const prerender = true;
 ---
 
 <Layout title="Julie Wright Land Company — Finding The Homeplace">
-  <!-- Hero -->
-  <section class="relative min-h-[92vh] flex items-center overflow-hidden">
-    <!-- Background layers -->
-    <div class="absolute inset-0 bg-gradient-to-br from-earth-900 via-forest-950 to-earth-950"></div>
-    <!-- Topographic line overlay -->
-    <svg class="absolute inset-0 w-full h-full opacity-[0.06]" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 1200 800">
-      {[...Array(20)].map((_, i) => (
-        <ellipse cx={600 + (i % 3) * 40} cy={400 + (i % 4) * 20} rx={100 + i * 30} ry={60 + i * 20} fill="none" stroke="white" stroke-width="0.8" />
-      ))}
-    </svg>
-    <!-- Noise texture -->
-    <div class="absolute inset-0 opacity-[0.03]" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 /%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22 /%3E%3C/svg%3E');"></div>
 
-    <div class="relative max-w-7xl mx-auto px-6 lg:px-8 py-32">
-      <div class="max-w-3xl">
-        <p class="section-label !text-copper-400 animate-fade-up" style="animation-delay: 200ms">
-          Est. 1984 &middot; Raleigh, North Carolina
-        </p>
-        <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl text-earth-50 leading-[1.1] mt-4 animate-fade-up" style="animation-delay: 400ms">
-          Finding The<br />
-          <span class="italic text-forest-300">Homeplace</span>
-        </h1>
-        <p class="text-lg text-earth-300 leading-relaxed mt-8 max-w-xl animate-fade-up" style="animation-delay: 600ms">
-          Over 40 years of expertise in Triangle area land brokerage, sales, and investment properties across Wake, Durham, Granville, Franklin, and beyond.
-        </p>
-        <div class="flex flex-wrap gap-4 mt-10 animate-fade-up" style="animation-delay: 800ms">
-          <a href="/listings" class="btn-primary !bg-forest-600 hover:!bg-forest-500">Browse Listings</a>
-          <a href="/contact" class="btn-secondary !border-earth-400 !text-earth-200 hover:!bg-earth-200 hover:!text-earth-900">Schedule Consultation</a>
-        </div>
-      </div>
+  <!-- ═══════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════════ -->
+  <section class="relative py-20 lg:py-24 bg-earth-900 overflow-hidden">
+    <img
+      src="/FallsLakeTopoContours.svg"
+      class="topo-bg opacity-[0.09]"
+      style="filter: invert(1);"
+      alt="" aria-hidden="true"
+    />
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-16">
 
-      <!-- Stats bar -->
-      <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 animate-fade-up" style="animation-delay: 1000ms">
-        {[
-          { number: '40+', label: 'Years Experience' },
-          { number: '8', label: 'Counties Served' },
-          { number: '5', label: 'Expert Brokers' },
-          { number: '1000s', label: 'Acres Sold' },
-        ].map((stat) => (
-          <div class="border-l border-earth-700 pl-5">
-            <p class="font-display text-3xl text-earth-50">{stat.number}</p>
-            <p class="text-xs uppercase tracking-widest text-earth-500 mt-1">{stat.label}</p>
+        <!-- LEFT: brand lockup -->
+        <div class="flex flex-col items-center lg:flex-shrink-0 animate-fade-up" style="animation-delay:100ms">
+          <p class="section-label !text-[#faca83] mb-6 text-center">
+            Est. 1984 &middot; Raleigh, North Carolina
+          </p>
+          <img
+            src="/JWLC_1C.svg"
+            alt="Julie Wright Land Company"
+            class="h-36 md:h-44 w-auto"
+            style="filter: brightness(0) invert(1);"
+          />
+          <div class="grid grid-cols-4 gap-5 mt-6 pt-6 border-t border-earth-700/60">
+            {[
+              { number: '40+',   label: 'Years'    },
+              { number: '8',     label: 'Counties' },
+              { number: '5',     label: 'Brokers'  },
+              { number: '1000s', label: 'Acres'    },
+            ].map((stat) => (
+              <div>
+                <p class="font-display text-xl text-white">{stat.number}</p>
+                <p class="text-[9px] uppercase tracking-widest text-earth-500 mt-0.5">{stat.label}</p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
+        </div>
 
-    <!-- Scroll indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in" style="animation-delay: 1400ms">
-      <span class="text-[10px] uppercase tracking-[0.3em] text-earth-500">Scroll</span>
-      <div class="w-px h-8 bg-gradient-to-b from-earth-500 to-transparent animate-pulse"></div>
+        <!-- Divider -->
+        <div class="hidden lg:block w-px self-stretch bg-earth-700/60 flex-shrink-0"></div>
+
+        <!-- RIGHT: headline + copy + CTAs -->
+        <div class="animate-fade-up" style="animation-delay:250ms">
+          <h1 class="font-display text-4xl md:text-5xl lg:text-6xl text-white leading-[1.05]">
+            Finding The <span class="italic text-[#faca83]">Homeplace</span>
+          </h1>
+          <p class="text-earth-300 text-lg leading-relaxed mt-5 max-w-lg">
+            Over 40 years of Triangle-area land brokerage across Wake, Durham, Granville, Franklin, and beyond.
+          </p>
+          <div class="flex flex-wrap gap-3 mt-8">
+            <a href="/listings" class="btn-primary">Browse Listings</a>
+            <a href="/contact" class="inline-flex items-center justify-center px-6 py-3 border border-earth-500 text-earth-200 text-sm font-medium tracking-wide rounded-sm transition-all duration-300 hover:bg-earth-200 hover:text-earth-900">
+              Contact Us
+            </a>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
-  <!-- Featured Listings -->
-  <section class="py-24 lg:py-32">
+  <!-- ═══════════════════════════════════════════
+       FEATURED LISTINGS
+  ════════════════════════════════════════════════ -->
+  <section class="py-16 lg:py-20 bg-earth-100/50 border-b border-earth-200">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+      <div class="flex items-end justify-between mb-8">
         <div>
           <p class="section-label">Featured Properties</p>
-          <h2 class="section-heading">Current Listings</h2>
+          <h2 class="font-display text-3xl text-earth-900">Current Listings</h2>
         </div>
-        <a href="/listings" class="btn-secondary self-start md:self-auto text-sm">
-          View All Properties
-          <svg class="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <a href="/listings" class="btn-secondary text-sm">
+          View All
+          <svg class="w-4 h-4 ml-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
         </a>
       </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-        {featuredListings.slice(0, 6).map((listing, i) => (
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {featuredListings.slice(0, 3).map((listing, i) => (
           <ListingCard listing={listing} index={i} />
         ))}
       </div>
     </div>
   </section>
 
-  <!-- About Strip -->
-  <section class="relative py-24 lg:py-32 bg-earth-900 overflow-hidden">
-    <svg class="absolute inset-0 w-full h-full opacity-[0.04]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" preserveAspectRatio="none">
-      {[...Array(12)].map((_, i) => (
-        <ellipse cx={300} cy={300} rx={60 + i * 45} ry={40 + i * 30} fill="none" stroke="white" stroke-width="0.6" />
-      ))}
-    </svg>
-    <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
-      <div class="grid lg:grid-cols-2 gap-16 items-center">
-        <div>
-          <p class="section-label !text-copper-400">About the Company</p>
-          <h2 class="font-display text-4xl md:text-5xl text-earth-50 leading-tight mt-3">
-            Rooted in the<br />
-            <span class="italic text-forest-300">Triangle</span> since 1984
-          </h2>
-          <p class="text-earth-300 leading-relaxed mt-8">
-            Julie Wright Land Company has been the Triangle's trusted land brokerage for over four decades. We specialize in helping clients find the right piece of land — or the right use for their land — navigating everything from soil and topography to zoning, tax implications, and estate considerations.
-          </p>
-          <p class="text-earth-400 leading-relaxed mt-4">
-            Our team of five experienced brokers covers Wake, Durham, Granville, Franklin, Vance, Harnett, Nash, and Chatham counties with deep local knowledge and relationships built over generations.
-          </p>
-          <a href="/about" class="btn-primary mt-8 !bg-forest-600 hover:!bg-forest-500">Meet Our Team</a>
-        </div>
-
-        <!-- Services grid -->
-        <div class="grid grid-cols-2 gap-4">
-          {services.slice(0, 4).map((service) => (
-            <div class="bg-earth-800/50 backdrop-blur-sm border border-earth-700/50 rounded-sm p-5 hover:bg-earth-800 transition-colors duration-300">
-              <h3 class="font-display text-base text-earth-100 mb-2">{service.title}</h3>
-              <p class="text-xs text-earth-400 leading-relaxed">{service.description.slice(0, 80)}...</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonials -->
-  <section class="py-24 lg:py-32 bg-earth-100/50">
+  <!-- ═══════════════════════════════════════════
+       ABOUT + SERVICES
+  ════════════════════════════════════════════════ -->
+  <section class="py-12 lg:py-16">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <p class="section-label">Client Stories</p>
-        <h2 class="section-heading">Trusted by Landowners<br />Across North Carolina</h2>
-      </div>
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-14">
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {testimonials.slice(0, 3).map((t, i) => (
-          <blockquote class="bg-white rounded-sm p-8 shadow-sm border border-earth-100 relative">
-            <svg class="absolute top-6 right-6 w-8 h-8 text-earth-200" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H0z" />
+        <!-- About -->
+        <div class="lg:col-span-4 border-l-2 border-crimson-700 pl-5">
+          <p class="section-label">About the Company</p>
+          <h2 class="font-display text-3xl text-earth-900 leading-tight">
+            Rooted in the<br />
+            <span class="italic text-crimson-700">Triangle</span> since 1984
+          </h2>
+          <p class="text-earth-600 text-sm leading-relaxed mt-3">
+            We help buyers, sellers, and investors navigate land — soil, topography, zoning, tax, and estate — with deep local knowledge built over four decades across 8 counties.
+          </p>
+          <a href="/about" class="inline-flex items-center gap-1.5 text-sm font-semibold text-crimson-700 hover:text-crimson-900 mt-3 transition-colors">
+            Meet Our Team
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
             </svg>
-            <p class="text-earth-700 leading-relaxed italic text-[15px]">"{t.quote}"</p>
-            <footer class="mt-5 pt-4 border-t border-earth-100">
-              <cite class="not-italic text-sm font-semibold text-earth-900">{t.author}</cite>
-            </footer>
+          </a>
+        </div>
+
+        <!-- Services -->
+        <div class="lg:col-span-8">
+          <p class="section-label">What We Do</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {services.map((service) => (
+              <div class="bg-earth-100 rounded-sm px-3 py-2.5 border border-earth-200/60">
+                <p class="text-xs font-semibold text-earth-800 leading-snug">{service.title}</p>
+              </div>
+            ))}
+          </div>
+          <a href="/services" class="inline-flex items-center gap-1.5 text-sm font-semibold text-crimson-700 hover:text-crimson-900 mt-3 transition-colors">
+            All Services
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       TESTIMONIAL + CTA
+  ════════════════════════════════════════════════ -->
+  <section class="relative py-14 bg-earth-900 overflow-hidden">
+    <img
+      src="/FallsLakeTopoContours.svg"
+      class="topo-bg opacity-[0.07]"
+      style="filter: invert(1);"
+      alt="" aria-hidden="true"
+    />
+    <div class="relative max-w-6xl mx-auto px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+        <!-- Testimonial -->
+        <div>
+          <svg class="w-7 h-7 text-white/30 mb-3" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H0z" />
+          </svg>
+          <blockquote class="font-display text-xl lg:text-2xl text-earth-100 italic leading-relaxed">
+            "{testimonials[0].quote}"
           </blockquote>
-        ))}
-      </div>
+          <footer class="mt-4">
+            <cite class="not-italic text-sm text-earth-400 font-semibold">— {testimonials[0].author}</cite>
+          </footer>
+          <a href="/testimonials" class="inline-flex items-center gap-1.5 text-sm text-earth-400 hover:text-white mt-4 transition-colors font-medium">
+            Read more testimonials
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
 
-      <div class="text-center mt-10">
-        <a href="/testimonials" class="btn-secondary text-sm">Read More Testimonials</a>
+        <!-- CTA -->
+        <div class="lg:border-l lg:border-earth-700 lg:pl-14">
+          <h2 class="font-display text-3xl lg:text-4xl text-white leading-tight">
+            Ready to Find Your<br />
+            <span class="italic text-[#faca83]">Perfect Piece of Land?</span>
+          </h2>
+          <p class="text-earth-400 text-sm mt-4 leading-relaxed">
+            Whether you're buying, selling, or investing — our team has the local knowledge to guide you every step of the way.
+          </p>
+          <div class="flex flex-wrap gap-3 mt-7">
+            <a href="/contact" class="btn-primary">Schedule a Free Consultation</a>
+            <a href="tel:9198475731" class="inline-flex items-center justify-center px-6 py-3 border border-earth-600 text-earth-300 text-sm font-medium tracking-wide rounded-sm transition-all duration-300 hover:bg-earth-300 hover:text-earth-900">
+              (919) 847-5731
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="relative py-24 lg:py-32 overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-r from-forest-800 to-forest-950"></div>
-    <div class="absolute inset-0 opacity-[0.05]" style="background-image: url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.4%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
-
-    <div class="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
-      <h2 class="font-display text-4xl md:text-5xl text-white leading-tight">
-        Ready to Find Your<br /><span class="italic text-forest-200">Perfect Piece of Land?</span>
-      </h2>
-      <p class="text-forest-200 text-lg mt-6 max-w-2xl mx-auto">
-        Whether you're buying, selling, or investing, our team has the experience and local knowledge to guide you every step of the way.
-      </p>
-      <div class="flex flex-wrap justify-center gap-4 mt-10">
-        <a href="/contact" class="btn-primary !bg-white !text-forest-900 hover:!bg-earth-100">Schedule a Free Consultation</a>
-        <a href="tel:9198475731" class="btn-secondary !border-white/40 !text-white hover:!bg-white hover:!text-forest-900">
-          Call (919) 847-5731
-        </a>
-      </div>
-    </div>
-  </section>
 </Layout>

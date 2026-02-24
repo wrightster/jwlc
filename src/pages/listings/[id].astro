@@ -74,7 +74,7 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
               <button
                 class:list={[
                   'thumb-btn flex-shrink-0 w-20 h-14 md:w-24 md:h-16 rounded-sm overflow-hidden border-2 transition-all duration-200 hover:opacity-100',
-                  i === 0 ? 'border-copper-400 opacity-100' : 'border-transparent opacity-60',
+                  i === 0 ? 'border-[#be3528] opacity-100' : 'border-transparent opacity-60',
                 ]}
                 data-index={i}
                 data-src={img}
@@ -97,7 +97,7 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
           <!-- Header -->
           <div class="mb-8">
             <div class="flex flex-wrap items-center gap-3 mb-3">
-              <span class="px-3 py-1 bg-forest-50 text-forest-700 text-xs font-semibold uppercase tracking-widest rounded-sm">
+              <span class="px-3 py-1 bg-earth-100 text-crimson-700 text-xs font-semibold uppercase tracking-widest rounded-sm">
                 {listing.status === 'available' ? 'Available' : listing.status}
               </span>
               <span class="text-xs text-earth-500 uppercase tracking-widest">{listing.county}</span>
@@ -120,7 +120,7 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-10 pb-10 border-b border-earth-200">
             <div class="bg-earth-50 rounded-sm p-5">
               <p class="text-[11px] uppercase tracking-[0.2em] text-earth-500 font-semibold">Price</p>
-              <p class="font-display text-2xl text-forest-700 mt-1">{listing.price}</p>
+              <p class="font-display text-2xl text-crimson-700 mt-1">{listing.price}</p>
             </div>
             <div class="bg-earth-50 rounded-sm p-5">
               <p class="text-[11px] uppercase tracking-[0.2em] text-earth-500 font-semibold">Acreage</p>
@@ -165,7 +165,7 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
                     loading="lazy"
                   />
                 ) : (
-                  <div class="w-12 h-12 rounded-full bg-gradient-to-br from-forest-600 to-forest-800 flex items-center justify-center flex-shrink-0">
+                  <div class="w-12 h-12 rounded-full bg-gradient-to-br from-crimson-800 to-crimson-900 flex items-center justify-center flex-shrink-0">
                     <span class="font-display text-base text-white">
                       {listing.broker.split(' ').map((n: string) => n[0]).join('')}
                     </span>
@@ -218,7 +218,7 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
           const colorVariants = [
             'from-forest-800 to-forest-950',
             'from-earth-700 to-earth-900',
-            'from-copper-600 to-earth-900',
+            'from-crimson-800 to-earth-950',
           ];
           return (
             <a href={`/listings/${other.id}`} class="group block bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
@@ -235,9 +235,9 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
                 </span>
               </div>
               <div class="p-5">
-                <h3 class="font-display text-lg text-earth-900 leading-snug mb-2 group-hover:text-forest-700 transition-colors">{other.title}</h3>
+                <h3 class="font-display text-lg text-earth-900 leading-snug mb-2 group-hover:text-crimson-700 transition-colors">{other.title}</h3>
                 <div class="flex items-center justify-between pt-3 border-t border-earth-100">
-                  <span class="font-display text-xl text-forest-700">{other.price}</span>
+                  <span class="font-display text-xl text-crimson-700">{other.price}</span>
                   <span class="text-xs text-earth-400">{other.acreage}</span>
                 </div>
               </div>
@@ -322,10 +322,10 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
       if (counter) counter.textContent = `${index + 1} / ${totalImages}`;
       thumbs.forEach((t, i) => {
         if (i === index) {
-          t.classList.add('border-copper-400', 'opacity-100');
+          t.classList.add('border-[#be3528]', 'opacity-100');
           t.classList.remove('border-transparent', 'opacity-60');
         } else {
-          t.classList.remove('border-copper-400', 'opacity-100');
+          t.classList.remove('border-[#be3528]', 'opacity-100');
           t.classList.add('border-transparent', 'opacity-60');
         }
       });

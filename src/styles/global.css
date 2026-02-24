@@ -1,36 +1,39 @@
 @import "tailwindcss";
 
 @theme {
-  --color-earth-50: #faf8f5;
-  --color-earth-100: #f2ede6;
-  --color-earth-200: #e4dacb;
-  --color-earth-300: #d1c2a8;
-  --color-earth-400: #bba47e;
+  /* Design.txt palette (exact values) */
+  --color-brand-primary:  #be3528;   /* Primary accent */
+  --color-brand-dark:     #612827;   /* Dark accent */
+  --color-brand-light:    #faca83;   /* Light accent */
+  --color-brand-bg:       #f8f8f2;   /* Background */
+  --color-brand-altbg:    #f3e7c9;   /* Alt background */
+
+  /* Earth (main brown family — used for text, dark sections, borders) */
+  --color-earth-50:  #f8f8f2;
+  --color-earth-100: #f3e7c9;
+  --color-earth-200: #e8d9bb;
+  --color-earth-300: #d4bc96;
+  --color-earth-400: #bb9d72;
   --color-earth-500: #a48a63;
   --color-earth-600: #8d7350;
   --color-earth-700: #745d42;
   --color-earth-800: #5e4c38;
-  --color-earth-900: #3d3225;
+  --color-earth-900: #3d3225;   /* Main brown */
   --color-earth-950: #2a2119;
 
-  --color-forest-50: #f3f6f0;
-  --color-forest-100: #e2e9db;
-  --color-forest-200: #c5d3b7;
+  /* Crimson (primary/dark accent from Design.txt) */
+  --color-crimson-700: #be3528;   /* = brand-primary */
+  --color-crimson-800: #aa3c27;   /* logo fill color */
+  --color-crimson-900: #612827;   /* = brand-dark */
+
+  /* Forest (incidental — kept for natural/land imagery, use sparingly) */
   --color-forest-300: #9db586;
-  --color-forest-400: #7a9a5e;
-  --color-forest-500: #5e7f44;
-  --color-forest-600: #4a6636;
   --color-forest-700: #3b502d;
-  --color-forest-800: #314127;
   --color-forest-900: #283622;
   --color-forest-950: #131d0f;
 
-  --color-copper-400: #c87941;
-  --color-copper-500: #b5692f;
-  --color-copper-600: #9a5526;
-
   --font-display: 'DM Serif Display', Georgia, serif;
-  --font-body: 'Libre Franklin', system-ui, sans-serif;
+  --font-body:    'Libre Franklin', system-ui, sans-serif;
 }
 
 @layer base {
@@ -40,7 +43,7 @@
   body {
     font-family: var(--font-body);
     color: var(--color-earth-900);
-    background-color: var(--color-earth-50);
+    background-color: var(--color-brand-bg);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -48,45 +51,43 @@
     font-family: var(--font-display);
   }
   ::selection {
-    background-color: var(--color-forest-300);
+    background-color: var(--color-brand-light);
     color: var(--color-earth-950);
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center px-7 py-3 bg-forest-700 text-earth-50 font-medium tracking-wide rounded-sm transition-all duration-300 hover:bg-forest-800 hover:shadow-lg;
+    @apply inline-flex items-center justify-center px-7 py-3 bg-crimson-700 text-white font-medium tracking-wide rounded-sm transition-all duration-300 hover:bg-crimson-900 hover:shadow-lg;
   }
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-7 py-3 border-2 border-earth-900 text-earth-900 font-medium tracking-wide rounded-sm transition-all duration-300 hover:bg-earth-900 hover:text-earth-50;
+    @apply inline-flex items-center justify-center px-7 py-3 border-2 border-earth-900 text-earth-900 font-medium tracking-wide rounded-sm transition-all duration-300 hover:bg-earth-900 hover:text-white;
   }
   .section-label {
-    @apply uppercase tracking-[0.25em] text-xs font-semibold text-copper-500 mb-3;
+    @apply uppercase tracking-[0.25em] text-xs font-semibold text-crimson-700 mb-2;
   }
   .section-heading {
     @apply font-display text-4xl md:text-5xl text-earth-900 leading-tight;
   }
+  .topo-bg {
+    position: absolute;
+    width: 115vw;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    pointer-events: none;
+    user-select: none;
+  }
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes fadeIn {
   from { opacity: 0; }
-  to { opacity: 1; }
-}
-@keyframes slideInLeft {
-  from { opacity: 0; transform: translateX(-32px); }
-  to { opacity: 1; transform: translateX(0); }
+  to   { opacity: 1; }
 }
 
-.animate-fade-up {
-  animation: fadeUp 0.7s ease-out both;
-}
-.animate-fade-in {
-  animation: fadeIn 0.6s ease-out both;
-}
-.animate-slide-left {
-  animation: slideInLeft 0.7s ease-out both;
-}
+.animate-fade-up  { animation: fadeUp  0.65s ease-out both; }
+.animate-fade-in  { animation: fadeIn  0.55s ease-out both; }
