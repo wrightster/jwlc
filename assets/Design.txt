@@ -1,0 +1,7 @@
+Palette:
+
+Primary accent #be3528
+Dark accent #612827
+Light accent #faca83
+Background #f8f8f2
+Alt background #f3e7c9

@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd E:\\\\github\\\\JWLC WEBSITE\\\\jwlc:*)",
+      "Bash(tail:*)",
+      "WebFetch(domain:localhost)",
+      "Bash(head:*)",
+      "Bash(cd \"E:/github/JWLC WEBSITE/jwlc\" && npm run dev 2>&1)",
+      "Bash(powershell:*)",
+      "Bash(cat:*)",
+      "Bash(curl:*)",
+      "Bash(start chrome:*)",
+      "Bash(cd:*)"
+    ]
+  }
+}

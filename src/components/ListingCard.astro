@@ -13,7 +13,7 @@ const images = getListingImages(listing);
 
 <a
   href={`/listings/${listing.id}`}
-  class="group block bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
+  class="group relative block bg-brand-bg rounded-sm overflow-hidden transition-all duration-300 after:absolute after:inset-0 after:rounded-sm after:pointer-events-none after:shadow-[inset_0_0_0_1px_var(--color-brand-altbg)] after:transition-all after:duration-300 hover:after:shadow-[inset_0_0_0_3px_var(--color-crimson-700)]"
 >
   <!-- Image Header -->
   <div class="relative h-48 overflow-hidden bg-earth-200">
@@ -52,10 +52,10 @@ const images = getListingImages(listing);
     <h3 class="font-display text-lg text-earth-900 leading-snug mb-2 group-hover:text-crimson-700 transition-colors duration-300">
       {listing.title}
     </h3>
-    <p class="text-sm text-earth-600 leading-relaxed line-clamp-2 mb-4">
+    <p class="text-earth-600 leading-relaxed line-clamp-3 mb-4">
       {listing.description}
     </p>
-    <div class="flex items-center justify-between pt-3 border-t border-earth-100">
+    <div class="flex items-center justify-between pt-3 border-t border-earth-200">
       <span class="font-display text-xl text-crimson-700">{listing.price}</span>
       <span class="text-xs text-earth-500 flex items-center gap-1 group-hover:text-crimson-700 transition-colors">
         View Details

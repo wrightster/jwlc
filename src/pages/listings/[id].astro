@@ -74,7 +74,7 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
               <button
                 class:list={[
                   'thumb-btn flex-shrink-0 w-20 h-14 md:w-24 md:h-16 rounded-sm overflow-hidden border-2 transition-all duration-200 hover:opacity-100',
-                  i === 0 ? 'border-[#be3528] opacity-100' : 'border-transparent opacity-60',
+                  i === 0 ? 'border-crimson-700 opacity-100' : 'border-transparent opacity-60',
                 ]}
                 data-index={i}
                 data-src={img}
@@ -151,7 +151,7 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
         <!-- Sidebar -->
         <div class="lg:col-span-1 space-y-6">
           <!-- Contact Card -->
-          <div class="bg-white border border-earth-200 rounded-sm p-7 shadow-sm sticky top-28">
+          <div class="bg-white border border-earth-200 rounded-sm p-7 sticky top-28">
             <h3 class="font-display text-lg text-earth-900 mb-1">Interested in this property?</h3>
             <p class="text-sm text-earth-500 mb-6">Contact the listing broker for details, showings, or to make an offer.</p>
 
@@ -221,7 +221,7 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
             'from-crimson-800 to-earth-950',
           ];
           return (
-            <a href={`/listings/${other.id}`} class="group block bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
+            <a href={`/listings/${other.id}`} class="group relative block bg-white rounded-sm overflow-hidden transition-all duration-300 after:absolute after:inset-0 after:rounded-sm after:pointer-events-none after:shadow-[inset_0_0_0_1px_var(--color-earth-200)] after:transition-all after:duration-300 hover:after:shadow-[inset_0_0_0_3px_var(--color-crimson-700)]">
               <div class="relative h-44 overflow-hidden">
                 <img
                   src={otherImages[0]}
@@ -322,10 +322,10 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
       if (counter) counter.textContent = `${index + 1} / ${totalImages}`;
       thumbs.forEach((t, i) => {
         if (i === index) {
-          t.classList.add('border-[#be3528]', 'opacity-100');
+          t.classList.add('border-crimson-700', 'opacity-100');
           t.classList.remove('border-transparent', 'opacity-60');
         } else {
-          t.classList.remove('border-[#be3528]', 'opacity-100');
+          t.classList.remove('border-crimson-700', 'opacity-100');
           t.classList.add('border-transparent', 'opacity-60');
         }
       });

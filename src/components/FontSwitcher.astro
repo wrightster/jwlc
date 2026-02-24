@@ -1,43 +1,45 @@
 ---
 const isDev = import.meta.env.DEV;
 
+// variable: true  → smooth weight slider (loads googleVar for full wght axis)
+// variable: false → slider snaps through discrete weights[]
 const displayFonts = [
-  { name: 'DM Serif Display (current)', family: "'DM Serif Display', Georgia, serif", google: 'DM+Serif+Display:ital@0;1' },
-  { name: 'Playfair Display',           family: "'Playfair Display', Georgia, serif",  google: 'Playfair+Display:ital,wght@0,400;0,700;1,400' },
-  { name: 'Cormorant Garamond',         family: "'Cormorant Garamond', Georgia, serif", google: 'Cormorant+Garamond:ital,wght@0,400;0,600;1,400' },
-  { name: 'Lora',                       family: "'Lora', Georgia, serif",              google: 'Lora:ital,wght@0,400;0,600;1,400' },
-  { name: 'Merriweather',               family: "'Merriweather', Georgia, serif",      google: 'Merriweather:ital,wght@0,300;0,400;1,300' },
-  { name: 'EB Garamond',                family: "'EB Garamond', Georgia, serif",       google: 'EB+Garamond:ital,wght@0,400;0,600;1,400' },
-  { name: 'Libre Baskerville',          family: "'Libre Baskerville', Georgia, serif", google: 'Libre+Baskerville:ital,wght@0,400;0,700;1,400' },
-  { name: 'Crimson Pro',                family: "'Crimson Pro', Georgia, serif",       google: 'Crimson+Pro:ital,wght@0,400;0,600;1,400' },
-  { name: 'Spectral',                   family: "'Spectral', Georgia, serif",          google: 'Spectral:ital,wght@0,300;0,400;1,300' },
-  { name: 'Yeseva One',                 family: "'Yeseva One', Georgia, serif",        google: 'Yeseva+One' },
+  { name: 'DM Serif Display (current)', family: "'DM Serif Display', Georgia, serif",  google: 'DM+Serif+Display:ital@0;1',                                    variable: false, weights: [400] },
+  { name: 'Playfair Display',           family: "'Playfair Display', Georgia, serif",   google: 'Playfair+Display:ital,wght@0,400;0,700;1,400',                 googleVar: 'Playfair+Display:ital,wght@0,100..900;1,100..900',   variable: true  },
+  { name: 'Cormorant Garamond',         family: "'Cormorant Garamond', Georgia, serif",  google: 'Cormorant+Garamond:ital,wght@0,400;0,600;1,400',               googleVar: 'Cormorant+Garamond:ital,wght@0,100..700;1,100..700', variable: true  },
+  { name: 'Lora',                       family: "'Lora', Georgia, serif",               google: 'Lora:ital,wght@0,400;0,600;1,400',                             googleVar: 'Lora:ital,wght@0,400..700;1,400..700',              variable: true  },
+  { name: 'Merriweather',               family: "'Merriweather', Georgia, serif",        google: 'Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300',         variable: false, weights: [300, 400, 700, 900] },
+  { name: 'EB Garamond',                family: "'EB Garamond', Georgia, serif",         google: 'EB+Garamond:ital,wght@0,400;0,600;1,400',                      googleVar: 'EB+Garamond:ital,wght@0,400..800;1,400..800',       variable: true  },
+  { name: 'Libre Baskerville',          family: "'Libre Baskerville', Georgia, serif",   google: 'Libre+Baskerville:ital,wght@0,400;0,700;1,400',                variable: false, weights: [400, 700] },
+  { name: 'Crimson Pro',                family: "'Crimson Pro', Georgia, serif",         google: 'Crimson+Pro:ital,wght@0,400;0,600;1,400',                      googleVar: 'Crimson+Pro:ital,wght@0,200..900;1,200..900',       variable: true  },
+  { name: 'Spectral',                   family: "'Spectral', Georgia, serif",            google: 'Spectral:ital,wght@0,300;0,400;0,600;0,700;1,300',             variable: false, weights: [300, 400, 600, 700] },
+  { name: 'Yeseva One',                 family: "'Yeseva One', Georgia, serif",          google: 'Yeseva+One',                                                   variable: false, weights: [400] },
 ];
 
 const bodyFonts = [
-  { name: 'Libre Franklin (current)', family: "'Libre Franklin', system-ui, sans-serif",   google: 'Libre+Franklin:wght@300;400;500;600;700' },
-  { name: 'Inter',                    family: "'Inter', system-ui, sans-serif",             google: 'Inter:wght@300;400;500;600;700' },
-  { name: 'DM Sans',                  family: "'DM Sans', system-ui, sans-serif",           google: 'DM+Sans:wght@300;400;500;600;700' },
-  { name: 'Plus Jakarta Sans',        family: "'Plus Jakarta Sans', system-ui, sans-serif", google: 'Plus+Jakarta+Sans:wght@300;400;500;600;700' },
-  { name: 'Jost',                     family: "'Jost', system-ui, sans-serif",              google: 'Jost:wght@300;400;500;600;700' },
-  { name: 'Nunito Sans',              family: "'Nunito Sans', system-ui, sans-serif",       google: 'Nunito+Sans:wght@300;400;500;600;700' },
-  { name: 'Raleway',                  family: "'Raleway', system-ui, sans-serif",           google: 'Raleway:wght@300;400;500;600;700' },
-  { name: 'Outfit',                   family: "'Outfit', system-ui, sans-serif",            google: 'Outfit:wght@300;400;500;600;700' },
-  { name: 'Source Sans 3',            family: "'Source Sans 3', system-ui, sans-serif",     google: 'Source+Sans+3:wght@300;400;500;600;700' },
-  { name: 'Lato',                     family: "'Lato', system-ui, sans-serif",              google: 'Lato:wght@300;400;700' },
+  { name: 'Libre Franklin (current)', family: "'Libre Franklin', system-ui, sans-serif",   google: 'Libre+Franklin:wght@300;400;500;600;700',     googleVar: 'Libre+Franklin:wght@100..900',     variable: true  },
+  { name: 'Inter',                    family: "'Inter', system-ui, sans-serif",             google: 'Inter:wght@300;400;500;600;700',               googleVar: 'Inter:wght@100..900',             variable: true  },
+  { name: 'DM Sans',                  family: "'DM Sans', system-ui, sans-serif",           google: 'DM+Sans:wght@300;400;500;600;700',             googleVar: 'DM+Sans:wght@100..900',           variable: true  },
+  { name: 'Plus Jakarta Sans',        family: "'Plus Jakarta Sans', system-ui, sans-serif", google: 'Plus+Jakarta+Sans:wght@300;400;500;600;700',   googleVar: 'Plus+Jakarta+Sans:wght@200..800', variable: true  },
+  { name: 'Jost',                     family: "'Jost', system-ui, sans-serif",              google: 'Jost:wght@300;400;500;600;700',                googleVar: 'Jost:wght@100..900',              variable: true  },
+  { name: 'Nunito Sans',              family: "'Nunito Sans', system-ui, sans-serif",       google: 'Nunito+Sans:wght@300;400;500;600;700',         googleVar: 'Nunito+Sans:wght@200..900',       variable: true  },
+  { name: 'Raleway',                  family: "'Raleway', system-ui, sans-serif",           google: 'Raleway:wght@300;400;500;600;700',             googleVar: 'Raleway:wght@100..900',           variable: true  },
+  { name: 'Outfit',                   family: "'Outfit', system-ui, sans-serif",            google: 'Outfit:wght@300;400;500;600;700',              googleVar: 'Outfit:wght@100..900',            variable: true  },
+  { name: 'Source Sans 3',            family: "'Source Sans 3', system-ui, sans-serif",     google: 'Source+Sans+3:wght@300;400;500;600;700',       googleVar: 'Source+Sans+3:wght@200..900',     variable: true  },
+  { name: 'Lato',                     family: "'Lato', system-ui, sans-serif",              google: 'Lato:wght@300;400;700',                        variable: false, weights: [300, 400, 700]       },
 ];
 
 // Each token: id for DOM, label, primary cssVar for chaining, all CSS vars to update together, default value
 const colorTokens = [
-  { id: 'primary',   label: 'Primary Red',    cssVar: '--color-brand-primary', vars: ['--color-brand-primary', '--color-crimson-700'], value: '#be3528' },
-  { id: 'dark',      label: 'Dark Red',       cssVar: '--color-brand-dark',    vars: ['--color-brand-dark', '--color-crimson-900'],    value: '#612827' },
-  { id: 'accent',    label: 'Light Accent',   cssVar: '--color-brand-light',   vars: ['--color-brand-light'],                          value: '#faca83' },
-  { id: 'light',     label: 'Light Text',     cssVar: '--color-light-text',    vars: ['--color-light-text'],                           value: '#ffffff' },
-  { id: 'bg',        label: 'Background',     cssVar: '--color-brand-bg',      vars: ['--color-brand-bg', '--color-earth-50'],         value: '#f8f8f2' },
-  { id: 'altbg',     label: 'Alt Background', cssVar: '--color-brand-altbg',   vars: ['--color-brand-altbg', '--color-earth-100'],     value: '#f3e7c9' },
-  { id: 'darkbrown', label: 'Dark Brown',     cssVar: '--color-earth-900',     vars: ['--color-earth-900'],                            value: '#3d3225' },
-  { id: 'medtext',   label: 'Medium Text',    cssVar: '--color-earth-400',     vars: ['--color-earth-400'],                            value: '#bb9d72' },
-  { id: 'darktext',  label: 'Dark Text',      cssVar: '--color-earth-600',     vars: ['--color-earth-600'],                            value: '#8d7350' },
+  { id: 'primary',   label: 'Primary Accent', cssVar: '--color-brand-primary', vars: ['--color-brand-primary', '--color-crimson-700'], value: '#be3528' },
+  { id: 'altbg',     label: 'Light Accent',   cssVar: '--color-brand-altbg',   vars: ['--color-brand-altbg', '--color-earth-100'],     value: '#f3e7c9' },
+  { id: 'accent',    label: 'Medium Accent',  cssVar: '--color-brand-light',   vars: ['--color-brand-light'],                          value: '#faca83' },
+  { id: 'dark',      label: 'Dark Accent',    cssVar: '--color-brand-dark',    vars: ['--color-brand-dark', '--color-crimson-900'],    value: '#612827' },
+  { id: 'light',     label: 'Light Body',     cssVar: '--color-light-text',    vars: ['--color-light-text'],                           value: '#ffffff' },
+  { id: 'medtext',   label: 'Medium Body',    cssVar: '--color-earth-400',     vars: ['--color-earth-400'],                            value: '#bb9d72' },
+  { id: 'darktext',  label: 'Dark Body',      cssVar: '--color-earth-600',     vars: ['--color-earth-600'],                            value: '#8d7350' },
+  { id: 'bg',        label: 'Light BG',       cssVar: '--color-brand-bg',      vars: ['--color-brand-bg', '--color-earth-50'],         value: '#f8f8f2' },
+  { id: 'darkbrown', label: 'Dark BG',        cssVar: '--color-earth-900',     vars: ['--color-earth-900'],                            value: '#3d3225' },
 ];
 ---
 
@@ -64,8 +66,13 @@ const colorTokens = [
           <select id="fs-display-select" style="width:100%;padding:6px 8px;border:1px solid #e8d9bb;border-radius:4px;font-size:12px;color:#3d3225;background:#f8f8f2;cursor:pointer;outline:none;">
             {displayFonts.map((f, i) => <option value={i}>{f.name}</option>)}
           </select>
-          <div id="fs-display-preview" style="margin-top:8px;font-size:21px;color:#3d3225;line-height:1.25;padding-bottom:10px;border-bottom:1px solid #f3e7c9;">
+          <div id="fs-display-preview" style="margin-top:8px;font-size:21px;color:#3d3225;line-height:1.25;margin-bottom:8px;">
             Julie Wright Land Co.
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:1px solid #f3e7c9;">
+            <span style="font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#a48a63;flex-shrink:0;">Wt</span>
+            <input id="fs-display-weight" type="range" min="0" max="0" step="1" value="0" disabled style="flex:1;accent-color:#be3528;opacity:0.35;cursor:default;" />
+            <span id="fs-display-weight-label" style="font-size:10px;font-family:monospace;color:#a48a63;width:28px;text-align:right;flex-shrink:0;">400</span>
           </div>
         </div>
 
@@ -74,8 +81,13 @@ const colorTokens = [
           <select id="fs-body-select" style="width:100%;padding:6px 8px;border:1px solid #e8d9bb;border-radius:4px;font-size:12px;color:#3d3225;background:#f8f8f2;cursor:pointer;outline:none;">
             {bodyFonts.map((f, i) => <option value={i}>{f.name}</option>)}
           </select>
-          <div id="fs-body-preview" style="margin-top:8px;font-size:12px;color:#8d7350;line-height:1.6;padding-bottom:10px;border-bottom:1px solid #f3e7c9;">
+          <div id="fs-body-preview" style="margin-top:8px;font-size:12px;color:#8d7350;line-height:1.6;margin-bottom:8px;">
             Land brokerage, appraisals, and estate planning across the Triangle for over 40 years.
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:1px solid #f3e7c9;">
+            <span style="font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#a48a63;flex-shrink:0;">Wt</span>
+            <input id="fs-body-weight" type="range" min="100" max="900" step="1" value="400" style="flex:1;accent-color:#be3528;cursor:pointer;" />
+            <span id="fs-body-weight-label" style="font-size:10px;font-family:monospace;color:#a48a63;width:28px;text-align:right;flex-shrink:0;">400</span>
           </div>
         </div>
 
@@ -163,10 +175,16 @@ const colorTokens = [
       const customDisp    = document.getElementById('fs-custom-disp');
       const customBody    = document.getElementById('fs-custom-body');
       const customError   = document.getElementById('fs-custom-error');
-      const resetBtn      = document.getElementById('fs-reset-colors');
+      const resetBtn          = document.getElementById('fs-reset-colors');
+      const dispWeight        = document.getElementById('fs-display-weight');
+      const dispWeightLabel   = document.getElementById('fs-display-weight-label');
+      const bodyWeight        = document.getElementById('fs-body-weight');
+      const bodyWeightLabel   = document.getElementById('fs-body-weight-label');
 
-      let currentDisplay = displayFonts[0];
-      let currentBody    = bodyFonts[0];
+      let currentDisplay       = displayFonts[0];
+      let currentBody          = bodyFonts[0];
+      let currentDisplayWeight = 400;
+      let currentBodyWeight    = 400;
 
       // ── Tabs ─────────────────────────────────────────────────────
       function setTab(tab) {
@@ -192,18 +210,57 @@ const colorTokens = [
         document.head.appendChild(link);
       }
 
+      function loadVariableFont(font) {
+        if (!font.googleVar) return;
+        const id = 'gf-var-' + font.googleVar.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+        if (document.getElementById(id)) return;
+        const link = document.createElement('link');
+        link.id = id; link.rel = 'stylesheet';
+        link.href = 'https://fonts.googleapis.com/css2?family=' + font.googleVar + '&display=swap';
+        document.head.appendChild(link);
+      }
+
+      // Sync weight slider UI and apply weight to page for the given font.
+      function syncWeightSlider(font, isDisplay) {
+        const slider = isDisplay ? dispWeight : bodyWeight;
+        const label  = isDisplay ? dispWeightLabel : bodyWeightLabel;
+        let w;
+        if (font.variable) {
+          slider.min = 100; slider.max = 900; slider.step = 1;
+          slider.disabled = false; slider.style.opacity = '1'; slider.style.cursor = 'pointer';
+          slider.value = 400; w = 400;
+        } else {
+          const wts = font.weights || [400];
+          slider.min = 0; slider.max = wts.length - 1; slider.step = 1;
+          const single = wts.length <= 1;
+          slider.disabled = single;
+          slider.style.opacity = single ? '0.35' : '1';
+          slider.style.cursor  = single ? 'default' : 'pointer';
+          const idx = wts.indexOf(400) >= 0 ? wts.indexOf(400) : Math.floor(wts.length / 2);
+          slider.value = idx; w = wts[idx];
+        }
+        label.textContent = w;
+        document.documentElement.style.setProperty(isDisplay ? '--font-display-weight' : '--font-body-weight', w);
+        if (isDisplay) { dispPrev.style.fontWeight = w; currentDisplayWeight = w; }
+        else            { bodyPrev.style.fontWeight = w; currentBodyWeight    = w; }
+      }
+
       function applyDisplay(font) {
         loadFont(font.google);
+        if (font.variable && font.googleVar) loadVariableFont(font);
         document.documentElement.style.setProperty('--font-display', font.family);
         dispPrev.style.fontFamily = font.family;
         currentDisplay = font;
+        syncWeightSlider(font, true);
       }
 
       function applyBody(font) {
         loadFont(font.google);
+        if (font.variable && font.googleVar) loadVariableFont(font);
         document.documentElement.style.setProperty('--font-body', font.family);
         bodyPrev.style.fontFamily = font.family;
         currentBody = font;
+        syncWeightSlider(font, false);
       }
 
       function addCustomOption(select, font) {
