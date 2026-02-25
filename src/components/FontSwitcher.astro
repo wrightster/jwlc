@@ -5,6 +5,7 @@ const isDev = import.meta.env.DEV;
 // variable: false → slider snaps through discrete weights[]
 const displayFonts = [
   { name: 'DM Serif Display (current)', family: "'DM Serif Display', Georgia, serif",  google: 'DM+Serif+Display:ital@0;1',                                    variable: false, weights: [400] },
+  { name: 'Buenard',                   family: "'Buenard', Georgia, serif",            google: 'Buenard:wght@400;700',                                        googleVar: 'Buenard:wght@400..700',                             variable: true  },
   { name: 'Playfair Display',           family: "'Playfair Display', Georgia, serif",   google: 'Playfair+Display:ital,wght@0,400;0,700;1,400',                 googleVar: 'Playfair+Display:ital,wght@0,100..900;1,100..900',   variable: true  },
   { name: 'Cormorant Garamond',         family: "'Cormorant Garamond', Georgia, serif",  google: 'Cormorant+Garamond:ital,wght@0,400;0,600;1,400',               googleVar: 'Cormorant+Garamond:ital,wght@0,100..700;1,100..700', variable: true  },
   { name: 'Lora',                       family: "'Lora', Georgia, serif",               google: 'Lora:ital,wght@0,400;0,600;1,400',                             googleVar: 'Lora:ital,wght@0,400..700;1,400..700',              variable: true  },
@@ -185,6 +186,8 @@ const colorTokens = [
       let currentBody          = bodyFonts[0];
       let currentDisplayWeight = 400;
       let currentBodyWeight    = 400;
+      let customDisplayFont    = null;
+      let customBodyFont       = null;
 
       // ── Tabs ─────────────────────────────────────────────────────
       function setTab(tab) {
@@ -281,31 +284,67 @@ const colorTokens = [
         customError.style.display = 'none';
         const urlName   = name.replace(/\s+/g, '+');
         const google    = urlName + ':ital,wght@0,400;0,700;1,400';
+        const googleVar = urlName + ':ital,wght@0,100..900;1,100..900';
         const isDisplay = target === 'display';
         const family    = "'" + name + "', " + (isDisplay ? 'Georgia, serif' : 'system-ui, sans-serif');
-        const font      = { name: 'Custom: ' + name, family, google };
+        const font      = { name: 'Custom: ' + name, family, google, googleVar, variable: true };
         const existingId = 'gf-' + google.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+        const apply = () => {
+          if (isDisplay) { customDisplayFont = font; applyDisplay(font); addCustomOption(dispSelect, font); }
+          else            { customBodyFont    = font; applyBody(font);    addCustomOption(bodySelect, font); }
+        };
         if (document.getElementById(existingId)) {
-          if (isDisplay) { applyDisplay(font); addCustomOption(dispSelect, font); }
-          else            { applyBody(font);    addCustomOption(bodySelect, font); }
+          apply();
         } else {
           const testLink = document.createElement('link');
           testLink.id   = existingId;
           testLink.rel  = 'stylesheet';
           testLink.href = 'https://fonts.googleapis.com/css2?family=' + google + '&display=swap';
           testLink.onerror = () => { customError.style.display = 'block'; };
-          testLink.onload  = () => {
-            if (isDisplay) { applyDisplay(font); addCustomOption(dispSelect, font); }
-            else            { applyBody(font);    addCustomOption(bodySelect, font); }
-          };
+          testLink.onload  = apply;
           document.head.appendChild(testLink);
         }
       }
 
-      dispSelect.addEventListener('change', (e) => applyDisplay(displayFonts[parseInt(e.target.value)]));
-      bodySelect.addEventListener('change', (e) => applyBody(bodyFonts[parseInt(e.target.value)]));
+      dispSelect.addEventListener('change', (e) => {
+        if (e.target.value === 'custom' && customDisplayFont) applyDisplay(customDisplayFont);
+        else applyDisplay(displayFonts[parseInt(e.target.value)]);
+      });
+      bodySelect.addEventListener('change', (e) => {
+        if (e.target.value === 'custom' && customBodyFont) applyBody(customBodyFont);
+        else applyBody(bodyFonts[parseInt(e.target.value)]);
+      });
       customDisp.addEventListener('click', () => applyCustomFont('display'));
       customBody.addEventListener('click', () => applyCustomFont('body'));
+
+      // ── Weight sliders ────────────────────────────────────────────
+      dispWeight.addEventListener('input', () => {
+        let w;
+        if (currentDisplay.variable) {
+          w = parseInt(dispWeight.value);
+        } else {
+          const wts = currentDisplay.weights || [400];
+          w = wts[parseInt(dispWeight.value)];
+        }
+        dispWeightLabel.textContent = w;
+        dispPrev.style.fontWeight = w;
+        document.documentElement.style.setProperty('--font-display-weight', w);
+        currentDisplayWeight = w;
+      });
+
+      bodyWeight.addEventListener('input', () => {
+        let w;
+        if (currentBody.variable) {
+          w = parseInt(bodyWeight.value);
+        } else {
+          const wts = currentBody.weights || [400];
+          w = wts[parseInt(bodyWeight.value)];
+        }
+        bodyWeightLabel.textContent = w;
+        bodyPrev.style.fontWeight = w;
+        document.documentElement.style.setProperty('--font-body-weight', w);
+        currentBodyWeight = w;
+      });
       customInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') applyCustomFont('display'); });
 
       // ── Color helpers ─────────────────────────────────────────────
@@ -368,9 +407,13 @@ const colorTokens = [
 
       // ── Copy Config ───────────────────────────────────────────────
       copyBtn.addEventListener('click', () => {
+        const dispGoogleStr = (currentDisplay.variable && currentDisplay.googleVar)
+          ? currentDisplay.googleVar : currentDisplay.google;
+        const bodyGoogleStr = (currentBody.variable && currentBody.googleVar)
+          ? currentBody.googleVar : currentBody.google;
         const googleUrl =
           'https://fonts.googleapis.com/css2?family=' +
-          currentDisplay.google + '&family=' + currentBody.google + '&display=swap';
+          dispGoogleStr + '&family=' + bodyGoogleStr + '&display=swap';
 
         const colorLines = colorTokens
           .map(t => t.vars.map(v => v + ': ' + document.getElementById('fs-color-' + t.id).value + ';').join('\n'))
@@ -390,6 +433,8 @@ const colorTokens = [
           '// Fonts:',
           '--font-display: ' + currentDisplay.family + ';',
           '--font-body:    ' + currentBody.family + ';',
+          '--font-display-weight: ' + currentDisplayWeight + ';',
+          '--font-body-weight:    ' + currentBodyWeight + ';',
           '',
           '// Colors:',
           colorLines,
