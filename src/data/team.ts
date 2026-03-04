@@ -39,7 +39,7 @@ export const team: TeamMember[] = [
   {
     name: "Rusty Ammons",
     role: "Broker — Developer",
-    bio: "With 40 years in real estate since 1984, Rusty specializes in new home development across Raleigh, Holly Springs, and Morrisville. He partners with his wife Mary Ammons to deliver quality residential projects throughout the Triangle.",
+    bio: "With 40 years in real estate since 1972, Rusty specializes in new home development across Raleigh, Holly Springs, and Morrisville. He partners with his wife Mary Ammons to deliver quality residential projects throughout the Triangle.",
     phone: "(919) 270-2100",
     email: "rusty@ammonsrealty.com",
     specialties: ["New Home Development", "Residential Projects", "Triangle Area"],
