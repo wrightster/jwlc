@@ -3,6 +3,15 @@ import Layout from '../layouts/Layout.astro';
 import ListingCard from '../components/ListingCard.astro';
 import { listings } from '../data/listings';
 export const prerender = true;
+
+function parsePrice(price: string): number {
+  const match = price.replace(/[$,]/g, '').match(/[\d.]+/);
+  return match ? parseFloat(match[0]) : 0;
+}
+function parseAcres(acreage: string): number {
+  const match = acreage.match(/[\d.]+/);
+  return match ? parseFloat(match[0]) : 0;
+}
 ---
 
 <Layout title="Listings — Julie Wright Land Company" description="Browse available land, lots, and investment properties across the North Carolina Triangle area.">
@@ -24,16 +33,52 @@ export const prerender = true;
   <section class="py-16 lg:py-24">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <!-- Filter bar -->
-      <div class="flex flex-wrap items-center gap-3 mb-12 pb-6 border-b border-earth-200">
-        <span class="text-sm font-medium text-earth-600 mr-2">Filter by county:</span>
-        <button class="county-filter active px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded-sm border border-earth-300 text-earth-700 bg-earth-100 transition-all hover:bg-crimson-700 hover:text-white hover:border-crimson-700" data-county="all">
-          All
-        </button>
-        {[...new Set(listings.map(l => l.county))].sort().map((county) => (
-          <button class="county-filter px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded-sm border border-earth-200 text-light-text0 transition-all hover:bg-crimson-700 hover:text-white hover:border-crimson-700" data-county={county}>
-            {county}
+      <div class="mb-12 pb-6 border-b border-earth-200 space-y-6">
+        <!-- County filters -->
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="text-sm font-medium text-earth-600 mr-2">Filter by county:</span>
+          <button class="county-filter active px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded-sm border border-crimson-700 text-white bg-crimson-700 transition-all hover:bg-[#ffd48a] hover:text-earth-900 hover:border-[#ffd48a]" data-county="all">
+            All
           </button>
-        ))}
+          {[...new Set(listings.map(l => l.county))].sort().map((county) => (
+            <button class="county-filter px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded-sm border border-earth-200 text-light-text0 transition-all hover:bg-[#ffd48a] hover:text-earth-900 hover:border-[#ffd48a]" data-county={county}>
+              {county}
+            </button>
+          ))}
+        </div>
+
+        <!-- Range sliders -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Price -->
+          <div>
+            <p class="text-sm font-medium text-earth-600 mb-2">Price Range</p>
+            <div class="range-slider">
+              <div class="range-track"><div class="range-fill" id="price-fill"></div></div>
+              <input type="range" id="price-min" min="0" max="500000" step="5000" value="0" class="range-input" />
+              <input type="range" id="price-max" min="0" max="500000" step="5000" value="500000" class="range-input" />
+            </div>
+            <div class="flex items-baseline mt-2">
+              <div class="flex-1 text-right"><span id="price-min-display" class="text-sm font-semibold text-earth-800">$0</span></div>
+              <span class="mx-2 text-sm text-earth-500">to</span>
+              <div class="flex-1 text-left"><span id="price-max-display" class="text-sm font-semibold text-earth-800">$500,000+</span></div>
+            </div>
+          </div>
+
+          <!-- Acreage -->
+          <div>
+            <p class="text-sm font-medium text-earth-600 mb-2">Acreage</p>
+            <div class="range-slider">
+              <div class="range-track"><div class="range-fill" id="acres-fill"></div></div>
+              <input type="range" id="acres-min" min="0" max="50" step="0.5" value="0" class="range-input" />
+              <input type="range" id="acres-max" min="0" max="50" step="0.5" value="50" class="range-input" />
+            </div>
+            <div class="flex items-baseline mt-2">
+              <div class="flex-1 text-right"><span id="acres-min-display" class="text-sm font-semibold text-earth-800">0</span></div>
+              <span class="mx-2 text-sm text-earth-500">to</span>
+              <div class="flex-1 text-left"><span id="acres-max-display" class="text-sm font-semibold text-earth-800">50+ acres</span></div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Results count -->
@@ -44,7 +89,7 @@ export const prerender = true;
       <!-- Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8" id="listings-grid">
         {listings.map((listing, i) => (
-          <div class="listing-item" data-county={listing.county} id={listing.id}>
+          <div class="listing-item" data-county={listing.county} data-price={parsePrice(listing.price)} data-acres={parseAcres(listing.acreage)} id={listing.id}>
             <ListingCard listing={listing} index={i} />
           </div>
         ))}
@@ -63,40 +108,161 @@ export const prerender = true;
     </div>
   </section>
 
+  <style>
+    .range-slider {
+      position: relative;
+      height: 24px;
+    }
+    .range-track {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 4px;
+      transform: translateY(-50%);
+      background: #e8d9bb;
+      border-radius: 2px;
+    }
+    .range-fill {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      background: #be3528;
+      border-radius: 2px;
+    }
+    .range-input {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      transform: translateY(-50%);
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      pointer-events: none;
+      margin: 0;
+      height: 24px;
+    }
+    .range-input::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #be3528;
+      border: 2px solid #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      pointer-events: all;
+      cursor: pointer;
+    }
+    .range-input::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #be3528;
+      border: 2px solid #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      pointer-events: all;
+      cursor: pointer;
+      border: none;
+    }
+  </style>
+
   <script>
+    const MAX_PRICE = 500000;
+    const MAX_ACRES = 50;
+
     const filters = document.querySelectorAll('.county-filter');
     const items = document.querySelectorAll('.listing-item');
     const countEl = document.getElementById('count');
 
+    let activeCounty = 'all';
+    let priceMin = 0, priceMax = MAX_PRICE;
+    let acresMin = 0, acresMax = MAX_ACRES;
+
+    // ── Filtering ────────────────────────────────────────────
+    function applyFilters() {
+      let visible = 0;
+      items.forEach(item => {
+        const el = item as HTMLElement;
+        const itemPrice = parseFloat(el.dataset.price ?? '0');
+        const itemAcres = parseFloat(el.dataset.acres ?? '0');
+        const countyOk = activeCounty === 'all' || el.dataset.county === activeCounty;
+        const priceOk  = itemPrice >= priceMin && (priceMax >= MAX_PRICE || itemPrice <= priceMax);
+        const acresOk  = itemAcres >= acresMin && (acresMax >= MAX_ACRES || itemAcres <= acresMax);
+        el.style.display = (countyOk && priceOk && acresOk) ? '' : 'none';
+        if (countyOk && priceOk && acresOk) visible++;
+      });
+      if (countEl) countEl.textContent = String(visible);
+    }
+
+    // ── County buttons ───────────────────────────────────────
     filters.forEach(btn => {
       btn.addEventListener('click', () => {
-        filters.forEach(f => f.classList.remove('active', 'bg-crimson-700', 'text-white', 'border-crimson-700', 'bg-earth-100', 'text-earth-700'));
+        filters.forEach(f => f.classList.remove('active', 'bg-crimson-700', 'text-white', 'border-crimson-700'));
         filters.forEach(f => f.classList.add('text-light-text0', 'border-earth-200'));
         btn.classList.add('active', 'bg-crimson-700', 'text-white', 'border-crimson-700');
         btn.classList.remove('text-light-text0', 'border-earth-200');
-
-        const county = (btn as HTMLElement).dataset.county;
-        let visible = 0;
-
-        items.forEach(item => {
-          const el = item as HTMLElement;
-          if (county === 'all' || el.dataset.county === county) {
-            el.style.display = '';
-            visible++;
-          } else {
-            el.style.display = 'none';
-          }
-        });
-
-        if (countEl) countEl.textContent = String(visible);
+        activeCounty = (btn as HTMLElement).dataset.county ?? 'all';
+        applyFilters();
       });
     });
 
-    // Set initial active state
-    const allBtn = document.querySelector('[data-county="all"]');
-    if (allBtn) {
-      allBtn.classList.add('bg-crimson-700', 'text-white', 'border-crimson-700');
-      allBtn.classList.remove('text-light-text0', 'border-earth-200');
+    // ── Slider helpers ───────────────────────────────────────
+    function updateFill(fill: HTMLElement, minInput: HTMLInputElement, maxInput: HTMLInputElement, max: number) {
+      const lo = (parseFloat(minInput.value) / max) * 100;
+      const hi = (parseFloat(maxInput.value) / max) * 100;
+      fill.style.left  = lo + '%';
+      fill.style.width = (hi - lo) + '%';
     }
+
+    function formatPrice(v: number) {
+      return '$' + v.toLocaleString();
+    }
+
+    // ── Price slider ─────────────────────────────────────────
+    const priceMinEl  = document.getElementById('price-min') as HTMLInputElement;
+    const priceMaxEl  = document.getElementById('price-max') as HTMLInputElement;
+    const priceFill   = document.getElementById('price-fill') as HTMLElement;
+    const priceMinLbl = document.getElementById('price-min-display') as HTMLElement;
+    const priceMaxLbl = document.getElementById('price-max-display') as HTMLElement;
+
+    function onPriceChange() {
+      let lo = parseFloat(priceMinEl.value);
+      let hi = parseFloat(priceMaxEl.value);
+      if (lo > hi) { if (this === priceMinEl) { lo = hi; priceMinEl.value = String(lo); } else { hi = lo; priceMaxEl.value = String(hi); } }
+      priceMin = lo; priceMax = hi;
+      priceMinLbl.textContent = formatPrice(lo);
+      priceMaxLbl.textContent = hi >= MAX_PRICE ? formatPrice(MAX_PRICE) + '+' : formatPrice(hi);
+      updateFill(priceFill, priceMinEl, priceMaxEl, MAX_PRICE);
+      applyFilters();
+    }
+    priceMinEl.addEventListener('input', onPriceChange);
+    priceMaxEl.addEventListener('input', onPriceChange);
+    updateFill(priceFill, priceMinEl, priceMaxEl, MAX_PRICE);
+
+    // ── Acres slider ─────────────────────────────────────────
+    const acresMinEl  = document.getElementById('acres-min') as HTMLInputElement;
+    const acresMaxEl  = document.getElementById('acres-max') as HTMLInputElement;
+    const acresFill   = document.getElementById('acres-fill') as HTMLElement;
+    const acresMinLbl = document.getElementById('acres-min-display') as HTMLElement;
+    const acresMaxLbl = document.getElementById('acres-max-display') as HTMLElement;
+
+    function fmtAcres(v: number) {
+      return v % 1 === 0 ? String(v) : v.toFixed(1);
+    }
+
+    function onAcresChange() {
+      let lo = parseFloat(acresMinEl.value);
+      let hi = parseFloat(acresMaxEl.value);
+      if (lo > hi) { if (this === acresMinEl) { lo = hi; acresMinEl.value = String(lo); } else { hi = lo; acresMaxEl.value = String(hi); } }
+      acresMin = lo; acresMax = hi;
+      acresMinLbl.textContent = fmtAcres(lo) + ' acres';
+      acresMaxLbl.textContent = (hi >= MAX_ACRES ? MAX_ACRES + '+' : fmtAcres(hi)) + ' acres';
+      updateFill(acresFill, acresMinEl, acresMaxEl, MAX_ACRES);
+      applyFilters();
+    }
+    acresMinEl.addEventListener('input', onAcresChange);
+    acresMaxEl.addEventListener('input', onAcresChange);
+    updateFill(acresFill, acresMinEl, acresMaxEl, MAX_ACRES);
   </script>
 </Layout>

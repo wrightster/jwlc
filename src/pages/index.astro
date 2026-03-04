@@ -27,7 +27,7 @@ export const prerender = true;
           <p class="section-label !text-brand-light mb-6 text-center">
             Est. 1972 &middot; Raleigh, North Carolina
           </p>
-          <div class="h-36 md:h-44" style="aspect-ratio:254.92/122.12;background-color:var(--color-light-text);-webkit-mask-image:url('/JWLC_1C.svg');mask-image:url('/JWLC_1C.svg');-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;" role="img" aria-label="Julie Wright Land Company"></div>
+          <img src="/JWLC_Full_Negative.svg" class="h-36 md:h-44 w-auto" alt="Julie Wright Land Company" />
           <div class="grid grid-cols-4 gap-5 mt-6 pt-6 border-t border-earth-700/60">
             {[
               { number: '40+',   label: 'Years'    },
@@ -36,8 +36,8 @@ export const prerender = true;
               { number: '1000s', label: 'Acres'    },
             ].map((stat) => (
               <div>
-                <p class="font-display text-xl text-light-text">{stat.number}</p>
-                <p class="text-[9px] uppercase tracking-widest text-earth-500 mt-0.5">{stat.label}</p>
+                <p class="font-display text-3xl text-light-text">{stat.number}</p>
+                <p class="text-[11px] uppercase tracking-widest text-earth-500 mt-0.5">{stat.label}</p>
               </div>
             ))}
           </div>
