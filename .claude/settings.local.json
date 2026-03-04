@@ -10,7 +10,9 @@
       "Bash(cat:*)",
       "Bash(curl:*)",
       "Bash(start chrome:*)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(code:*)",
+      "Bash(git checkout:*)"
     ]
   }
 }
