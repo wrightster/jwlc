@@ -4,8 +4,8 @@ const isDev = import.meta.env.DEV;
 // variable: true  → smooth weight slider (loads googleVar for full wght axis)
 // variable: false → slider snaps through discrete weights[]
 const displayFonts = [
-  { name: 'DM Serif Display (current)', family: "'DM Serif Display', Georgia, serif",  google: 'DM+Serif+Display:ital@0;1',                                    variable: false, weights: [400] },
-  { name: 'Buenard',                   family: "'Buenard', Georgia, serif",            google: 'Buenard:wght@400;700',                                        googleVar: 'Buenard:wght@400..700',                             variable: true  },
+  { name: 'Buenard (current)',          family: "'Buenard', Georgia, serif",            google: 'Buenard:wght@400;700',                                        googleVar: 'Buenard:wght@400..700',                             variable: true  },
+  { name: 'DM Serif Display',           family: "'DM Serif Display', Georgia, serif",  google: 'DM+Serif+Display:ital@0;1',                                    variable: false, weights: [400] },
   { name: 'Playfair Display',           family: "'Playfair Display', Georgia, serif",   google: 'Playfair+Display:ital,wght@0,400;0,700;1,400',                 googleVar: 'Playfair+Display:ital,wght@0,100..900;1,100..900',   variable: true  },
   { name: 'Cormorant Garamond',         family: "'Cormorant Garamond', Georgia, serif",  google: 'Cormorant+Garamond:ital,wght@0,400;0,600;1,400',               googleVar: 'Cormorant+Garamond:ital,wght@0,100..700;1,100..700', variable: true  },
   { name: 'Lora',                       family: "'Lora', Georgia, serif",               google: 'Lora:ital,wght@0,400;0,600;1,400',                             googleVar: 'Lora:ital,wght@0,400..700;1,400..700',              variable: true  },
@@ -18,11 +18,11 @@ const displayFonts = [
 ];
 
 const bodyFonts = [
-  { name: 'Libre Franklin (current)', family: "'Libre Franklin', system-ui, sans-serif",   google: 'Libre+Franklin:wght@300;400;500;600;700',     googleVar: 'Libre+Franklin:wght@100..900',     variable: true  },
+  { name: 'Jost (current)',           family: "'Jost', system-ui, sans-serif",              google: 'Jost:wght@300;400;500;600;700',                googleVar: 'Jost:wght@100..900',              variable: true  },
+  { name: 'Libre Franklin',           family: "'Libre Franklin', system-ui, sans-serif",   google: 'Libre+Franklin:wght@300;400;500;600;700',     googleVar: 'Libre+Franklin:wght@100..900',     variable: true  },
   { name: 'Inter',                    family: "'Inter', system-ui, sans-serif",             google: 'Inter:wght@300;400;500;600;700',               googleVar: 'Inter:wght@100..900',             variable: true  },
   { name: 'DM Sans',                  family: "'DM Sans', system-ui, sans-serif",           google: 'DM+Sans:wght@300;400;500;600;700',             googleVar: 'DM+Sans:wght@100..900',           variable: true  },
   { name: 'Plus Jakarta Sans',        family: "'Plus Jakarta Sans', system-ui, sans-serif", google: 'Plus+Jakarta+Sans:wght@300;400;500;600;700',   googleVar: 'Plus+Jakarta+Sans:wght@200..800', variable: true  },
-  { name: 'Jost',                     family: "'Jost', system-ui, sans-serif",              google: 'Jost:wght@300;400;500;600;700',                googleVar: 'Jost:wght@100..900',              variable: true  },
   { name: 'Nunito Sans',              family: "'Nunito Sans', system-ui, sans-serif",       google: 'Nunito+Sans:wght@300;400;500;600;700',         googleVar: 'Nunito+Sans:wght@200..900',       variable: true  },
   { name: 'Raleway',                  family: "'Raleway', system-ui, sans-serif",           google: 'Raleway:wght@300;400;500;600;700',             googleVar: 'Raleway:wght@100..900',           variable: true  },
   { name: 'Outfit',                   family: "'Outfit', system-ui, sans-serif",            google: 'Outfit:wght@300;400;500;600;700',              googleVar: 'Outfit:wght@100..900',            variable: true  },
@@ -33,8 +33,8 @@ const bodyFonts = [
 // Each token: id for DOM, label, primary cssVar for chaining, all CSS vars to update together, default value
 const colorTokens = [
   { id: 'primary',   label: 'Primary Accent', cssVar: '--color-brand-primary', vars: ['--color-brand-primary', '--color-crimson-700'], value: '#be3528' },
-  { id: 'altbg',     label: 'Light Accent',   cssVar: '--color-brand-altbg',   vars: ['--color-brand-altbg', '--color-earth-100'],     value: '#f3e7c9' },
-  { id: 'accent',    label: 'Medium Accent',  cssVar: '--color-brand-light',   vars: ['--color-brand-light'],                          value: '#faca83' },
+  { id: 'altbg',     label: 'Light Accent',   cssVar: '--color-brand-light',   vars: ['--color-brand-light', '--color-earth-100'],     value: '#f3e7c9' },
+  { id: 'accent',    label: 'Medium Accent',  cssVar: '--color-brand-medium',  vars: ['--color-brand-medium'],                         value: '#faca83' },
   { id: 'dark',      label: 'Dark Accent',    cssVar: '--color-brand-dark',    vars: ['--color-brand-dark', '--color-crimson-900'],    value: '#612827' },
   { id: 'light',     label: 'Light Body',     cssVar: '--color-light-text',    vars: ['--color-light-text'],                           value: '#ffffff' },
   { id: 'medtext',   label: 'Medium Body',    cssVar: '--color-earth-400',     vars: ['--color-earth-400'],                            value: '#bb9d72' },
@@ -184,10 +184,40 @@ const colorTokens = [
 
       let currentDisplay       = displayFonts[0];
       let currentBody          = bodyFonts[0];
-      let currentDisplayWeight = 400;
-      let currentBodyWeight    = 400;
+
+      // Read actual weights from CSS so sliders reflect the real current state
+      const cssVars = getComputedStyle(document.documentElement);
+      let currentDisplayWeight = parseInt(cssVars.getPropertyValue('--font-display-weight')) || 400;
+      let currentBodyWeight    = parseInt(cssVars.getPropertyValue('--font-body-weight'))    || 400;
       let customDisplayFont    = null;
       let customBodyFont       = null;
+
+      // ── Init weight sliders from actual CSS values ────────────────
+      function initWeightSlider(font, isDisplay, weight) {
+        const slider = isDisplay ? dispWeight : bodyWeight;
+        const label  = isDisplay ? dispWeightLabel : bodyWeightLabel;
+        if (font.variable) {
+          slider.min = 100; slider.max = 900; slider.step = 1;
+          slider.disabled = false; slider.style.opacity = '1'; slider.style.cursor = 'pointer';
+          slider.value = weight;
+        } else {
+          const wts = font.weights || [400];
+          slider.min = 0; slider.max = wts.length - 1; slider.step = 1;
+          const single = wts.length <= 1;
+          slider.disabled = single;
+          slider.style.opacity = single ? '0.35' : '1';
+          slider.style.cursor  = single ? 'default' : 'pointer';
+          const idx = wts.indexOf(weight) >= 0 ? wts.indexOf(weight) : 0;
+          slider.value = idx;
+        }
+        label.textContent = weight;
+        if (isDisplay) dispPrev.style.fontWeight = weight;
+        else           bodyPrev.style.fontWeight = weight;
+      }
+      initWeightSlider(currentDisplay, true,  currentDisplayWeight);
+      initWeightSlider(currentBody,    false, currentBodyWeight);
+      dispPrev.style.fontFamily = currentDisplay.family;
+      bodyPrev.style.fontFamily = currentBody.family;
 
       // ── Tabs ─────────────────────────────────────────────────────
       function setTab(tab) {
