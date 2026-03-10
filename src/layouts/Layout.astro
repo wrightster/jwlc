@@ -34,19 +34,20 @@ const navLinks = [
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Libre+Franklin:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Buenard:wght@400..700&family=Jost:wght@100..900&display=swap" rel="stylesheet" />
   </head>
   <body class="min-h-screen flex flex-col">
     <!-- Navigation -->
     <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" id="site-header">
       <div class="absolute inset-0 border-b border-earth-200/60" id="header-bg" style="background-color: var(--color-nav-bg)"></div>
-      <nav class="relative max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
-        <a href="/" class="relative group flex items-center">
+      <nav class="relative max-w-7xl mx-auto px-6 lg:px-8 flex items-center h-20">
+        <!-- Logo (left) -->
+        <a href="/" class="relative group flex items-center flex-shrink-0">
           <div class="h-9" style="aspect-ratio:43.24/38.47;background-color:var(--color-nav-accent);-webkit-mask-image:url('/JWLC_Icon_Positive.svg');mask-image:url('/JWLC_Icon_Positive.svg');-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;" role="img" aria-label="Julie Wright Land Company"></div>
         </a>
 
-        <!-- Desktop Nav -->
-        <ul class="hidden lg:flex items-center gap-1">
+        <!-- Desktop Nav (center) -->
+        <ul class="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
           {navLinks.map((link) => (
             <li>
               <a
@@ -65,10 +66,12 @@ const navLinks = [
               </a>
             </li>
           ))}
-          <li class="ml-4">
-            <a href="/contact" class="btn-nav text-sm">Get in Touch</a>
-          </li>
         </ul>
+
+        <!-- CTA (right) -->
+        <div class="hidden lg:flex items-center ml-auto">
+          <a href="/contact" class="btn-nav text-sm">Get in Touch</a>
+        </div>
 
         <!-- Mobile Menu Button -->
         <button

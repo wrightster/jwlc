@@ -12,7 +12,9 @@
       "Bash(start chrome:*)",
       "Bash(cd:*)",
       "Bash(code:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(npm run:*)",
+      "Bash(start msedge:*)"
     ]
   }
 }

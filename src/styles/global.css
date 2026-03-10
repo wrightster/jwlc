@@ -4,13 +4,13 @@
   /* Design.txt palette (exact values) */
   --color-brand-primary:  #be3528;   /* Primary accent */
   --color-brand-dark:     #612827;   /* Dark accent */
-  --color-brand-light:    #faca83;   /* Light accent */
-  --color-brand-bg:       #f8f8f2;   /* Background */
-  --color-brand-altbg:    #f3e7c9;   /* Alt background */
+  --color-brand-light:    #ece5d5;   /* Light accent */
+  --color-brand-medium:   #faca83;   /* Medium accent */
+  --color-brand-bg:       #f4f4ec;   /* Background */
 
   /* Earth (main brown family — used for text, dark sections, borders) */
-  --color-earth-50:  #f8f8f2;
-  --color-earth-100: #f3e7c9;
+  --color-earth-50:  #f4f4ec;
+  --color-earth-100: #ece5d5;
   --color-earth-200: #e8d9bb;
   --color-earth-300: #d4bc96;
   --color-earth-400: #bb9d72;
@@ -39,10 +39,10 @@
   --color-nav-accent: #be3528;
   --color-nav-menu:   #3d3225;
 
-  --font-display: 'DM Serif Display', Georgia, serif;
-  --font-body:    'Libre Franklin', system-ui, sans-serif;
-  --font-display-weight: 400;
-  --font-body-weight:    400;
+  --font-display: 'Buenard', Georgia, serif;
+  --font-body:    'Jost', system-ui, sans-serif;
+  --font-display-weight: 900;
+  --font-body-weight:    390;
 }
 
 @layer base {
@@ -65,7 +65,7 @@
     font-weight: var(--font-display-weight);
   }
   ::selection {
-    background-color: var(--color-brand-light);
+    background-color: var(--color-brand-medium);
     color: var(--color-earth-950);
   }
 }

@@ -12,53 +12,40 @@ export const prerender = true;
   <!-- ═══════════════════════════════════════════
        HERO
   ════════════════════════════════════════════════ -->
-  <section class="relative py-20 lg:py-24 bg-earth-900 overflow-hidden">
+  <section class="relative py-10 lg:py-12 bg-brand-light overflow-hidden">
     <img
       src="/FallsLakeTopoContours.svg"
-      class="topo-bg opacity-[0.045]"
+      class="topo-bg opacity-20"
       style="filter: invert(1);"
       alt="" aria-hidden="true"
     />
     <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
-      <div class="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-16">
+      <div class="flex items-center gap-16 lg:gap-24">
 
-        <!-- LEFT: brand lockup -->
-        <div class="flex flex-col items-center lg:flex-shrink-0 animate-fade-up" style="animation-delay:100ms">
-          <p class="section-label !text-brand-light mb-6 text-center">
-            Est. 1972 &middot; Raleigh, North Carolina
-          </p>
-          <img src="/JWLC_Full_Negative.svg" class="h-36 md:h-44 w-auto" alt="Julie Wright Land Company" />
-          <div class="grid grid-cols-4 gap-5 mt-6 pt-6 border-t border-earth-700/60">
-            {[
-              { number: '40+',   label: 'Years'    },
-              { number: '8',     label: 'Counties' },
-              { number: '5',     label: 'Brokers'  },
-              { number: '1000s', label: 'Acres'    },
-            ].map((stat) => (
-              <div>
-                <p class="font-display text-3xl text-light-text">{stat.number}</p>
-                <p class="text-[11px] uppercase tracking-widest text-earth-500 mt-0.5">{stat.label}</p>
-              </div>
-            ))}
+        <!-- Left quote -->
+        <div class="hidden lg:flex flex-1 justify-end">
+          <div id="hero-quote-left" class="max-w-[260px] text-right opacity-0 transition-opacity duration-700">
+            <p class="font-display italic text-earth-800 text-base leading-relaxed" id="hero-quote-left-text"></p>
+            <p class="text-xs text-earth-600 mt-2 font-medium tracking-wide" id="hero-quote-left-author"></p>
           </div>
         </div>
 
-        <!-- Divider -->
-        <div class="hidden lg:block w-px self-stretch bg-earth-700/60 flex-shrink-0"></div>
-
-        <!-- RIGHT: headline + copy + CTAs -->
-        <div class="animate-fade-up" style="animation-delay:250ms">
-          <h1 class="font-display text-4xl md:text-5xl lg:text-6xl text-light-text leading-[1.05]">
-            Finding The <span class="italic text-brand-light">Homeplace</span>
-          </h1>
-          <p class="text-earth-300 text-lg leading-relaxed mt-5 max-w-lg">
-            Over 40 years of Triangle-area land brokerage across Wake, Durham, Granville, Franklin, and beyond.
+        <!-- Center: logo + tagline -->
+        <div class="flex flex-col items-center text-center flex-shrink-0 mx-auto">
+          <p class="section-label !text-earth-900 mb-4">
+            Est. 1972 &middot; Raleigh, North Carolina
           </p>
-          <div class="flex flex-wrap gap-3 mt-8">
-            <a href="/listings" class="btn-primary">Browse Listings</a>
-            <a href="/contact" class="inline-flex items-center justify-center px-6 py-3 border border-earth-500 text-earth-200 text-sm font-medium tracking-wide rounded-sm transition-all duration-300 hover:bg-earth-200 hover:text-earth-900">
-              Contact Us
-            </a>
+          <img src="/JWLC_Full_Positive.svg" class="h-36 md:h-44 w-auto" alt="Julie Wright Land Company" />
+          <h1 class="font-display italic text-xl md:text-2xl text-earth-900 mt-4">
+            Finding The Homeplace
+          </h1>
+        </div>
+
+        <!-- Right quote -->
+        <div class="hidden lg:flex flex-1 justify-start">
+          <div id="hero-quote-right" class="max-w-[260px] text-left opacity-0 transition-opacity duration-700">
+            <p class="font-display italic text-earth-800 text-base leading-relaxed" id="hero-quote-right-text"></p>
+            <p class="text-xs text-earth-600 mt-2 font-medium tracking-wide" id="hero-quote-right-author"></p>
           </div>
         </div>
 
@@ -66,10 +53,47 @@ export const prerender = true;
     </div>
   </section>
 
+  <script define:vars={{ testimonials }}>
+    const quotes = testimonials;
+    const leftWrap  = document.getElementById('hero-quote-left');
+    const rightWrap = document.getElementById('hero-quote-right');
+    const leftText   = document.getElementById('hero-quote-left-text');
+    const leftAuthor = document.getElementById('hero-quote-left-author');
+    const rightText   = document.getElementById('hero-quote-right-text');
+    const rightAuthor = document.getElementById('hero-quote-right-author');
+
+    let idx = 0; // next quote index to show
+    let turn = 'left'; // which side updates next
+
+    function setQuote(wrap, textEl, authorEl, quote) {
+      wrap.style.opacity = '0';
+      setTimeout(() => {
+        textEl.textContent = '\u201C' + quote.quote + '\u201D';
+        authorEl.textContent = '\u2014 ' + quote.author;
+        wrap.style.opacity = '1';
+      }, 700);
+    }
+
+    // Seed both sides immediately
+    setQuote(leftWrap,  leftText,  leftAuthor,  quotes[idx++ % quotes.length]);
+    setQuote(rightWrap, rightText, rightAuthor, quotes[idx++ % quotes.length]);
+
+    setInterval(() => {
+      const quote = quotes[idx++ % quotes.length];
+      if (turn === 'left') {
+        setQuote(leftWrap, leftText, leftAuthor, quote);
+        turn = 'right';
+      } else {
+        setQuote(rightWrap, rightText, rightAuthor, quote);
+        turn = 'left';
+      }
+    }, 3500);
+  </script>
+
   <!-- ═══════════════════════════════════════════
        FEATURED LISTINGS
   ════════════════════════════════════════════════ -->
-  <section class="py-16 lg:py-20 bg-brand-bg">
+  <section class="py-8 lg:py-10 bg-brand-bg">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="flex items-end justify-between mb-8">
         <div>
@@ -94,7 +118,7 @@ export const prerender = true;
   <!-- ═══════════════════════════════════════════
        ABOUT + SERVICES
   ════════════════════════════════════════════════ -->
-  <section class="py-12 lg:py-16 bg-brand-bg">
+  <section class="py-6 lg:py-8 bg-brand-bg">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="grid lg:grid-cols-12 gap-10 lg:gap-14">
 
@@ -149,7 +173,7 @@ export const prerender = true;
   <!-- ═══════════════════════════════════════════
        TESTIMONIAL + CTA
   ════════════════════════════════════════════════ -->
-  <section class="relative py-14 bg-earth-900 overflow-hidden">
+  <section class="relative py-7 bg-earth-900 overflow-hidden">
     <img
       src="/FallsLakeTopoContours.svg"
       class="topo-bg opacity-[0.035]"
@@ -182,7 +206,7 @@ export const prerender = true;
         <div class="lg:border-l lg:border-earth-700 lg:pl-14">
           <h2 class="font-display text-3xl lg:text-4xl text-light-text leading-tight">
             Ready to Find Your<br />
-            <span class="italic text-brand-light">Perfect Piece of Land?</span>
+            <span class="italic text-brand-medium">Perfect Piece of Land?</span>
           </h2>
           <p class="text-earth-400 text-sm mt-4 leading-relaxed">
             Whether you're buying, selling, or investing — our team has the local knowledge to guide you every step of the way.
