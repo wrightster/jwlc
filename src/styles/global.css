@@ -39,10 +39,10 @@
   --color-nav-accent: #be3528;
   --color-nav-menu:   #3d3225;
 
-  --font-display: 'Buenard', Georgia, serif;
-  --font-body:    'Jost', system-ui, sans-serif;
-  --font-display-weight: 900;
-  --font-body-weight:    390;
+  --font-display: 'Jost', Georgia, serif;
+  --font-body:    'Funnel Sans', system-ui, sans-serif;
+  --font-display-weight: 700;
+  --font-body-weight:    400;
 }
 
 @layer base {

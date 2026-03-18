@@ -4,7 +4,7 @@ const isDev = import.meta.env.DEV;
 // variable: true  → smooth weight slider (loads googleVar for full wght axis)
 // variable: false → slider snaps through discrete weights[]
 const displayFonts = [
-  { name: 'Buenard (current)',          family: "'Buenard', Georgia, serif",            google: 'Buenard:wght@400;700',                                        googleVar: 'Buenard:wght@400..700',                             variable: true  },
+  { name: 'Jost (current)',             family: "'Jost', Georgia, serif",               google: 'Jost:ital,wght@0,400;0,700;1,400',                            googleVar: 'Jost:ital,wght@0,100..900;1,100..900',              variable: true  },
   { name: 'DM Serif Display',           family: "'DM Serif Display', Georgia, serif",  google: 'DM+Serif+Display:ital@0;1',                                    variable: false, weights: [400] },
   { name: 'Playfair Display',           family: "'Playfair Display', Georgia, serif",   google: 'Playfair+Display:ital,wght@0,400;0,700;1,400',                 googleVar: 'Playfair+Display:ital,wght@0,100..900;1,100..900',   variable: true  },
   { name: 'Cormorant Garamond',         family: "'Cormorant Garamond', Georgia, serif",  google: 'Cormorant+Garamond:ital,wght@0,400;0,600;1,400',               googleVar: 'Cormorant+Garamond:ital,wght@0,100..700;1,100..700', variable: true  },
@@ -18,7 +18,7 @@ const displayFonts = [
 ];
 
 const bodyFonts = [
-  { name: 'Jost (current)',           family: "'Jost', system-ui, sans-serif",              google: 'Jost:wght@300;400;500;600;700',                googleVar: 'Jost:wght@100..900',              variable: true  },
+  { name: 'Funnel Sans (current)',    family: "'Funnel Sans', system-ui, sans-serif",       google: 'Funnel+Sans:ital,wght@0,300;0,400;0,600;1,400', googleVar: 'Funnel+Sans:ital,wght@0,100..900;1,100..900', variable: true  },
   { name: 'Libre Franklin',           family: "'Libre Franklin', system-ui, sans-serif",   google: 'Libre+Franklin:wght@300;400;500;600;700',     googleVar: 'Libre+Franklin:wght@100..900',     variable: true  },
   { name: 'Inter',                    family: "'Inter', system-ui, sans-serif",             google: 'Inter:wght@300;400;500;600;700',               googleVar: 'Inter:wght@100..900',             variable: true  },
   { name: 'DM Sans',                  family: "'DM Sans', system-ui, sans-serif",           google: 'DM+Sans:wght@300;400;500;600;700',             googleVar: 'DM+Sans:wght@100..900',           variable: true  },

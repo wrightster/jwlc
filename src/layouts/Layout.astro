@@ -34,13 +34,13 @@ const navLinks = [
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Buenard:wght@400..700&family=Jost:wght@100..900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Funnel+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
   </head>
   <body class="min-h-screen flex flex-col">
     <!-- Navigation -->
     <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" id="site-header">
       <div class="absolute inset-0 border-b border-earth-200/60" id="header-bg" style="background-color: var(--color-nav-bg)"></div>
-      <nav class="relative max-w-7xl mx-auto px-6 lg:px-8 flex items-center h-20">
+      <nav class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 flex items-center h-20">
         <!-- Logo (left) -->
         <a href="/" class="relative group flex items-center flex-shrink-0">
           <div class="h-9" style="aspect-ratio:43.24/38.47;background-color:var(--color-nav-accent);-webkit-mask-image:url('/JWLC_Icon_Positive.svg');mask-image:url('/JWLC_Icon_Positive.svg');-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;" role="img" aria-label="Julie Wright Land Company"></div>
@@ -68,35 +68,30 @@ const navLinks = [
           ))}
         </ul>
 
-        <!-- CTA (right) -->
-        <div class="hidden lg:flex items-center ml-auto">
-          <a href="/contact" class="btn-nav text-sm">Get in Touch</a>
-        </div>
-
         <!-- Mobile Menu Button -->
         <button
-          class="lg:hidden relative w-10 h-10 flex items-center justify-center"
+          class="lg:hidden relative w-10 h-10 flex items-center justify-center ml-auto mr-3 cursor-pointer group"
           id="mobile-menu-btn"
           aria-label="Toggle navigation menu"
         >
           <span class="sr-only">Menu</span>
           <div class="w-6 flex flex-col gap-1.5 transition-all" id="hamburger">
-            <span class="block h-0.5 w-6 transition-all duration-300 origin-center" id="bar1" style="background-color: var(--color-nav-menu)"></span>
-            <span class="block h-0.5 w-6 transition-all duration-300" id="bar2" style="background-color: var(--color-nav-menu)"></span>
-            <span class="block h-0.5 w-4 transition-all duration-300 origin-center ml-auto" id="bar3" style="background-color: var(--color-nav-menu)"></span>
+            <span class="hamburger-bar block h-0.5 w-6 transition-all duration-300 origin-center" id="bar1"></span>
+            <span class="hamburger-bar block h-0.5 w-6 transition-all duration-300" id="bar2"></span>
+            <span class="hamburger-bar block h-0.5 w-4 transition-all duration-300 origin-center ml-auto" id="bar3"></span>
           </div>
         </button>
       </nav>
 
       <!-- Mobile Menu -->
-      <div class="lg:hidden fixed inset-0 top-20 backdrop-blur-lg -translate-x-full transition-transform duration-500 ease-out" id="mobile-menu" style="background-color: var(--color-nav-bg)">
-        <ul class="flex flex-col items-center justify-center h-full gap-6 -mt-20">
+      <div class="lg:hidden absolute top-full left-0 right-0 -translate-y-2 opacity-0 pointer-events-none transition-all duration-300 ease-out border-b border-earth-200/60 shadow-md" id="mobile-menu" style="background-color: var(--color-nav-bg)">
+        <ul class="flex flex-col items-center px-6 py-4 gap-1">
           {navLinks.map((link, i) => (
-            <li style={`animation-delay: ${i * 80}ms`} class="mobile-nav-item">
+            <li>
               <a
                 href={link.href}
                 class:list={[
-                  'text-2xl font-display tracking-wide transition-colors',
+                  'block px-2 py-2.5 text-lg font-display tracking-wide transition-colors text-center',
                   currentPath === link.href ? 'nav-link-active' : 'nav-link-inactive',
                 ]}
               >
@@ -104,9 +99,6 @@ const navLinks = [
               </a>
             </li>
           ))}
-          <li class="mt-4 mobile-nav-item" style="animation-delay: 480ms">
-            <a href="/contact" class="btn-nav">Get in Touch</a>
-          </li>
         </ul>
       </div>
     </header>
@@ -215,19 +207,23 @@ const navLinks = [
       menuBtn?.addEventListener('click', () => {
         menuOpen = !menuOpen;
         if (menuOpen) {
-          mobileMenu?.classList.replace('-translate-x-full', 'translate-x-0');
-          bar1?.classList.add('rotate-45', 'translate-y-[4px]');
+          mobileMenu?.classList.remove('-translate-y-2', 'opacity-0', 'pointer-events-none');
+          mobileMenu?.classList.add('translate-y-0');
+          bar1?.classList.add('rotate-45', 'translate-y-[8px]');
           bar2?.classList.add('opacity-0');
-          bar3?.classList.add('-rotate-45', '-translate-y-[4px]', 'w-6');
-          document.body.style.overflow = 'hidden';
+          bar3?.classList.add('-rotate-45', '-translate-y-[8px]', 'w-6');
         } else {
-          mobileMenu?.classList.replace('translate-x-0', '-translate-x-full');
-          bar1?.classList.remove('rotate-45', 'translate-y-[4px]');
+          mobileMenu?.classList.add('-translate-y-2', 'opacity-0', 'pointer-events-none');
+          mobileMenu?.classList.remove('translate-y-0');
+          bar1?.classList.remove('rotate-45', 'translate-y-[8px]');
           bar2?.classList.remove('opacity-0');
-          bar3?.classList.remove('-rotate-45', '-translate-y-[4px]', 'w-6');
-          document.body.style.overflow = '';
+          bar3?.classList.remove('-rotate-45', '-translate-y-[8px]', 'w-6');
         }
       });
     </script>
+    <style>
+      .hamburger-bar { background-color: var(--color-nav-menu); transition: background-color 200ms; }
+      #mobile-menu-btn:hover .hamburger-bar { background-color: var(--color-nav-accent); }
+    </style>
   </body>
 </html>
