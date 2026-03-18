@@ -16,78 +16,71 @@ function parseAcres(acreage: string): number {
 
 <Layout title="Listings — Julie Wright Land Company" description="Browse available land, lots, and investment properties across the North Carolina Triangle area.">
   <!-- Page Header -->
-  <section class="relative py-10 lg:py-12 bg-earth-900 overflow-hidden">
-    <img src="/FallsLakeTopoContours.svg" class="topo-bg opacity-[0.045]" style="filter: invert(1);" alt="" aria-hidden="true" />
-    <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
-      <p class="section-label text-light-text/70">Browse Properties</p>
-      <h1 class="font-display text-4xl md:text-6xl text-light-text leading-tight mt-3">
-        Available <span class="italic text-brand-medium">Listings</span>
-      </h1>
-      <p class="text-earth-400 mt-5 max-w-2xl text-lg">
+  <section class="page-banner">
+    <img src="/FallsLakeTopoContours.svg" class="topo-bg topo-bg--light" alt="" aria-hidden="true" />
+    <div class="relative content-wrap">
+      <h1 class="page-banner-title">Available Listings</h1>
+      <p class="page-banner-desc">
         Land, lots, and investment properties across Wake, Durham, Granville, Franklin, Nash, and Vance counties.
       </p>
     </div>
   </section>
 
   <!-- Listings Grid -->
-  <section class="py-8 lg:py-12">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+  <section class="listings-section">
+    <div class="content-wrap">
       <!-- Filter bar -->
-      <div class="mb-12 pb-6 border-b border-earth-200 space-y-6">
+      <div class="filter-bar">
         <!-- County filters -->
-        <div class="flex flex-wrap items-center gap-3">
-          <span class="text-sm font-medium text-earth-600 mr-2">Filter by county:</span>
-          <button class="county-filter active px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded-sm border border-crimson-700 text-white bg-crimson-700 transition-all hover:bg-[#ffd48a] hover:text-earth-900 hover:border-[#ffd48a]" data-county="all">
-            All
-          </button>
+        <div class="filter-county-row">
+          <span class="filter-label">Filter by county:</span>
+          <button class="county-filter active" data-county="all">All</button>
           {[...new Set(listings.map(l => l.county))].sort().map((county) => (
-            <button class="county-filter px-4 py-1.5 text-xs font-semibold uppercase tracking-widest rounded-sm border border-earth-200 text-light-text0 transition-all hover:bg-[#ffd48a] hover:text-earth-900 hover:border-[#ffd48a]" data-county={county}>
-              {county}
-            </button>
+            <button class="county-filter" data-county={county}>{county}</button>
           ))}
         </div>
 
         <!-- Range sliders -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="filter-range-row">
           <!-- Price -->
           <div>
-            <p class="text-sm font-medium text-earth-600 mb-2">Price Range</p>
+            <p class="filter-range-label">Price Range</p>
             <div class="range-slider">
               <div class="range-track"><div class="range-fill" id="price-fill"></div></div>
               <input type="range" id="price-min" min="0" max="500000" step="5000" value="0" class="range-input" />
               <input type="range" id="price-max" min="0" max="500000" step="5000" value="500000" class="range-input" />
             </div>
-            <div class="flex items-baseline mt-2">
-              <div class="flex-1 text-right"><span id="price-min-display" class="text-sm font-semibold text-earth-800">$0</span></div>
-              <span class="mx-2 text-sm text-earth-500">to</span>
-              <div class="flex-1 text-left"><span id="price-max-display" class="text-sm font-semibold text-earth-800">$500,000+</span></div>
+            <div class="filter-range-display">
+              <div class="filter-range-side filter-range-side--left"><span id="price-min-display" class="filter-range-val">$0</span></div>
+              <span class="filter-range-sep">to</span>
+              <div class="filter-range-side filter-range-side--right"><span id="price-max-display" class="filter-range-val">$500,000+</span></div>
             </div>
           </div>
 
           <!-- Acreage -->
           <div>
-            <p class="text-sm font-medium text-earth-600 mb-2">Acreage</p>
+            <p class="filter-range-label">Acreage</p>
             <div class="range-slider">
               <div class="range-track"><div class="range-fill" id="acres-fill"></div></div>
               <input type="range" id="acres-min" min="0" max="50" step="0.5" value="0" class="range-input" />
               <input type="range" id="acres-max" min="0" max="50" step="0.5" value="50" class="range-input" />
             </div>
-            <div class="flex items-baseline mt-2">
-              <div class="flex-1 text-right"><span id="acres-min-display" class="text-sm font-semibold text-earth-800">0</span></div>
-              <span class="mx-2 text-sm text-earth-500">to</span>
-              <div class="flex-1 text-left"><span id="acres-max-display" class="text-sm font-semibold text-earth-800">50+ acres</span></div>
+            <div class="filter-range-display">
+              <div class="filter-range-side filter-range-side--left"><span id="acres-min-display" class="filter-range-val">0</span></div>
+              <span class="filter-range-sep">to</span>
+              <div class="filter-range-side filter-range-side--right"><span id="acres-max-display" class="filter-range-val">50+ acres</span></div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Results count -->
-      <p class="text-sm text-light-text0 mb-8">
-        Showing <span id="count" class="font-semibold text-earth-800">{listings.length}</span> properties
+      <p class="results-count">
+        Showing <span id="count" class="results-count-val">{listings.length}</span> properties
       </p>
 
       <!-- Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8" id="listings-grid">
+      <div class="listings-grid" id="listings-grid">
         {listings.map((listing, i) => (
           <div class="listing-item" data-county={listing.county} data-price={parsePrice(listing.price)} data-acres={parseAcres(listing.acreage)} id={listing.id}>
             <ListingCard listing={listing} index={i} />
@@ -98,74 +91,17 @@ function parseAcres(acreage: string): number {
   </section>
 
   <!-- CTA -->
-  <section class="py-8 bg-earth-100/50 border-t border-earth-200">
-    <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
-      <h2 class="font-display text-3xl text-earth-900">Don't See What You're Looking For?</h2>
-      <p class="text-earth-600 mt-4">
+  <section class="cta-light">
+    <div class="cta-wrap">
+      <h2 class="cta-light-heading">Don't See What You're Looking For?</h2>
+      <p class="cta-light-body">
         We have access to off-market properties and upcoming listings. Tell us what you need and we'll find it.
       </p>
-      <a href="/contact" class="btn-primary mt-8">Contact Us</a>
+      <div class="cta-btn-row">
+        <a href="/contact" class="btn-primary">Contact Us</a>
+      </div>
     </div>
   </section>
-
-  <style>
-    .range-slider {
-      position: relative;
-      height: 24px;
-    }
-    .range-track {
-      position: absolute;
-      top: 50%;
-      left: 0;
-      right: 0;
-      height: 4px;
-      transform: translateY(-50%);
-      background: #e8d9bb;
-      border-radius: 2px;
-    }
-    .range-fill {
-      position: absolute;
-      top: 0;
-      height: 100%;
-      background: #be3528;
-      border-radius: 2px;
-    }
-    .range-input {
-      position: absolute;
-      top: 50%;
-      left: 0;
-      width: 100%;
-      transform: translateY(-50%);
-      -webkit-appearance: none;
-      appearance: none;
-      background: transparent;
-      pointer-events: none;
-      margin: 0;
-      height: 24px;
-    }
-    .range-input::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: #be3528;
-      border: 2px solid #fff;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-      pointer-events: all;
-      cursor: pointer;
-    }
-    .range-input::-moz-range-thumb {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: #be3528;
-      border: 2px solid #fff;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-      pointer-events: all;
-      cursor: pointer;
-      border: none;
-    }
-  </style>
 
   <script>
     const MAX_PRICE = 500000;
@@ -179,7 +115,6 @@ function parseAcres(acreage: string): number {
     let priceMin = 0, priceMax = MAX_PRICE;
     let acresMin = 0, acresMax = MAX_ACRES;
 
-    // ── Filtering ────────────────────────────────────────────
     function applyFilters() {
       let visible = 0;
       items.forEach(item => {
@@ -195,19 +130,15 @@ function parseAcres(acreage: string): number {
       if (countEl) countEl.textContent = String(visible);
     }
 
-    // ── County buttons ───────────────────────────────────────
     filters.forEach(btn => {
       btn.addEventListener('click', () => {
-        filters.forEach(f => f.classList.remove('active', 'bg-crimson-700', 'text-white', 'border-crimson-700'));
-        filters.forEach(f => f.classList.add('text-light-text0', 'border-earth-200'));
-        btn.classList.add('active', 'bg-crimson-700', 'text-white', 'border-crimson-700');
-        btn.classList.remove('text-light-text0', 'border-earth-200');
+        filters.forEach(f => f.classList.remove('active'));
+        btn.classList.add('active');
         activeCounty = (btn as HTMLElement).dataset.county ?? 'all';
         applyFilters();
       });
     });
 
-    // ── Slider helpers ───────────────────────────────────────
     function updateFill(fill: HTMLElement, minInput: HTMLInputElement, maxInput: HTMLInputElement, max: number) {
       const lo = (parseFloat(minInput.value) / max) * 100;
       const hi = (parseFloat(maxInput.value) / max) * 100;
@@ -219,7 +150,6 @@ function parseAcres(acreage: string): number {
       return '$' + v.toLocaleString();
     }
 
-    // ── Price slider ─────────────────────────────────────────
     const priceMinEl  = document.getElementById('price-min') as HTMLInputElement;
     const priceMaxEl  = document.getElementById('price-max') as HTMLInputElement;
     const priceFill   = document.getElementById('price-fill') as HTMLElement;
@@ -240,7 +170,6 @@ function parseAcres(acreage: string): number {
     priceMaxEl.addEventListener('input', onPriceChange);
     updateFill(priceFill, priceMinEl, priceMaxEl, MAX_PRICE);
 
-    // ── Acres slider ─────────────────────────────────────────
     const acresMinEl  = document.getElementById('acres-min') as HTMLInputElement;
     const acresMaxEl  = document.getElementById('acres-max') as HTMLInputElement;
     const acresFill   = document.getElementById('acres-fill') as HTMLElement;

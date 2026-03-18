@@ -36,24 +36,24 @@ const navLinks = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Funnel+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
   </head>
-  <body class="min-h-screen flex flex-col">
+  <body class="site-body">
     <!-- Navigation -->
-    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" id="site-header">
-      <div class="absolute inset-0 border-b border-earth-200/60" id="header-bg" style="background-color: var(--color-nav-bg)"></div>
-      <nav class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 flex items-center h-20">
+    <header class="site-header" id="site-header">
+      <div class="header-bg" id="header-bg"></div>
+      <nav class="site-nav">
         <!-- Logo (left) -->
-        <a href="/" class="relative group flex items-center flex-shrink-0">
-          <div class="h-9" style="aspect-ratio:43.24/38.47;background-color:var(--color-nav-accent);-webkit-mask-image:url('/JWLC_Icon_Positive.svg');mask-image:url('/JWLC_Icon_Positive.svg');-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;" role="img" aria-label="Julie Wright Land Company"></div>
+        <a href="/" class="nav-logo">
+          <div class="nav-logo-icon" role="img" aria-label="Julie Wright Land Company"></div>
         </a>
 
         <!-- Desktop Nav (center) -->
-        <ul class="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+        <ul class="nav-desktop">
           {navLinks.map((link) => (
             <li>
               <a
                 href={link.href}
                 class:list={[
-                  'relative px-4 py-2 text-sm font-medium tracking-wide transition-colors duration-300',
+                  'nav-desktop-link',
                   (currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)))
                     ? 'nav-link-active'
                     : 'nav-link-inactive',
@@ -61,7 +61,7 @@ const navLinks = [
               >
                 {link.label}
                 {(currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))) && (
-                  <span class="absolute bottom-0 left-4 right-4 h-0.5 rounded-full" style="background-color: var(--color-nav-accent)" />
+                  <span class="nav-active-bar" />
                 )}
               </a>
             </li>
@@ -69,29 +69,25 @@ const navLinks = [
         </ul>
 
         <!-- Mobile Menu Button -->
-        <button
-          class="lg:hidden relative w-10 h-10 flex items-center justify-center ml-auto mr-3 cursor-pointer group"
-          id="mobile-menu-btn"
-          aria-label="Toggle navigation menu"
-        >
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation menu">
           <span class="sr-only">Menu</span>
-          <div class="w-6 flex flex-col gap-1.5 transition-all" id="hamburger">
-            <span class="hamburger-bar block h-0.5 w-6 transition-all duration-300 origin-center" id="bar1"></span>
-            <span class="hamburger-bar block h-0.5 w-6 transition-all duration-300" id="bar2"></span>
-            <span class="hamburger-bar block h-0.5 w-4 transition-all duration-300 origin-center ml-auto" id="bar3"></span>
+          <div class="hamburger-wrap">
+            <span class="hamburger-bar" id="bar1"></span>
+            <span class="hamburger-bar" id="bar2"></span>
+            <span class="hamburger-bar" id="bar3"></span>
           </div>
         </button>
       </nav>
 
       <!-- Mobile Menu -->
-      <div class="lg:hidden absolute top-full left-0 right-0 -translate-y-2 opacity-0 pointer-events-none transition-all duration-300 ease-out border-b border-earth-200/60 shadow-md" id="mobile-menu" style="background-color: var(--color-nav-bg)">
-        <ul class="flex flex-col items-center px-6 py-4 gap-1">
-          {navLinks.map((link, i) => (
+      <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-menu-list">
+          {navLinks.map((link) => (
             <li>
               <a
                 href={link.href}
                 class:list={[
-                  'block px-2 py-2.5 text-lg font-display tracking-wide transition-colors text-center',
+                  'mobile-menu-link',
                   currentPath === link.href ? 'nav-link-active' : 'nav-link-inactive',
                 ]}
               >
@@ -106,34 +102,32 @@ const navLinks = [
     <FontSwitcher />
 
     <!-- Main Content -->
-    <main class="flex-1 pt-20">
+    <main class="site-main">
       <slot />
     </main>
 
     <!-- Footer -->
-    <footer class="relative bg-earth-900 text-earth-300 mt-auto overflow-hidden">
-      <img src="/FallsLakeTopoContours.svg" class="topo-bg opacity-[0.035]" style="filter: invert(1);" alt="" aria-hidden="true" />
-      <div class="relative max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+    <footer class="site-footer">
+      <img src="/FallsLakeTopoContours.svg" class="topo-bg topo-bg--faint" alt="" aria-hidden="true" />
+      <div class="footer-inner">
+        <div class="footer-grid">
           <!-- Brand -->
-          <div class="lg:col-span-1">
-            <a href="/" class="inline-block mb-5">
-              <img src="/JWLC_Full_Negative.svg" class="h-12 w-auto" alt="Julie Wright Land Company" />
+          <div class="footer-brand">
+            <a href="/" class="footer-logo">
+              <img src="/JWLC_Full_Negative.svg" class="footer-logo-img" alt="Julie Wright Land Company" />
             </a>
-            <p class="text-sm leading-relaxed text-earth-400 max-w-xs">
+            <p class="footer-tagline">
               Specializing in Triangle area land brokerage, sales, and investment properties for over 40 years.
             </p>
           </div>
 
           <!-- Quick Links -->
           <div>
-            <h4 class="font-display text-lg text-earth-100 mb-5">Navigate</h4>
-            <ul class="space-y-3">
+            <h4 class="footer-col-heading">Navigate</h4>
+            <ul class="footer-nav-list">
               {navLinks.map((link) => (
                 <li>
-                  <a href={link.href} class="text-sm text-earth-400 hover:text-earth-100 transition-colors duration-300">
-                    {link.label}
-                  </a>
+                  <a href={link.href} class="footer-nav-link">{link.label}</a>
                 </li>
               ))}
             </ul>
@@ -141,8 +135,8 @@ const navLinks = [
 
           <!-- Services -->
           <div>
-            <h4 class="font-display text-lg text-earth-100 mb-5">Services</h4>
-            <ul class="space-y-3 text-sm text-earth-400">
+            <h4 class="footer-col-heading">Services</h4>
+            <ul class="footer-services-list">
               <li>Land Brokerage & Sales</li>
               <li>Appraisal Services</li>
               <li>Land Planning</li>
@@ -154,22 +148,22 @@ const navLinks = [
 
           <!-- Contact -->
           <div>
-            <h4 class="font-display text-lg text-earth-100 mb-5">Contact</h4>
-            <address class="not-italic space-y-3 text-sm text-earth-400">
+            <h4 class="footer-col-heading">Contact</h4>
+            <address class="footer-contact">
               <p>10931 Strickland Rd, Suite 111<br />Raleigh, NC 27615</p>
               <p>
-                <a href="tel:9198475731" class="hover:text-earth-100 transition-colors">(919) 847-5731</a>
+                <a href="tel:9198475731" class="footer-contact-link">(919) 847-5731</a>
               </p>
               <p>
-                <a href="mailto:juliannawright@gmail.com" class="hover:text-earth-100 transition-colors">juliannawright@gmail.com</a>
+                <a href="mailto:juliannawright@gmail.com" class="footer-contact-link">juliannawright@gmail.com</a>
               </p>
             </address>
           </div>
         </div>
 
-        <div class="mt-16 pt-8 border-t border-earth-800 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p class="text-xs text-earth-500">&copy; {new Date().getFullYear()} Julie Wright Land Company. All rights reserved.</p>
-          <p class="text-xs text-earth-600">Raleigh, NC &middot; Serving the Triangle for 40+ Years</p>
+        <div class="footer-bottom">
+          <p class="footer-copyright">&copy; {new Date().getFullYear()} Julie Wright Land Company. All rights reserved.</p>
+          <p class="footer-location">Raleigh, NC &middot; Serving the Triangle for 40+ Years</p>
         </div>
       </div>
     </footer>
@@ -181,49 +175,23 @@ const navLinks = [
           const section = el.parentElement;
           if (!section) return;
           const rect = section.getBoundingClientRect();
-          // Anchor SVG to viewport center so adjacent dark sections share the same
-          // slice of the pattern, making them appear visually seamless.
           const relativeToCenter = rect.top + rect.height / 2 - window.innerHeight / 2;
           const offset = -relativeToCenter;
           el.style.transform = `translateX(-50%) translateY(calc(-50% + ${offset}px))`;
         });
       }
 
-      // Init
       updateParallax();
-
-      window.addEventListener('scroll', () => {
-        updateParallax();
-      }, { passive: true });
+      window.addEventListener('scroll', updateParallax, { passive: true });
 
       // Mobile menu
       const menuBtn = document.getElementById('mobile-menu-btn');
       const mobileMenu = document.getElementById('mobile-menu');
-      const bar1 = document.getElementById('bar1');
-      const bar2 = document.getElementById('bar2');
-      const bar3 = document.getElementById('bar3');
-      let menuOpen = false;
 
       menuBtn?.addEventListener('click', () => {
-        menuOpen = !menuOpen;
-        if (menuOpen) {
-          mobileMenu?.classList.remove('-translate-y-2', 'opacity-0', 'pointer-events-none');
-          mobileMenu?.classList.add('translate-y-0');
-          bar1?.classList.add('rotate-45', 'translate-y-[8px]');
-          bar2?.classList.add('opacity-0');
-          bar3?.classList.add('-rotate-45', '-translate-y-[8px]', 'w-6');
-        } else {
-          mobileMenu?.classList.add('-translate-y-2', 'opacity-0', 'pointer-events-none');
-          mobileMenu?.classList.remove('translate-y-0');
-          bar1?.classList.remove('rotate-45', 'translate-y-[8px]');
-          bar2?.classList.remove('opacity-0');
-          bar3?.classList.remove('-rotate-45', '-translate-y-[8px]', 'w-6');
-        }
+        const open = menuBtn.classList.toggle('open');
+        mobileMenu?.classList.toggle('open', open);
       });
     </script>
-    <style>
-      .hamburger-bar { background-color: var(--color-nav-menu); transition: background-color 200ms; }
-      #mobile-menu-btn:hover .hamburger-bar { background-color: var(--color-nav-accent); }
-    </style>
   </body>
 </html>
