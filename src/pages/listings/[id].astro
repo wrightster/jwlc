@@ -25,7 +25,7 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
 >
   <!-- Back Link -->
   <div class="listing-back-bar">
-    <div class="content-wrap py-4">
+    <div class="content-wrap py-2">
       <a href="/listings" class="listing-back-link">
         <svg class="listing-back-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
@@ -85,8 +85,8 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
           <!-- Header -->
           <div class="listing-detail-header">
             <div class="listing-badges">
-              <span class="listing-status-badge">
-                {listing.status === 'available' ? 'Available' : listing.status}
+              <span class="listing-status-badge" data-status={listing.status}>
+                {listing.status === 'available' ? 'Available' : listing.status === 'pending' ? 'Pending' : 'Sold'}
               </span>
               <span class="listing-county-badge">{listing.county} County</span>
             </div>

@@ -489,14 +489,14 @@
   /* ══════════════════════════════════════════════════
      LISTING DETAIL PAGE
   ══════════════════════════════════════════════════ */
-  .listing-back-bar  { @apply bg-brand-bg border-b border-brand-light; }
+  .listing-back-bar  { @apply bg-brand-light border-b border-brand-light; }
   .listing-back-link {
     @apply inline-flex items-center gap-2 text-sm text-brand-bg0 hover:text-earth-800 transition-colors;
   }
   .listing-back-icon { @apply w-4 h-4; }
 
   .listing-gallery-inset {
-    @apply bg-brand-light rounded-sm mb-8 p-4 md:p-5;
+    @apply bg-brand-light rounded-b-sm mb-8 p-4 md:p-5;
   }
   .gallery-main-wrap {
     @apply relative aspect-[16/9] overflow-hidden cursor-pointer rounded-sm w-full md:w-4/5 mx-auto;
@@ -524,30 +524,33 @@
   .thumb-btn.active { @apply border-brand-primary opacity-100; }
   .thumb-img        { @apply w-full h-full object-cover; }
 
-  .listing-detail-section { @apply py-6 lg:py-8; }
+  .listing-detail-section { @apply pb-6 lg:pb-8; }
   .listing-detail-grid    { @apply grid lg:grid-cols-3 gap-12 lg:gap-16; }
   .listing-detail-main    { @apply lg:col-span-2; }
-  .listing-detail-header  { @apply mb-8; }
+  .listing-detail-header  { @apply mb-4; }
   .listing-badges         { @apply flex flex-wrap items-center gap-3 mb-3; }
   .listing-status-badge   {
-    @apply px-3 py-1 bg-brand-light text-brand-primary text-xs font-semibold uppercase tracking-widest rounded-sm;
+    @apply px-3 py-1 text-xs font-display font-semibold uppercase tracking-widest rounded-sm;
   }
-  .listing-county-badge { @apply text-xs text-brand-bg0 uppercase tracking-widest; }
-  .listing-title        { @apply font-display text-3xl md:text-4xl lg:text-5xl text-earth-900 leading-tight; }
+  .listing-status-badge[data-status="available"] { @apply bg-brand-primary text-brand-bg; }
+  .listing-status-badge[data-status="pending"]   { @apply bg-brand-medium text-earth-900; }
+  .listing-status-badge[data-status="sold"]      { @apply bg-earth-900 text-light-text; }
+  .listing-county-badge { @apply text-xs font-display font-semibold text-brand-bg0 uppercase tracking-widest; }
+  .listing-title        { @apply font-display text-4xl text-earth-900 leading-tight; }
   .listing-address-row  { @apply text-brand-bg0 mt-3 flex items-center gap-2; }
   .listing-address-icon { @apply w-4 h-4; }
 
-  .listing-key-stats  { @apply grid grid-cols-2 sm:grid-cols-3 gap-4 mb-10 pb-10 border-b border-earth-200; }
+  .listing-key-stats  { @apply grid grid-cols-2 sm:grid-cols-3 gap-4 mb-5 pb-5 border-b border-earth-200; }
   .listing-stat-cell  { @apply bg-brand-bg rounded-sm p-5; }
   .listing-stat-label { @apply text-[11px] uppercase tracking-[0.2em] text-brand-bg0 font-semibold; }
-  .listing-stat-value          { @apply font-display text-2xl text-brand-primary mt-1; }
-  .listing-stat-value--dark    { @apply font-display text-2xl text-earth-900 mt-1; }
+  .listing-stat-value          { @apply font-display font-bold text-2xl text-brand-primary mt-1; }
+  .listing-stat-value--dark    { @apply font-display font-bold text-2xl text-earth-900 mt-1; }
   .listing-stat-value--medium  { @apply font-display text-lg text-earth-900 mt-1; }
 
   .listing-description-heading { @apply font-display text-2xl text-earth-900 mb-5; }
   .listing-description-body    { @apply space-y-4 text-earth-700 leading-relaxed; }
 
-  .listing-sidebar      { @apply lg:col-span-1 space-y-6; }
+  .listing-sidebar      { @apply lg:col-span-1 space-y-6 pt-4 md:pt-5; }
   .listing-contact-card { @apply bg-white rounded-sm p-7 sticky top-28; }
   .listing-contact-heading { @apply font-display text-lg text-earth-900 mb-1; }
   .listing-contact-desc    { @apply text-sm text-brand-bg0 mb-6; }
