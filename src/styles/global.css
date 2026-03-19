@@ -70,21 +70,33 @@
 
   /* ══════════════════════════════════════════════════
      BUTTONS
+     Shared structure: display font, border-2, px-7 py-2, rounded-sm.
+     To tweak site-wide: adjust the shared rule below.
+     Color is the only difference between variants.
   ══════════════════════════════════════════════════ */
-  .btn-primary {
-    @apply inline-flex items-center justify-center px-7 py-3 bg-brand-primary text-brand-bg font-medium tracking-wide rounded-sm transition-all duration-300 hover:bg-[#ffd48a] hover:text-earth-900;
-  }
-  .btn-secondary {
-    @apply inline-flex items-center justify-center px-7 py-3 border-2 border-earth-900 text-earth-900 font-medium tracking-wide rounded-sm transition-all duration-300 hover:bg-earth-900 hover:text-brand-bg;
-  }
+  .btn-primary,
+  .btn-secondary,
   .btn-nav {
-    @apply inline-flex items-center justify-center px-7 py-3 font-medium tracking-wide rounded-sm transition-all duration-300;
-    background-color: var(--color-nav-accent);
-    color: var(--color-nav-bg);
+    @apply inline-flex items-center justify-center px-7 py-2 font-display font-medium border-2 tracking-wide rounded-sm transition-all duration-300;
+    background-color: var(--btn-bg, transparent);
+  }
+
+  /* Crimson — outlined, fills on hover */
+  .btn-primary {
+    @apply border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-brand-bg;
+  }
+  /* Earth — outlined, fills dark on hover */
+  .btn-secondary {
+    @apply border-earth-900 text-earth-900 hover:bg-earth-900 hover:text-brand-bg;
+  }
+  /* Nav — uses CSS-variable accent color */
+  .btn-nav {
+    border-color: var(--color-nav-accent);
+    color: var(--color-nav-accent);
   }
   .btn-nav:hover {
-    background-color: #ffd48a;
-    color: var(--color-earth-900);
+    background-color: var(--color-nav-accent);
+    color: var(--color-nav-bg);
   }
   .btn-icon { @apply w-4 h-4 ml-1.5; }
   .btn-icon-lead { @apply w-4 h-4 mr-2; }
@@ -186,7 +198,7 @@
   /* ══════════════════════════════════════════════════
      PAGE BANNER
   ══════════════════════════════════════════════════ */
-  .page-banner       { @apply relative py-10 lg:py-12 bg-brand-light overflow-hidden; }
+  .page-banner       { @apply relative py-10 lg:py-12 bg-brand-light overflow-hidden; --btn-bg: var(--color-brand-light); }
   .page-banner-title { @apply font-display italic text-4xl md:text-6xl text-brand-primary leading-tight; }
   .page-banner-desc  { @apply text-earth-700 mt-5 max-w-2xl text-lg; }
 
@@ -199,10 +211,10 @@
   /* ══════════════════════════════════════════════════
      CTA SECTIONS
   ══════════════════════════════════════════════════ */
-  .cta-dark         { @apply py-7 bg-earth-900; }
+  .cta-dark         { @apply py-7 bg-earth-900; --btn-bg: var(--color-earth-900); }
   .cta-dark-heading { @apply font-display text-3xl text-light-text; }
   .cta-dark-body    { @apply text-earth-400 mt-4; }
-  .cta-light         { @apply py-8 bg-brand-light/50 border-t border-earth-200; }
+  .cta-light         { @apply py-8 bg-brand-light/50 border-t border-earth-200; --btn-bg: var(--color-brand-light); }
   .cta-light-heading { @apply font-display text-3xl text-earth-900; }
   .cta-light-body    { @apply text-earth-600 mt-4; }
   .cta-btn-row       { @apply flex flex-wrap justify-center gap-4 mt-8; }
@@ -252,7 +264,7 @@
   /* ══════════════════════════════════════════════════
      HOMEPAGE — TESTIMONIAL + CTA
   ══════════════════════════════════════════════════ */
-  .home-dark-section       { @apply relative py-7 bg-brand-light overflow-hidden; }
+  .home-dark-section       { @apply relative py-7 bg-brand-light overflow-hidden; --btn-bg: var(--color-brand-light); }
   .home-dark-inner         { @apply relative max-w-6xl mx-auto px-6 lg:px-8; }
   .home-dark-grid          { @apply grid lg:grid-cols-2 gap-12 lg:gap-16 items-center; }
   .home-testimonial-icon   { @apply w-7 h-7 text-earth-900/20 mb-3; }
