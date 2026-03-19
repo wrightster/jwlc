@@ -383,7 +383,8 @@
   .sidebar-contact-link { @apply hover:text-brand-primary transition-colors; }
   .sidebar-area-desc    { @apply text-sm text-earth-600 mb-4; }
   .sidebar-county-tags  { @apply flex flex-wrap gap-2; }
-  .sidebar-county-tag   { @apply px-3 py-1.5 bg-white text-xs font-medium text-earth-700 rounded-sm; }
+  .sidebar-county-tag   { @apply px-3 py-1.5 bg-white text-xs font-medium text-earth-700 rounded-sm no-underline transition-colors; }
+  .sidebar-county-tag:hover { background-color: var(--color-crimson-700); color: white; }
   .sidebar-dark          { @apply bg-earth-900 rounded-sm p-7; }
   .sidebar-dark-heading  { @apply font-display text-lg text-light-text mb-2; }
   .sidebar-dark-desc     { @apply text-sm text-earth-400 mb-5; }

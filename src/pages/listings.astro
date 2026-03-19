@@ -172,7 +172,6 @@ function parseAcres(acreage: string): number {
       const filterId = (cs as HTMLElement).dataset.filter!;
       const options  = cs.querySelectorAll('.custom-select-option');
 
-      // Toggle open on trigger click
       trigger.addEventListener('click', e => {
         e.stopPropagation();
         const wasOpen = cs.classList.contains('is-open');
@@ -214,6 +213,20 @@ function parseAcres(acreage: string): number {
     let priceMin = 0, priceMax = MAX_PRICE;
     let acresMin = 0, acresMax = MAX_ACRES;
 
+    const statusToShort: Record<string, string> = { available: 'a', pending: 'p', sold: 's' };
+    const shortToStatus: Record<string, string> = { a: 'available', p: 'pending', s: 'sold' };
+
+    function updateURL() {
+      const params = new URLSearchParams();
+      if (filterValues.county !== 'all') params.set('county', filterValues.county);
+      if (filterValues.city   !== 'all') params.set('city',   filterValues.city);
+      if (filterValues.status !== 'all') params.set('status', statusToShort[filterValues.status] ?? filterValues.status);
+      if (priceMin > 0 || priceMax < MAX_PRICE)   params.set('price', `${priceMin / 1000}-${priceMax / 1000}`);
+      if (acresMin > 0 || acresMax < MAX_ACRES)   params.set('acres', `${acresMin}-${acresMax}`);
+      const qs = params.toString();
+      history.replaceState(null, '', qs ? '?' + qs : window.location.pathname);
+    }
+
     function applyFilters() {
       let visible = 0;
       items.forEach(item => {
@@ -230,6 +243,7 @@ function parseAcres(acreage: string): number {
         if (show) visible++;
       });
       if (countEl) countEl.textContent = String(visible);
+      updateURL();
     }
 
     // ── Range sliders ─────────────────────────────────────────────────────
@@ -240,9 +254,9 @@ function parseAcres(acreage: string): number {
       fill.style.width = (hi - lo) + '%';
     }
 
-    const priceMinEl  = document.getElementById('price-min')      as HTMLInputElement;
-    const priceMaxEl  = document.getElementById('price-max')      as HTMLInputElement;
-    const priceFill   = document.getElementById('price-fill')     as HTMLElement;
+    const priceMinEl  = document.getElementById('price-min')         as HTMLInputElement;
+    const priceMaxEl  = document.getElementById('price-max')         as HTMLInputElement;
+    const priceFill   = document.getElementById('price-fill')        as HTMLElement;
     const priceMinLbl = document.getElementById('price-min-display') as HTMLElement;
     const priceMaxLbl = document.getElementById('price-max-display') as HTMLElement;
 
@@ -260,9 +274,9 @@ function parseAcres(acreage: string): number {
     priceMaxEl.addEventListener('input', onPriceChange);
     updateFill(priceFill, priceMinEl, priceMaxEl, MAX_PRICE);
 
-    const acresMinEl  = document.getElementById('acres-min')      as HTMLInputElement;
-    const acresMaxEl  = document.getElementById('acres-max')      as HTMLInputElement;
-    const acresFill   = document.getElementById('acres-fill')     as HTMLElement;
+    const acresMinEl  = document.getElementById('acres-min')         as HTMLInputElement;
+    const acresMaxEl  = document.getElementById('acres-max')         as HTMLInputElement;
+    const acresFill   = document.getElementById('acres-fill')        as HTMLElement;
     const acresMinLbl = document.getElementById('acres-min-display') as HTMLElement;
     const acresMaxLbl = document.getElementById('acres-max-display') as HTMLElement;
 
@@ -286,5 +300,50 @@ function parseAcres(acreage: string): number {
     acresMinEl.addEventListener('input', onAcresChange);
     acresMaxEl.addEventListener('input', onAcresChange);
     updateFill(acresFill, acresMinEl, acresMaxEl, MAX_ACRES);
+
+    // ── Initialize from URL params (runs after all vars are ready) ────────
+    (function initFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      if (!params.toString()) return;
+
+      // Dropdowns
+      const paramMap: Array<[string, string]> = [['county', 'county'], ['city', 'city'], ['status', 'status']];
+      paramMap.forEach(([param, filterId]) => {
+        const raw = params.get(param);
+        if (!raw) return;
+        const val = filterId === 'status' ? (shortToStatus[raw] ?? raw) : raw;
+        const cs = document.querySelector(`.custom-select[data-filter="${filterId}"]`);
+        if (!cs) return;
+        const valEl   = cs.querySelector('.custom-select-val') as HTMLElement;
+        const options = cs.querySelectorAll('.custom-select-option');
+        options.forEach(opt => {
+          const el = opt as HTMLElement;
+          const isMatch = el.dataset.value === val;
+          el.classList.toggle('is-selected', isMatch);
+          if (isMatch) valEl.textContent = el.textContent;
+        });
+        filterValues[filterId] = val;
+      });
+
+      // Price sliders
+      const priceParam = params.get('price');
+      if (priceParam) {
+        const [pLo, pHi] = priceParam.split('-').map(v => parseFloat(v) * 1000);
+        if (!isNaN(pLo)) { priceMin = pLo; priceMinEl.value = String(pLo); priceMinLbl.textContent = '$' + pLo.toLocaleString(); }
+        if (!isNaN(pHi)) { priceMax = pHi; priceMaxEl.value = String(pHi); priceMaxLbl.textContent = '$' + pHi.toLocaleString(); }
+        updateFill(priceFill, priceMinEl, priceMaxEl, MAX_PRICE);
+      }
+
+      // Acres sliders
+      const acresParam = params.get('acres');
+      if (acresParam) {
+        const [aLo, aHi] = acresParam.split('-').map(v => parseFloat(v));
+        if (!isNaN(aLo)) { acresMin = aLo; acresMinEl.value = String(aLo); acresMinLbl.textContent = fmtAcres(aLo) + ' ac'; }
+        if (!isNaN(aHi)) { acresMax = aHi; acresMaxEl.value = String(aHi); acresMaxLbl.textContent = fmtAcres(aHi) + ' ac'; }
+        updateFill(acresFill, acresMinEl, acresMaxEl, MAX_ACRES);
+      }
+
+      applyFilters();
+    })();
   </script>
 </Layout>

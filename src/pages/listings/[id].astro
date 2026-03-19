@@ -89,7 +89,7 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
               <span class="listing-status-badge">
                 {listing.status === 'available' ? 'Available' : listing.status}
               </span>
-              <span class="listing-county-badge">{listing.county}</span>
+              <span class="listing-county-badge">{listing.county} County</span>
             </div>
             <h1 class="listing-title">{listing.title}</h1>
             {listing.address && (
@@ -201,7 +201,7 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
               <div class="more-listing-image">
                 <img src={otherImages[0]} alt={other.title} class="more-listing-img" loading="lazy" />
                 <div class="more-listing-overlay"></div>
-                <span class="more-listing-county">{other.county}</span>
+                <span class="more-listing-county">{other.county} County</span>
               </div>
               <div class="more-listing-content">
                 <h3 class="more-listing-title">{other.title}</h3>

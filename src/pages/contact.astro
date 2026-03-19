@@ -115,7 +115,7 @@ export const prerender = true;
             <p class="sidebar-area-desc">We serve the following counties across the Triangle region:</p>
             <div class="sidebar-county-tags">
               {['Wake', 'Durham', 'Granville', 'Franklin', 'Vance', 'Harnett', 'Nash', 'Chatham'].map((county) => (
-                <span class="sidebar-county-tag">{county}</span>
+                <a href={`/listings?county=${encodeURIComponent(county)}`} class="sidebar-county-tag">{county}</a>
               ))}
             </div>
           </div>
