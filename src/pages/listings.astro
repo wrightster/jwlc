@@ -31,46 +31,89 @@ function parseAcres(acreage: string): number {
     <div class="content-wrap">
       <!-- Filter bar -->
       <div class="filter-bar">
-        <!-- County filters -->
-        <div class="filter-county-row">
-          <span class="filter-label">Filter by county:</span>
-          <button class="county-filter active" data-county="all">All</button>
-          {[...new Set(listings.map(l => l.county))].sort().map((county) => (
-            <button class="county-filter" data-county={county}>{county}</button>
-          ))}
-        </div>
+        <div class="filter-controls-row">
 
-        <!-- Range sliders -->
-        <div class="filter-range-row">
-          <!-- Price -->
-          <div>
-            <p class="filter-range-label">Price Range</p>
+          <!-- County dropdown -->
+          <div class="filter-select-wrap">
+            <span class="filter-select-label">County</span>
+            <div class="custom-select" data-filter="county">
+              <button class="custom-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                <span class="custom-select-val">All Counties</span>
+                <svg class="custom-select-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <ul class="custom-select-list" role="listbox">
+                <li class="custom-select-option is-selected" data-value="all" role="option">All Counties</li>
+                {[...new Set(listings.map(l => l.county))].sort().map((county) => (
+                  <li class="custom-select-option" data-value={county} role="option">{county}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <!-- City dropdown -->
+          <div class="filter-select-wrap">
+            <span class="filter-select-label">City</span>
+            <div class="custom-select" data-filter="city">
+              <button class="custom-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                <span class="custom-select-val">All Cities</span>
+                <svg class="custom-select-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <ul class="custom-select-list" role="listbox">
+                <li class="custom-select-option is-selected" data-value="all" role="option">All Cities</li>
+                {[...new Set(listings.map(l => l.city))].sort().map((city) => (
+                  <li class="custom-select-option" data-value={city} role="option">{city}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <!-- Status dropdown -->
+          <div class="filter-select-wrap">
+            <span class="filter-select-label">Status</span>
+            <div class="custom-select" data-filter="status">
+              <button class="custom-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                <span class="custom-select-val">All Statuses</span>
+                <svg class="custom-select-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <ul class="custom-select-list" role="listbox">
+                <li class="custom-select-option is-selected" data-value="all" role="option">All Statuses</li>
+                <li class="custom-select-option" data-value="available" role="option">Available</li>
+                <li class="custom-select-option" data-value="pending" role="option">Pending</li>
+                <li class="custom-select-option" data-value="sold" role="option">Sold</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Price slider -->
+          <div class="filter-range-wrap">
+            <p class="filter-select-label">Price Range</p>
             <div class="range-slider">
               <div class="range-track"><div class="range-fill" id="price-fill"></div></div>
-              <input type="range" id="price-min" min="0" max="500000" step="5000" value="0" class="range-input" />
-              <input type="range" id="price-max" min="0" max="500000" step="5000" value="500000" class="range-input" />
+              <input type="range" id="price-min" min="0" max="500000" step="10000" value="0" class="range-input" />
+              <input type="range" id="price-max" min="0" max="500000" step="10000" value="500000" class="range-input" />
             </div>
             <div class="filter-range-display">
-              <div class="filter-range-side filter-range-side--left"><span id="price-min-display" class="filter-range-val">$0</span></div>
-              <span class="filter-range-sep">to</span>
-              <div class="filter-range-side filter-range-side--right"><span id="price-max-display" class="filter-range-val">$500,000+</span></div>
+              <span id="price-min-display" class="filter-range-val">$0</span>
+              <span class="filter-range-sep">–</span>
+              <span id="price-max-display" class="filter-range-val">$500,000+</span>
             </div>
           </div>
 
-          <!-- Acreage -->
-          <div>
-            <p class="filter-range-label">Acreage</p>
+          <!-- Acreage slider -->
+          <div class="filter-range-wrap">
+            <p class="filter-select-label">Acreage</p>
             <div class="range-slider">
               <div class="range-track"><div class="range-fill" id="acres-fill"></div></div>
-              <input type="range" id="acres-min" min="0" max="50" step="0.5" value="0" class="range-input" />
-              <input type="range" id="acres-max" min="0" max="50" step="0.5" value="50" class="range-input" />
+              <input type="range" id="acres-min" min="0" max="50" step="1" value="0" class="range-input" />
+              <input type="range" id="acres-max" min="0" max="50" step="1" value="50" class="range-input" />
             </div>
             <div class="filter-range-display">
-              <div class="filter-range-side filter-range-side--left"><span id="acres-min-display" class="filter-range-val">0</span></div>
-              <span class="filter-range-sep">to</span>
-              <div class="filter-range-side filter-range-side--right"><span id="acres-max-display" class="filter-range-val">50+ acres</span></div>
+              <span id="acres-min-display" class="filter-range-val">0</span>
+              <span class="filter-range-sep">–</span>
+              <span id="acres-max-display" class="filter-range-val">50+ ac</span>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -82,7 +125,7 @@ function parseAcres(acreage: string): number {
       <!-- Grid -->
       <div class="listings-grid" id="listings-grid">
         {listings.map((listing, i) => (
-          <div class="listing-item" data-county={listing.county} data-price={parsePrice(listing.price)} data-acres={parseAcres(listing.acreage)} id={listing.id}>
+          <div class="listing-item" data-county={listing.county} data-city={listing.city} data-status={listing.status} data-price={parsePrice(listing.price)} data-acres={parseAcres(listing.acreage)} id={listing.id}>
             <ListingCard listing={listing} index={i} />
           </div>
         ))}
@@ -105,64 +148,111 @@ function parseAcres(acreage: string): number {
 
   <script>
     const MAX_PRICE = 500000;
-    const MAX_ACRES = 50;
 
-    const filters = document.querySelectorAll('.county-filter');
-    const items = document.querySelectorAll('.listing-item');
+    const items   = document.querySelectorAll('.listing-item');
     const countEl = document.getElementById('count');
 
-    let activeCounty = 'all';
+    const highestAcres = Math.max(...Array.from(items).map(el => parseFloat((el as HTMLElement).dataset.acres ?? '0')));
+    const MAX_ACRES = Math.ceil(highestAcres / 2) * 2;
+
+    // ── Custom select state ───────────────────────────────────────────────
+    const filterValues: Record<string, string> = { county: 'all', city: 'all', status: 'all' };
+
+    function closeAll(except?: Element) {
+      document.querySelectorAll('.custom-select.is-open').forEach(cs => {
+        if (cs === except) return;
+        cs.classList.remove('is-open');
+        cs.querySelector('.custom-select-trigger')!.setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    document.querySelectorAll('.custom-select').forEach(cs => {
+      const trigger  = cs.querySelector('.custom-select-trigger') as HTMLButtonElement;
+      const valEl    = cs.querySelector('.custom-select-val') as HTMLElement;
+      const filterId = (cs as HTMLElement).dataset.filter!;
+      const options  = cs.querySelectorAll('.custom-select-option');
+
+      // Toggle open on trigger click
+      trigger.addEventListener('click', e => {
+        e.stopPropagation();
+        const wasOpen = cs.classList.contains('is-open');
+        closeAll();
+        if (!wasOpen) {
+          cs.classList.add('is-open');
+          trigger.setAttribute('aria-expanded', 'true');
+        }
+      });
+
+      options.forEach(opt => {
+        const el = opt as HTMLElement;
+
+        // Single click → select, list stays open
+        el.addEventListener('click', e => {
+          e.stopPropagation();
+          filterValues[filterId] = el.dataset.value ?? 'all';
+          valEl.textContent = el.textContent;
+          options.forEach(o => o.classList.remove('is-selected'));
+          el.classList.add('is-selected');
+          applyFilters();
+        });
+
+        // Double click → also close
+        el.addEventListener('dblclick', e => {
+          e.stopPropagation();
+          closeAll();
+        });
+      });
+    });
+
+    // Outside click closes all
+    document.addEventListener('click', () => closeAll());
+
+    // Scroll closes all
+    window.addEventListener('scroll', () => closeAll(), { passive: true });
+
+    // ── Filter logic ──────────────────────────────────────────────────────
     let priceMin = 0, priceMax = MAX_PRICE;
     let acresMin = 0, acresMax = MAX_ACRES;
 
     function applyFilters() {
       let visible = 0;
       items.forEach(item => {
-        const el = item as HTMLElement;
+        const el        = item as HTMLElement;
         const itemPrice = parseFloat(el.dataset.price ?? '0');
         const itemAcres = parseFloat(el.dataset.acres ?? '0');
-        const countyOk = activeCounty === 'all' || el.dataset.county === activeCounty;
-        const priceOk  = itemPrice >= priceMin && (priceMax >= MAX_PRICE || itemPrice <= priceMax);
-        const acresOk  = itemAcres >= acresMin && (acresMax >= MAX_ACRES || itemAcres <= acresMax);
-        el.style.display = (countyOk && priceOk && acresOk) ? '' : 'none';
-        if (countyOk && priceOk && acresOk) visible++;
+        const countyOk  = filterValues.county === 'all' || el.dataset.county === filterValues.county;
+        const cityOk    = filterValues.city   === 'all' || el.dataset.city   === filterValues.city;
+        const statusOk  = filterValues.status === 'all' || el.dataset.status === filterValues.status;
+        const priceOk   = itemPrice >= priceMin && (priceMax >= MAX_PRICE || itemPrice <= priceMax);
+        const acresOk   = itemAcres >= acresMin && (acresMax >= MAX_ACRES  || itemAcres <= acresMax);
+        const show = countyOk && cityOk && statusOk && priceOk && acresOk;
+        el.style.display = show ? '' : 'none';
+        if (show) visible++;
       });
       if (countEl) countEl.textContent = String(visible);
     }
 
-    filters.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filters.forEach(f => f.classList.remove('active'));
-        btn.classList.add('active');
-        activeCounty = (btn as HTMLElement).dataset.county ?? 'all';
-        applyFilters();
-      });
-    });
-
-    function updateFill(fill: HTMLElement, minInput: HTMLInputElement, maxInput: HTMLInputElement, max: number) {
-      const lo = (parseFloat(minInput.value) / max) * 100;
-      const hi = (parseFloat(maxInput.value) / max) * 100;
+    // ── Range sliders ─────────────────────────────────────────────────────
+    function updateFill(fill: HTMLElement, minEl: HTMLInputElement, maxEl: HTMLInputElement, max: number) {
+      const lo = (parseFloat(minEl.value) / max) * 100;
+      const hi = (parseFloat(maxEl.value) / max) * 100;
       fill.style.left  = lo + '%';
       fill.style.width = (hi - lo) + '%';
     }
 
-    function formatPrice(v: number) {
-      return '$' + v.toLocaleString();
-    }
-
-    const priceMinEl  = document.getElementById('price-min') as HTMLInputElement;
-    const priceMaxEl  = document.getElementById('price-max') as HTMLInputElement;
-    const priceFill   = document.getElementById('price-fill') as HTMLElement;
+    const priceMinEl  = document.getElementById('price-min')      as HTMLInputElement;
+    const priceMaxEl  = document.getElementById('price-max')      as HTMLInputElement;
+    const priceFill   = document.getElementById('price-fill')     as HTMLElement;
     const priceMinLbl = document.getElementById('price-min-display') as HTMLElement;
     const priceMaxLbl = document.getElementById('price-max-display') as HTMLElement;
 
-    function onPriceChange() {
-      let lo = parseFloat(priceMinEl.value);
-      let hi = parseFloat(priceMaxEl.value);
-      if (lo > hi) { if (this === priceMinEl) { lo = hi; priceMinEl.value = String(lo); } else { hi = lo; priceMaxEl.value = String(hi); } }
+    function onPriceChange(this: HTMLInputElement) {
+      let lo = parseFloat(priceMinEl.value), hi = parseFloat(priceMaxEl.value);
+      if (this === priceMinEl && lo >= hi) { lo = hi - 10000; priceMinEl.value = String(lo); }
+      if (this === priceMaxEl && hi <= lo) { hi = lo + 10000; priceMaxEl.value = String(hi); }
       priceMin = lo; priceMax = hi;
-      priceMinLbl.textContent = formatPrice(lo);
-      priceMaxLbl.textContent = hi >= MAX_PRICE ? formatPrice(MAX_PRICE) + '+' : formatPrice(hi);
+      priceMinLbl.textContent = '$' + lo.toLocaleString();
+      priceMaxLbl.textContent = hi >= MAX_PRICE ? '$' + MAX_PRICE.toLocaleString() + '+' : '$' + hi.toLocaleString();
       updateFill(priceFill, priceMinEl, priceMaxEl, MAX_PRICE);
       applyFilters();
     }
@@ -170,23 +260,26 @@ function parseAcres(acreage: string): number {
     priceMaxEl.addEventListener('input', onPriceChange);
     updateFill(priceFill, priceMinEl, priceMaxEl, MAX_PRICE);
 
-    const acresMinEl  = document.getElementById('acres-min') as HTMLInputElement;
-    const acresMaxEl  = document.getElementById('acres-max') as HTMLInputElement;
-    const acresFill   = document.getElementById('acres-fill') as HTMLElement;
+    const acresMinEl  = document.getElementById('acres-min')      as HTMLInputElement;
+    const acresMaxEl  = document.getElementById('acres-max')      as HTMLInputElement;
+    const acresFill   = document.getElementById('acres-fill')     as HTMLElement;
     const acresMinLbl = document.getElementById('acres-min-display') as HTMLElement;
     const acresMaxLbl = document.getElementById('acres-max-display') as HTMLElement;
 
-    function fmtAcres(v: number) {
-      return v % 1 === 0 ? String(v) : v.toFixed(1);
-    }
+    acresMinEl.max = String(MAX_ACRES);
+    acresMaxEl.max = String(MAX_ACRES);
+    acresMaxEl.value = String(MAX_ACRES);
+    acresMaxLbl.textContent = MAX_ACRES + '+ ac';
 
-    function onAcresChange() {
-      let lo = parseFloat(acresMinEl.value);
-      let hi = parseFloat(acresMaxEl.value);
-      if (lo > hi) { if (this === acresMinEl) { lo = hi; acresMinEl.value = String(lo); } else { hi = lo; acresMaxEl.value = String(hi); } }
+    function fmtAcres(v: number) { return String(v); }
+
+    function onAcresChange(this: HTMLInputElement) {
+      let lo = parseFloat(acresMinEl.value), hi = parseFloat(acresMaxEl.value);
+      if (this === acresMinEl && lo >= hi) { lo = hi - 1; acresMinEl.value = String(lo); }
+      if (this === acresMaxEl && hi <= lo) { hi = lo + 1; acresMaxEl.value = String(hi); }
       acresMin = lo; acresMax = hi;
-      acresMinLbl.textContent = fmtAcres(lo) + ' acres';
-      acresMaxLbl.textContent = (hi >= MAX_ACRES ? MAX_ACRES + '+' : fmtAcres(hi)) + ' acres';
+      acresMinLbl.textContent = fmtAcres(lo) + ' ac';
+      acresMaxLbl.textContent = (hi >= MAX_ACRES ? MAX_ACRES + '+' : fmtAcres(hi)) + ' ac';
       updateFill(acresFill, acresMinEl, acresMaxEl, MAX_ACRES);
       applyFilters();
     }
