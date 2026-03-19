@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import ListingCard from '../../components/ListingCard.astro';
 import { listings, getListingImages } from '../../data/listings';
 import { team } from '../../data/team';
 import type { GetStaticPaths } from 'astro';
@@ -194,25 +195,9 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
     <div class="content-wrap">
       <h2 class="more-listings-heading">More Properties</h2>
       <div class="more-listings-grid">
-        {otherListings.map((other) => {
-          const otherImages = getListingImages(other);
-          return (
-            <a href={`/listings/${other.id}`} class="more-listing-card">
-              <div class="more-listing-image">
-                <img src={otherImages[0]} alt={other.title} class="more-listing-img" loading="lazy" />
-                <div class="more-listing-overlay"></div>
-                <span class="more-listing-county">{other.county} County</span>
-              </div>
-              <div class="more-listing-content">
-                <h3 class="more-listing-title">{other.title}</h3>
-                <div class="more-listing-footer">
-                  <span class="more-listing-price">{other.price}</span>
-                  <span class="more-listing-acreage">{other.acreage}</span>
-                </div>
-              </div>
-            </a>
-          );
-        })}
+        {otherListings.map((other, i) => (
+          <ListingCard listing={other} index={i} />
+        ))}
       </div>
       <div class="more-listings-cta">
         <a href="/listings" class="btn-secondary text-sm">View All Properties</a>
@@ -228,6 +213,8 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
     aria-modal="true"
     aria-label="Image gallery"
   >
+    <img id="lb-bg" src="" alt="" aria-hidden="true" class="lightbox-bg" />
+    <div class="lightbox-overlay"></div>
     <button id="lb-close" class="lightbox-close" aria-label="Close gallery">
       <svg class="lightbox-close-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -282,6 +269,7 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
 
     const lightbox = document.getElementById('lightbox');
     const lbImage = document.getElementById('lb-image');
+    const lbBg = document.getElementById('lb-bg');
     const lbCounter = document.getElementById('lb-counter');
     const lbClose = document.getElementById('lb-close');
     const lbPrev = document.getElementById('lb-prev');
@@ -289,26 +277,37 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
 
     function openLightbox(index) {
       currentIndex = index;
-      updateLightbox();
-      lightbox?.classList.remove('hidden');
-      lightbox?.classList.add('flex');
+      if (lbBg) { lbBg.src = imageList[currentIndex]; lbBg.style.opacity = '0.50'; }
+      if (lbImage) { lbImage.src = imageList[currentIndex]; lbImage.alt = `Photo ${currentIndex + 1}`; lbImage.style.opacity = '1'; }
+      if (lbCounter) lbCounter.textContent = `${currentIndex + 1} / ${totalImages}`;
+      setMainImage(currentIndex);
+      lightbox?.classList.add('is-open');
       document.body.style.overflow = 'hidden';
     }
 
     function closeLightbox() {
-      lightbox?.classList.add('hidden');
-      lightbox?.classList.remove('flex');
-      document.body.style.overflow = '';
+      lightbox?.classList.remove('is-open');
+      lightbox?.addEventListener('transitionend', () => {
+        document.body.style.overflow = '';
+      }, { once: true });
     }
 
     function updateLightbox() {
+      const src = imageList[currentIndex];
       if (lbImage) {
         lbImage.style.opacity = '0';
         setTimeout(() => {
-          lbImage.src = imageList[currentIndex];
+          lbImage.src = src;
           lbImage.alt = `Photo ${currentIndex + 1}`;
           lbImage.style.opacity = '1';
-        }, 100);
+        }, 150);
+      }
+      if (lbBg) {
+        lbBg.style.opacity = '0';
+        setTimeout(() => {
+          lbBg.src = src;
+          lbBg.style.opacity = '0.50';
+        }, 150);
       }
       if (lbCounter) lbCounter.textContent = `${currentIndex + 1} / ${totalImages}`;
       setMainImage(currentIndex);
@@ -330,13 +329,13 @@ const brokerMember = listing.broker ? team.find((t) => t.name === listing.broker
     lbNext?.addEventListener('click', nextImage);
 
     lightbox?.addEventListener('click', (e) => {
-      if (e.target === lightbox || e.target?.parentElement === lightbox) {
+      if (!e.target.closest('button, .lightbox-body, .lightbox-counter')) {
         closeLightbox();
       }
     });
 
     document.addEventListener('keydown', (e) => {
-      if (!lightbox?.classList.contains('flex')) return;
+      if (!lightbox?.classList.contains('is-open')) return;
       if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowRight') nextImage();
       if (e.key === 'ArrowLeft') prevImage();

@@ -497,7 +497,15 @@
 
   .listing-gallery   { @apply bg-earth-900; }
   .gallery-container { @apply max-w-7xl mx-auto; }
-  .gallery-main-wrap { @apply relative aspect-[16/9] md:aspect-[21/9] overflow-hidden cursor-pointer; }
+  .gallery-main-wrap {
+    @apply relative aspect-[16/9] overflow-hidden cursor-pointer pt-3;
+    @media (min-width: 768px) {
+      /* Fix height to 9/42 of the container width, derive width from 16/9 ratio */
+      height: calc(min(100vw, 80rem) * 9 / 42);
+      width: auto;
+      margin-inline: auto;
+    }
+  }
   .gallery-main-img  { @apply w-full h-full object-cover transition-opacity duration-500; }
   .gallery-gradient  {
     @apply absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-earth-900/60 to-transparent pointer-events-none;
@@ -592,22 +600,46 @@
      LIGHTBOX
   ══════════════════════════════════════════════════ */
   .lightbox {
-    @apply fixed inset-0 z-[100] bg-earth-950/95 backdrop-blur-sm hidden items-center justify-center;
+    @apply fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-md;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 300ms ease;
+  }
+  .lightbox.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .lightbox-bg {
+    @apply absolute inset-0 w-full h-full object-cover;
+    opacity: 0.50;
+    filter: blur(24px);
+    z-index: 0;
+    transition: opacity 150ms ease;
+  }
+  .lightbox-overlay {
+    @apply absolute inset-0 bg-earth-950/50;
+    z-index: 1;
+  }
+  .lightbox::after {
+    content: '';
+    @apply absolute inset-0 pointer-events-none;
+    background: radial-gradient(ellipse at center, transparent 40%, oklch(from var(--color-earth-950) l c h / 0.85) 100%);
+    z-index: 2;
   }
   .lightbox-close {
     @apply absolute top-4 right-4 z-10 w-12 h-12 flex items-center justify-center text-brand-bg/70 hover:text-brand-bg transition-colors;
   }
   .lightbox-close-icon { @apply w-8 h-8; }
   .lightbox-prev {
-    @apply absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-full text-brand-bg transition-colors;
+    @apply absolute left-4 top-1/2 -translate-y-1/2 z-10 w-24 h-24 flex items-center justify-center bg-brand-light hover:bg-brand-primary rounded-full text-earth-900 hover:text-brand-bg transition-colors cursor-pointer;
   }
   .lightbox-next {
-    @apply absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-full text-brand-bg transition-colors;
+    @apply absolute right-4 top-1/2 -translate-y-1/2 z-10 w-24 h-24 flex items-center justify-center bg-brand-light hover:bg-brand-primary rounded-full text-earth-900 hover:text-brand-bg transition-colors cursor-pointer;
   }
-  .lightbox-nav-icon { @apply w-6 h-6; }
-  .lightbox-body     { @apply max-w-6xl max-h-[85vh] mx-auto px-16; }
+  .lightbox-nav-icon { @apply w-12 h-12 pointer-events-none; }
+  .lightbox-body     { @apply relative z-10 max-w-6xl max-h-[85vh] mx-auto px-16; }
   .lightbox-img      { @apply max-w-full max-h-[85vh] object-contain mx-auto transition-opacity duration-300; }
-  .lightbox-counter  { @apply absolute bottom-6 left-1/2 -translate-x-1/2 text-brand-bg/60 text-sm; }
+  .lightbox-counter  { @apply absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-brand-bg/60 text-sm; }
 
   /* ══════════════════════════════════════════════════
      LISTING CARD COMPONENT
@@ -630,13 +662,13 @@
   .listing-card-gradient { @apply absolute inset-0 bg-gradient-to-t from-earth-900/50 to-transparent; }
   .listing-card-overlay  { @apply absolute inset-0 flex items-end p-5; }
   .listing-card-county   { @apply text-[11px] uppercase tracking-widest text-brand-bg/90 font-semibold mb-0.5; }
-  .listing-card-acreage  { @apply text-2xl font-display text-brand-bg leading-tight; }
+  .listing-card-acreage  { @apply text-2xl font-display font-bold text-brand-bg leading-tight; }
   .listing-card-photos-badge {
-    @apply absolute top-4 left-0 inline-flex items-center gap-1.5 pl-4 pr-3 py-1 rounded-r-sm bg-brand-light text-earth-900 text-xs font-semibold uppercase tracking-widest;
+    @apply absolute top-4 left-0 inline-flex items-center gap-1.5 pl-4 pr-3 py-1 rounded-r-sm bg-brand-light text-earth-900 text-xs font-display font-semibold uppercase tracking-widest;
   }
   .listing-card-photos-icon { @apply w-3 h-3; }
   .listing-card-status {
-    @apply absolute top-4 right-0 pl-4 pr-4 py-1 rounded-l-sm text-xs font-semibold uppercase tracking-widest;
+    @apply absolute top-4 right-0 pl-4 pr-4 py-1 rounded-l-sm text-xs font-display font-semibold uppercase tracking-widest;
   }
   .listing-card-status[data-status="available"] { @apply bg-brand-primary text-brand-bg; }
   .listing-card-status[data-status="pending"]   { @apply bg-brand-medium text-earth-900; }
@@ -646,7 +678,7 @@
   .listing-card:hover .listing-card-title { color: var(--color-brand-primary); }
   .listing-card-desc   { @apply text-earth-600 leading-relaxed line-clamp-3 mb-4; }
   .listing-card-footer { @apply flex items-center justify-between pt-3 border-t border-earth-200; }
-  .listing-card-price  { @apply font-display text-xl text-brand-primary; }
+  .listing-card-price  { @apply font-display font-bold text-xl text-brand-primary; }
   .listing-card-link   { @apply text-xs text-brand-bg0 flex items-center gap-1 transition-colors; }
   .listing-card:hover .listing-card-link { color: var(--color-brand-primary); }
   .listing-card-link-arrow { @apply w-3.5 h-3.5 transition-transform duration-300; }
