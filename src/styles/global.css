@@ -180,22 +180,22 @@
   .mobile-menu-link { @apply block px-2 py-2.5 text-lg font-display tracking-wide transition-colors text-center; }
 
   /* Footer */
-  .site-footer   { @apply relative bg-brand-medium text-earth-900 mt-auto overflow-hidden; }
+  .site-footer   { @apply relative bg-brand-primary text-brand-light mt-auto overflow-hidden; }
   .footer-inner  { @apply relative max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20; }
   .footer-grid   { @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8; }
   .footer-brand  { @apply lg:col-span-1; }
   .footer-logo   { @apply inline-block mb-5; }
   .footer-logo-img { @apply h-12 w-auto; }
-  .footer-tagline  { @apply text-sm leading-relaxed text-earth-700 max-w-xs; }
-  .footer-col-heading { @apply font-display text-lg text-earth-900 mb-5; }
+  .footer-tagline  { @apply text-sm leading-relaxed text-brand-light max-w-xs; }
+  .footer-col-heading { @apply font-display text-lg text-brand-bg mb-5; }
   .footer-nav-list    { @apply space-y-3; }
-  .footer-nav-link    { @apply text-sm text-earth-700 hover:text-brand-primary transition-colors duration-300; }
-  .footer-services-list { @apply space-y-3 text-sm text-earth-700; }
-  .footer-contact      { @apply not-italic space-y-3 text-sm text-earth-700; }
-  .footer-contact-link { @apply hover:text-brand-primary transition-colors; }
-  .footer-bottom    { @apply mt-16 pt-8 border-t border-earth-900/20 flex flex-col md:flex-row items-center justify-between gap-4; }
-  .footer-copyright { @apply text-xs text-earth-900/50; }
-  .footer-location  { @apply text-xs text-earth-900/50; }
+  .footer-nav-link    { @apply text-sm text-brand-light hover:text-brand-bg transition-colors duration-300; }
+  .footer-services-list { @apply space-y-3 text-sm text-brand-light; }
+  .footer-contact      { @apply not-italic space-y-3 text-sm text-brand-light; }
+  .footer-contact-link { @apply hover:text-brand-bg transition-colors; }
+  .footer-bottom    { @apply mt-16 pt-8 border-t border-brand-light/30 flex flex-col md:flex-row items-center justify-between gap-4; }
+  .footer-copyright { @apply text-xs text-brand-light/70; }
+  .footer-location  { @apply text-xs text-brand-light/70; }
 
   /* ══════════════════════════════════════════════════
      PAGE BANNER
