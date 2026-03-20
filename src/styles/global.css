@@ -98,7 +98,9 @@
     background-color: var(--color-nav-accent);
     color: var(--color-nav-bg);
   }
-  .btn-icon { @apply w-4 h-4 ml-1.5; }
+  .btn-icon { @apply w-4 h-4 ml-1.5 transition-transform duration-300; }
+  .btn-primary:hover .btn-icon,
+  .btn-secondary:hover .btn-icon { transform: translateX(4px); }
   .btn-icon-lead { @apply w-4 h-4 mr-2; }
 
   /* ══════════════════════════════════════════════════
@@ -259,7 +261,9 @@
   .home-service-img    { @apply w-full h-full object-cover; }
   .home-service-label  { @apply text-xs font-semibold text-earth-800 leading-snug; }
   .home-services-link  { @apply inline-flex items-center gap-1.5 text-sm font-semibold text-brand-primary hover:text-brand-dark mt-3 transition-colors; }
-  .home-link-icon { @apply w-3.5 h-3.5; }
+  .home-link-icon { @apply w-3.5 h-3.5 translate-y-px transition-transform duration-300; }
+  .home-about-link:hover .home-link-icon,
+  .home-services-link:hover .home-link-icon { transform: translateX(4px); }
 
   /* ══════════════════════════════════════════════════
      HOMEPAGE — TESTIMONIAL + CTA
@@ -272,6 +276,7 @@
   .home-testimonial-footer { @apply mt-4; }
   .home-testimonial-cite   { @apply not-italic text-sm text-earth-600 font-semibold; }
   .home-testimonial-link   { @apply inline-flex items-center gap-1.5 text-sm text-earth-600 hover:text-earth-900 mt-4 transition-colors font-medium; }
+  .home-testimonial-link:hover .home-link-icon { transform: translateX(4px); }
   .home-cta-block   { @apply lg:border-l lg:border-earth-300 lg:pl-14; }
   .home-cta-heading { @apply font-display text-3xl lg:text-4xl text-earth-900 leading-tight; }
   .home-cta-accent  { @apply italic text-brand-primary; }
@@ -480,7 +485,8 @@
   .listing-back-link {
     @apply inline-flex items-center gap-2 text-sm text-brand-bg0 hover:text-earth-800 transition-colors;
   }
-  .listing-back-icon { @apply w-4 h-4; }
+  .listing-back-icon { @apply w-4 h-4 transition-transform duration-300; }
+  .listing-back-link:hover .listing-back-icon { transform: translateX(-4px); }
 
   .listing-gallery-inset {
     @apply bg-brand-light rounded-b-sm mb-8 p-4 md:p-5;
