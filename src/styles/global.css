@@ -752,11 +752,12 @@
 ══════════════════════════════════════════════════ */
 .topo-bg {
   position: absolute;
-  width: 230vw; max-width: none;
+  width: var(--topo-width, 2880px); max-width: none;
   left: 50%; top: 50%;
   transform: translateX(-50%) translateY(-50%);
   pointer-events: none; user-select: none;
   filter: invert(1);
+  will-change: transform;
 }
 .topo-bg--light  { opacity: 0.2; }
 .topo-bg--faint  { opacity: 0.035; }

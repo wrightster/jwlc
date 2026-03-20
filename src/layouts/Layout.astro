@@ -108,7 +108,7 @@ const navLinks = [
 
     <!-- Footer -->
     <footer class="site-footer">
-      <img src="/FallsLakeTopoContours.svg" class="topo-bg topo-bg--faint" alt="" aria-hidden="true" />
+      <img src="/FallTopo_v2.svg" class="topo-bg topo-bg--faint" alt="" aria-hidden="true" />
       <div class="footer-inner">
         <div class="footer-grid">
           <!-- Brand -->
@@ -169,20 +169,71 @@ const navLinks = [
     </footer>
 
     <script>
-      // Topo SVG parallax
+      // Topo width — zoom-independent
+      // outerWidth is in layout pixels (unaffected by zoom); innerWidth is in CSS pixels (zoom-dependent).
+      // We size the SVG in layout pixels, then convert to CSS pixels so it stays physically constant.
+      function updateTopoWidth() {
+        const outer = window.outerWidth;
+        const inner = window.innerWidth;
+        const physicalW = Math.max(2880, outer / 0.95); // layout pixels
+        const cssW = physicalW * inner / outer;          // convert to CSS pixels
+        document.documentElement.style.setProperty('--topo-width', `${Math.round(cssW)}px`);
+      }
+      let resizeTimer: ReturnType<typeof setTimeout> | null = null;
+      function scheduleResize() {
+        if (!resizeTimer) {
+          document.querySelectorAll<HTMLElement>('.topo-bg').forEach(el => el.style.visibility = 'hidden');
+        }
+        clearTimeout(resizeTimer!);
+        resizeTimer = setTimeout(() => {
+          updateTopoWidth();
+          updateParallax();
+          document.querySelectorAll<HTMLElement>('.topo-bg').forEach(el => el.style.visibility = '');
+          resizeTimer = null;
+        }, 150);
+      }
+
+      updateTopoWidth();
+      window.addEventListener('resize', scheduleResize);
+
+      // Topo SVG parallax — seamless across sections, scrolls slower than page
+      const PARALLAX_SPEED = 0.3; // fraction of scroll speed (0 = with page, 1 = fixed to viewport)
       function updateParallax() {
-        document.querySelectorAll('.topo-bg').forEach(el => {
+        const scrollY = window.scrollY;
+        const vpH = window.innerHeight;
+        const elements = document.querySelectorAll<HTMLElement>('.topo-bg');
+        if (!elements.length) return;
+
+        const svgHeight = elements[0].offsetHeight;
+
+        // Raw target: SVG center drifts upward at PARALLAX_SPEED as page scrolls
+        const rawTargetVpY = vpH / 2 - scrollY * PARALLAX_SPEED;
+
+        // Clamp so SVG edges never become visible:
+        //   top edge clamped: targetVpY <= svgHeight / 2
+        //   bottom edge clamped: targetVpY >= vpH - svgHeight / 2
+        const targetVpY = Math.max(vpH - svgHeight / 2, Math.min(svgHeight / 2, rawTargetVpY));
+
+        elements.forEach(el => {
           const section = el.parentElement;
           if (!section) return;
           const rect = section.getBoundingClientRect();
-          const relativeToCenter = rect.top + rect.height / 2 - window.innerHeight / 2;
-          const offset = -relativeToCenter;
+          const sectionCenterVpY = rect.top + rect.height / 2;
+          const offset = targetVpY - sectionCenterVpY;
           el.style.transform = `translateX(-50%) translateY(calc(-50% + ${offset}px))`;
         });
       }
 
+      let rafPending = false;
+      function scheduleParallax() {
+        if (!rafPending) {
+          rafPending = true;
+          requestAnimationFrame(() => { updateParallax(); rafPending = false; });
+        }
+      }
+
       updateParallax();
-      window.addEventListener('scroll', updateParallax, { passive: true });
+      window.addEventListener('scroll', scheduleParallax, { passive: true });
 
       // Mobile menu
       const menuBtn = document.getElementById('mobile-menu-btn');
