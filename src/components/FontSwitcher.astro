@@ -130,7 +130,7 @@ const colorTokens = [
               <div id={"fs-color-" + token.id + "-hex"} style="font-size:10px;color:#a48a63;font-family:monospace;">{token.value}</div>
             </div>
             <div style="width:60px;display:flex;justify-content:space-around;flex-shrink:0;align-items:center;">
-              <input type="radio" name="nav-bg"     value={token.id} checked={token.id === 'bg'}        style="accent-color:#be3528;cursor:pointer;" />
+              <input type="radio" name="nav-bg"     value={token.id} checked={token.id === 'altbg'}     style="accent-color:#be3528;cursor:pointer;" />
               <input type="radio" name="nav-accent" value={token.id} checked={token.id === 'primary'}   style="accent-color:#be3528;cursor:pointer;" />
               <input type="radio" name="nav-menu"   value={token.id} checked={token.id === 'darkbrown'} style="accent-color:#be3528;cursor:pointer;" />
             </div>
@@ -398,7 +398,7 @@ const colorTokens = [
         ['--color-nav-bg', '--color-nav-accent', '--color-nav-menu'].forEach(v =>
           document.documentElement.style.removeProperty(v)
         );
-        const bgR     = document.querySelector('input[name="nav-bg"][value="bg"]');
+        const bgR     = document.querySelector('input[name="nav-bg"][value="altbg"]');
         const accentR = document.querySelector('input[name="nav-accent"][value="primary"]');
         const menuR   = document.querySelector('input[name="nav-menu"][value="darkbrown"]');
         if (bgR)     bgR.checked = true;
@@ -412,7 +412,7 @@ const colorTokens = [
         if (token) document.documentElement.style.setProperty(cssVar, 'var(' + token.cssVar + ')');
       }
       // Apply defaults on load
-      applyNavColor('--color-nav-bg',     'bg');
+      applyNavColor('--color-nav-bg',     'altbg');
       applyNavColor('--color-nav-accent', 'primary');
       applyNavColor('--color-nav-menu',   'darkbrown');
 

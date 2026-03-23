@@ -41,10 +41,10 @@
   --color-earth-950: #2a2119;
 
   --color-light-text: #ffffff;
-  --color-nav-bg:     #f8f8f2;
+  --color-nav-bg:     #f2e6c9;
 
-  --font-display: 'Jost', Georgia, serif;
-  --font-body:    'Funnel Sans', system-ui, sans-serif;
+  --font-display: 'Gabarito', Georgia, serif;
+  --font-body:    'Anek Latin', system-ui, sans-serif;
   --font-display-weight: 700;
   --font-body-weight:    400;
 }
@@ -133,8 +133,9 @@
   /* Header */
   .site-header { @apply fixed top-0 left-0 right-0 z-50 transition-all duration-500; }
   .header-bg {
-    @apply absolute inset-0 border-b border-earth-200/60;
-    background-color: var(--color-nav-bg);
+    @apply absolute left-0 right-0 top-0;
+    height: 10rem;
+    background: linear-gradient(to bottom, var(--color-nav-bg) 2.5rem, transparent 10rem);
   }
   .site-nav { @apply relative z-10 max-w-7xl mx-auto px-6 lg:px-8 flex items-center h-20; }
 
@@ -211,7 +212,7 @@
   /* ══════════════════════════════════════════════════
      PAGE BANNER
   ══════════════════════════════════════════════════ */
-  .page-banner       { @apply relative py-10 lg:py-12 bg-earth-100 overflow-hidden; --btn-bg: var(--color-earth-100); }
+  .page-banner       { @apply relative py-10 lg:py-12 overflow-hidden; --btn-bg: var(--color-earth-50); }
   .page-banner-title { @apply font-display italic text-4xl md:text-6xl text-red-600 leading-tight; }
   .page-banner-desc  { @apply text-earth-700 mt-5 max-w-2xl text-lg; }
 
@@ -227,7 +228,7 @@
   .cta-dark         { @apply py-7 bg-earth-900; --btn-bg: var(--color-earth-900); }
   .cta-dark-heading { @apply font-display text-3xl text-light-text; }
   .cta-dark-body    { @apply text-earth-400 mt-4; }
-  .cta-light         { @apply py-8 bg-earth-100/50 border-t border-earth-200; --btn-bg: var(--color-earth-100); }
+  .cta-light         { @apply py-8 border-t border-earth-200; --btn-bg: var(--color-earth-50); }
   .cta-light-heading { @apply font-display text-3xl text-earth-900; }
   .cta-light-body    { @apply text-earth-600 mt-4; }
   .cta-btn-row       { @apply flex flex-wrap justify-center gap-4 mt-8; }
@@ -235,7 +236,7 @@
   /* ══════════════════════════════════════════════════
      HOMEPAGE — HERO
   ══════════════════════════════════════════════════ */
-  .hero        { @apply relative py-10 lg:py-12 bg-earth-100 overflow-hidden; }
+  .hero        { @apply relative py-10 lg:py-12 overflow-hidden; }
   .hero-layout { @apply flex items-center gap-16 lg:gap-24; }
   .hero-quote-side-left  { @apply hidden lg:flex flex-1 justify-end; }
   .hero-quote-side-right { @apply hidden lg:flex flex-1 justify-start; }
@@ -251,7 +252,7 @@
   /* ══════════════════════════════════════════════════
      HOMEPAGE — FEATURED LISTINGS
   ══════════════════════════════════════════════════ */
-  .featured-section  { @apply py-8 lg:py-10 bg-earth-50; }
+  .featured-section  { @apply py-8 lg:py-10; }
   .featured-header   { @apply flex items-end justify-between mb-8; }
   .featured-heading  { @apply font-display text-3xl text-earth-900; }
   .featured-grid     { @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6; }
@@ -259,7 +260,7 @@
   /* ══════════════════════════════════════════════════
      HOMEPAGE — ABOUT + SERVICES
   ══════════════════════════════════════════════════ */
-  .home-about-services      { @apply py-6 lg:py-8 bg-earth-50; }
+  .home-about-services      { @apply py-6 lg:py-8; }
   .home-about-services-grid { @apply grid lg:grid-cols-12 gap-10 lg:gap-14; }
   .home-about-block   { @apply lg:col-span-4 border-l-2 border-red-600 pl-5; }
   .home-about-heading { @apply font-display text-3xl text-earth-900 leading-tight; }
@@ -279,7 +280,7 @@
   /* ══════════════════════════════════════════════════
      HOMEPAGE — TESTIMONIAL + CTA
   ══════════════════════════════════════════════════ */
-  .home-dark-section       { @apply relative py-7 bg-earth-100 overflow-hidden; --btn-bg: var(--color-earth-100); }
+  .home-dark-section       { @apply relative py-7 overflow-hidden; --btn-bg: var(--color-earth-50); }
   .home-dark-inner         { @apply relative max-w-6xl mx-auto px-6 lg:px-8; }
   .home-dark-grid          { @apply grid lg:grid-cols-2 gap-12 lg:gap-16 items-center; }
   .home-testimonial-icon   { @apply w-7 h-7 text-earth-900/20 mb-3; }
@@ -310,7 +311,7 @@
   .stat-card-value  { @apply font-display text-3xl text-earth-900 mt-1; }
   .stat-card-detail { @apply text-sm text-earth-600 mt-1; }
 
-  .team-section  { @apply py-10 lg:py-14 bg-earth-100/50 border-t border-earth-200; }
+  .team-section  { @apply py-10 lg:py-14 border-t border-earth-200; }
   .team-header   { @apply text-center mb-8; }
   .team-list     { @apply space-y-8; }
   .team-card     { @apply bg-white rounded-sm overflow-hidden; }
@@ -345,7 +346,7 @@
   .service-card-title { @apply font-display text-xl text-earth-900 mb-3; }
   .service-card-desc  { @apply text-earth-600 leading-relaxed; }
 
-  .networks-section { @apply py-8 lg:py-10 bg-earth-100/50 border-t border-earth-200; }
+  .networks-section { @apply py-8 lg:py-10 border-t border-earth-200; }
   .networks-header  { @apply text-center mb-6; }
   .networks-desc    { @apply text-earth-600 mt-4 max-w-2xl mx-auto; }
   .networks-grid    { @apply grid grid-cols-1 md:grid-cols-3 gap-6; }
@@ -592,7 +593,7 @@
   .listing-contact-meta-text { @apply text-xs text-earth-400; }
   .listing-contact-meta-link { @apply hover:text-earth-700 transition-colors; }
 
-  .more-listings-section  { @apply py-6 lg:py-8 bg-earth-100/50 border-t border-earth-200; }
+  .more-listings-section  { @apply py-6 lg:py-8 border-t border-earth-200; }
   .more-listings-heading  { @apply font-display text-2xl text-earth-900 mb-8; }
   .more-listings-grid     { @apply grid grid-cols-1 md:grid-cols-3 gap-6; }
   .more-listing-card {
