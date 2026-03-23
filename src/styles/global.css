@@ -41,7 +41,7 @@
   --color-earth-950: #2a2119;
 
   --color-light-text: #ffffff;
-  --color-nav-bg:     #f2e6c9;
+  --color-nav-bg:     #fac984;
 
   --font-display: 'Gabarito', Georgia, serif;
   --font-body:    'Anek Latin', system-ui, sans-serif;
@@ -133,9 +133,8 @@
   /* Header */
   .site-header { @apply fixed top-0 left-0 right-0 z-50 transition-all duration-500; }
   .header-bg {
-    @apply absolute left-0 right-0 top-0;
-    height: 10rem;
-    background: linear-gradient(to bottom, var(--color-nav-bg) 2.5rem, transparent 10rem);
+    @apply absolute inset-0;
+    background-color: var(--color-nav-bg);
   }
   .site-nav { @apply relative z-10 max-w-7xl mx-auto px-6 lg:px-8 flex items-center h-20; }
 
@@ -212,9 +211,9 @@
   /* ══════════════════════════════════════════════════
      PAGE BANNER
   ══════════════════════════════════════════════════ */
-  .page-banner       { @apply relative py-10 lg:py-12 overflow-hidden; --btn-bg: var(--color-earth-50); }
-  .page-banner-title { @apply font-display italic text-4xl md:text-6xl text-red-600 leading-tight; }
-  .page-banner-desc  { @apply text-earth-700 mt-5 max-w-2xl text-lg; }
+  .page-banner       { @apply relative py-5 overflow-hidden bg-gold-300; --btn-bg: var(--color-gold-300); }
+  .page-banner-title { @apply font-display italic text-4xl md:text-6xl text-earth-50 leading-tight; }
+  .page-banner-desc  { @apply text-earth-700 mt-5 text-lg max-w-[75%] text-balance; }
 
   /* ══════════════════════════════════════════════════
      LAYOUT WRAPPERS
@@ -404,12 +403,61 @@
      LISTINGS PAGE
   ══════════════════════════════════════════════════ */
   .listings-section   { @apply py-8 lg:py-12; }
-  .filter-bar           { @apply mb-12 pb-3 border-b border-earth-200; }
+  .filter-bar {
+    @apply mb-8 border-b border-earth-200;
+    position: sticky;
+    top: 5rem;
+    z-index: 30;
+    background: var(--color-earth-50);
+    padding-bottom: 0;
+  }
+  /* Toggle button */
+  .filter-toggle-btn {
+    @apply flex items-center gap-2 w-full py-3 text-left;
+    background: none; border: none; cursor: pointer;
+    font-size: 0.8125rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--color-earth-600);
+    transition: color 200ms;
+  }
+  .filter-toggle-btn:hover { color: var(--color-earth-900); }
+  .filter-toggle-btn svg.filter-toggle-icon { color: var(--color-red-600); flex-shrink: 0; }
+  .filter-toggle-label { flex: 1; }
+  .filter-toggle-count {
+    font-size: 0.75rem; font-weight: 700;
+    color: var(--color-light-text);
+    background: var(--color-red-600);
+    border-radius: 999px;
+    padding: 0 0.45rem; line-height: 1.6;
+    opacity: 0; transform: scale(0.7);
+    transition: opacity 200ms, transform 200ms;
+    display: inline-block;
+  }
+  .filter-toggle-count.is-visible { opacity: 1; transform: scale(1); }
+  .filter-toggle-chevron {
+    flex-shrink: 0;
+    transition: transform 300ms ease;
+    color: var(--color-earth-500);
+  }
+  .filter-bar.is-collapsed .filter-toggle-chevron { transform: rotate(-90deg); }
+  /* Collapse container */
+  .filter-collapse-inner { transition: height 300ms ease; }
+  .filter-collapse-inner > .filter-controls-row { padding: 0.25rem 0.5rem 0.875rem; }
+
   .filter-controls-row  {
-    @apply flex items-start gap-x-4;
+    @apply flex flex-wrap items-start gap-4;
     width: 100%;
   }
   .filter-select-wrap   { @apply flex flex-col gap-1.5 flex-1 min-w-0; }
+  .filter-range-wrap    { @apply flex flex-col gap-1 flex-1 min-w-0; }
+  @media (max-width: 767px) {
+    .filter-select-wrap { flex: 1 1 calc(33.33% - 0.75rem); }
+    .filter-range-wrap  { flex: 1 1 calc(50% - 0.5rem); }
+  }
+  @media (max-width: 595px) {
+    .filter-select-wrap,
+    .filter-range-wrap  { flex: 1 1 100%; }
+  }
   .filter-select-label  { @apply text-xs font-semibold uppercase tracking-widest text-earth-500; }
 
   /* Custom select */
@@ -462,7 +510,6 @@
   .custom-select-option.is-selected:hover { color: #fff; }
 
 
-  .filter-range-wrap    { @apply flex flex-col gap-1 flex-1 min-w-0; }
   .filter-range-display { @apply flex items-center gap-1; }
   .filter-range-val  { @apply text-xs font-semibold text-earth-800; }
   .filter-range-sep  { @apply text-xs text-earth-400; }
@@ -765,8 +812,8 @@
   ══════════════════════════════════════════════════ */
   .range-slider { position: relative; height: 28px; }
   .range-track  {
-    position: absolute; top: 50%; left: 0; right: 0;
-    height: 4px; transform: translateY(-50%);
+    position: absolute; top: calc(50% - 2px); left: 0; right: 0;
+    height: 4px;
     background: #e8d9bb; border-radius: 2px;
   }
   .range-fill  {
