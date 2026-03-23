@@ -61,7 +61,8 @@
     font-family: var(--font-body);
     font-weight: var(--font-body-weight);
     color: var(--color-earth-900);
-    background-color: var(--color-earth-50);
+    background: linear-gradient(to bottom, var(--color-earth-50), #f5efde);
+    background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -127,7 +128,7 @@
      SITE CHROME
   ══════════════════════════════════════════════════ */
   .site-body  { @apply min-h-screen flex flex-col; }
-  .site-main  { @apply flex-1 pt-20; }
+  .site-main  { @apply flex-1 pt-20 relative z-[1]; }
 
   /* Header */
   .site-header { @apply fixed top-0 left-0 right-0 z-50 transition-all duration-500; }
@@ -190,7 +191,7 @@
   .mobile-menu-link { @apply block px-2 py-2.5 text-lg font-display tracking-wide transition-colors text-center; }
 
   /* Footer */
-  .site-footer   { @apply relative bg-red-600 text-earth-100 mt-auto overflow-hidden; }
+  .site-footer   { @apply relative z-[1] bg-red-600 text-earth-100 mt-auto overflow-hidden; }
   .footer-inner  { @apply relative max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20; }
   .footer-grid   { @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8; }
   .footer-brand  { @apply lg:col-span-1; }
@@ -833,3 +834,11 @@
 }
 .topo-bg--light  { opacity: 0.2; }
 .topo-bg--faint  { opacity: 0.035; }
+.topo-bg-wrap-fixed {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.25;
+}
