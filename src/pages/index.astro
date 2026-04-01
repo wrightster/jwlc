@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ListingCard from '../components/ListingCard.astro';
+import BtnArrow from '../components/BtnArrow.astro';
 import { featuredListings } from '../data/listings';
 import { testimonials } from '../data/testimonials';
 import { services } from '../data/services';
@@ -89,12 +90,7 @@ export const prerender = true;
         <div>
           <h2 class="featured-heading">Current Listings</h2>
         </div>
-        <a href="/listings" class="btn-secondary text-sm">
-          View All
-          <svg class="btn-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-          </svg>
-        </a>
+        <BtnArrow href="/listings" variant="secondary">View All</BtnArrow>
       </div>
       <div class="featured-grid">
         {featuredListings.slice(0, 3).map((listing, i) => (

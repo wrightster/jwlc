@@ -42,7 +42,7 @@
   --color-earth-950: #2a2119;
 
   --color-light-text: #ffffff;
-  --color-nav-bg:     var(--color-earth-100);
+  --color-nav-bg:     var(--color-earth-50);
 
   --font-display: 'Gabarito', Georgia, serif;
   --font-body:    'Anek Latin', system-ui, sans-serif;
@@ -114,6 +114,76 @@
   .btn-primary:hover .btn-icon,
   .btn-secondary:hover .btn-icon { transform: translateX(4px); }
   .btn-icon-lead { @apply w-4 h-4 mr-2; }
+
+  /* ══════════════════════════════════════════════════
+     ARROW BUTTON (BtnArrow.astro)
+     Three-piece layout: [left cap SVG] + [stretching shaft span] + [right cap SVG].
+     Only the shaft span grows; caps scale proportionally with --btn-arrow-h.
+     Shaft fill sits at 20.2%–79.8% of total height (50.84/251.68 from the SVG).
+  ══════════════════════════════════════════════════ */
+  .btn-arrow {
+    --btn-arrow-h: 3rem;
+    display: inline-flex;
+    align-items: stretch;
+    gap: 0;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-weight: var(--font-display-weight);
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    transition: filter 200ms ease;
+  }
+  .btn-arrow:hover { filter: brightness(0.88); }
+
+  .btn-arrow__lcap,
+  .btn-arrow__rcap {
+    flex-shrink: 0;
+    height: var(--btn-arrow-h);
+    display: block;
+  }
+  .btn-arrow__lcap {
+    /* viewBox 324.34 wide: shoulder (251.68) + 30°-from-vertical depth (72.66) */
+    aspect-ratio: 324.34 / 251.68;
+    /* Body overlaps behind to the notch tip (251.68 SVG units = full shoulder) */
+    margin-right: calc(var(--btn-arrow-h) * -251.68 / 251.68);
+  }
+  .btn-arrow__rcap {
+    /* viewBox 267.64 wide: shoulder (195) + 30°-from-vertical depth (72.66) */
+    aspect-ratio: 267.64 / 251.68;
+    /* Body overlaps behind up to the right shoulder (195 SVG units) */
+    margin-left: calc(var(--btn-arrow-h) * -195 / 251.68);
+  }
+
+  .btn-arrow__body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 36px;
+    white-space: nowrap;
+    position: relative;
+    z-index: 1; /* shaft renders on top of both caps */
+    /* Fill only the shaft band (20.2%–79.8% of total height) */
+    background: linear-gradient(
+      to bottom,
+      transparent 12.5%,
+      var(--_btn-arrow-fill) 12.5%,
+      var(--_btn-arrow-fill) 87.5%,
+      transparent 87.5%
+    );
+  }
+
+  .btn-arrow--primary {
+    color: var(--color-earth-50);
+    --_btn-arrow-fill: var(--color-red-600);
+  }
+  .btn-arrow--primary svg { fill: var(--color-red-600); }
+
+  .btn-arrow--secondary {
+    color: var(--color-earth-50);
+    --_btn-arrow-fill: var(--color-earth-900);
+  }
+  .btn-arrow--secondary svg { fill: var(--color-earth-900); }
 
   /* ══════════════════════════════════════════════════
      TYPOGRAPHY
@@ -212,8 +282,8 @@
   /* ══════════════════════════════════════════════════
      PAGE BANNER
   ══════════════════════════════════════════════════ */
-  .page-banner       { @apply relative py-5 overflow-hidden bg-gold-300; --btn-bg: var(--color-gold-300); }
-  .page-banner-title { @apply font-display italic text-4xl md:text-6xl text-earth-50 leading-tight; }
+  .page-banner       { @apply relative py-5 overflow-hidden bg-earth-50; --btn-bg: var(--color-earth-50); }
+  .page-banner-title { @apply font-display italic text-4xl md:text-6xl text-earth-900 leading-tight; }
   .page-banner-desc  { @apply text-earth-700 mt-5 text-lg max-w-[75%] text-balance; }
 
   /* ══════════════════════════════════════════════════
