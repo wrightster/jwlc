@@ -8,7 +8,7 @@
   --color-red-300: #f29388;
   --color-red-400: #e85f50;
   --color-red-500: #d14338;
-  --color-red-600: #be3528;  /* ★ Dark Accent / Red Clay — primary site color */
+  --color-red-600: #b52126;  /* ★ Dark Accent / Red Clay — primary site color */
   --color-red-700: #9e2c20;
   --color-red-800: #7c2218;
   --color-red-900: #551710;
@@ -18,7 +18,7 @@
   --color-gold-50:  #fff9f0;
   --color-gold-100: #fef0d5;
   --color-gold-200: #fde1ab;
-  --color-gold-300: #fac984;  /* ★ Light Accent / Muted Gold */
+  --color-gold-300: #ffcf7d;  /* ★ Light Accent / Muted Gold */
   --color-gold-400: #f5b35a;
   --color-gold-500: #e89537;
   --color-gold-600: #c07622;
@@ -28,8 +28,9 @@
   --color-gold-950: #281706;
 
   /* Earth */
-  --color-earth-50:  #f7f7f2;  /* ★ Light Neutral / Clean Bone — page background */
-  --color-earth-100: #f2e6c9;  /* ★ Medium Neutral / Fine Sand — banner / card background */
+  --color-earth-50:  #edeae6;  /* ★ Light Neutral / Clean Bone — page background */
+  --color-earth-75:  #ece2d1;  /* midpoint between earth-50 and earth-100 */
+  --color-earth-100: #ebd9bc;  /* ★ Medium Neutral / Fine Sand — banner / card background */
   --color-earth-200: #e8d9bb;
   --color-earth-300: #d4bc96;
   --color-earth-400: #bb9d72;
@@ -37,11 +38,11 @@
   --color-earth-600: #8d7350;
   --color-earth-700: #745d42;
   --color-earth-800: #5e4c38;
-  --color-earth-900: #3d3225;  /* ★ Dark Neutral / Rich Soil — main dark text */
+  --color-earth-900: #3a3023;  /* ★ Dark Neutral / Rich Soil — main dark text */
   --color-earth-950: #2a2119;
 
   --color-light-text: #ffffff;
-  --color-nav-bg:     #fac984;
+  --color-nav-bg:     var(--color-earth-100);
 
   --font-display: 'Gabarito', Georgia, serif;
   --font-body:    'Anek Latin', system-ui, sans-serif;
@@ -61,7 +62,7 @@
     font-family: var(--font-body);
     font-weight: var(--font-body-weight);
     color: var(--color-earth-900);
-    background: linear-gradient(to bottom, var(--color-earth-50), #f5efde);
+    background: linear-gradient(to bottom, var(--color-earth-75), var(--color-earth-50));
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -408,7 +409,7 @@
     position: sticky;
     top: 5rem;
     z-index: 30;
-    background: var(--color-earth-50);
+    background: var(--color-earth-100);
     padding-bottom: 0;
   }
   /* Toggle button */
@@ -818,7 +819,7 @@
   }
   .range-fill  {
     position: absolute; top: 0; height: 100%;
-    background: #be3528; border-radius: 2px;
+    background: #b52126; border-radius: 2px;
   }
   .range-input {
     position: absolute; top: 50%; left: 0; width: 100%;
@@ -830,27 +831,27 @@
   .range-input::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 14px; height: 24px; border-radius: 3px;
-    background: #f8f8f2; border: 3px solid #be3528;
+    background: #edeae6; border: 3px solid #b52126;
     pointer-events: all; cursor: pointer;
     transition: background 200ms, box-shadow 200ms;
   }
   .range-input::-webkit-slider-thumb:hover {
-    background: #f3e7c9; box-shadow: 0 0 0 1px #be3528;
+    background: #ebd9bc; box-shadow: 0 0 0 1px #b52126;
   }
   .range-input::-webkit-slider-thumb:active {
-    background: #be3528;
+    background: #b52126;
   }
   .range-input::-moz-range-thumb {
     width: 14px; height: 24px; border-radius: 3px;
-    background: #f8f8f2; border: 3px solid #be3528;
+    background: #edeae6; border: 3px solid #b52126;
     pointer-events: all; cursor: pointer;
     transition: background 200ms, box-shadow 200ms;
   }
   .range-input::-moz-range-thumb:hover {
-    background: #f3e7c9; box-shadow: 0 0 0 1px #be3528;
+    background: #ebd9bc; box-shadow: 0 0 0 1px #b52126;
   }
   .range-input::-moz-range-thumb:active {
-    background: #be3528;
+    background: #b52126;
   }
 }
 
@@ -877,7 +878,6 @@
   left: 50%; top: 50%;
   transform: translateX(-50%) translateY(-50%);
   pointer-events: none; user-select: none;
-  filter: invert(1);
   will-change: transform;
 }
 .topo-bg--light  { opacity: 0.2; }
@@ -888,5 +888,5 @@
   overflow: hidden;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.25;
+  opacity: 1;
 }

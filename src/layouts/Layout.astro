@@ -180,7 +180,7 @@ const navLinks = [
       function updateTopoWidth() {
         const outer = window.outerWidth;
         const inner = window.innerWidth;
-        const physicalW = Math.max(2880, outer / 0.95); // layout pixels
+        const physicalW = Math.max(2160, outer / 0.95); // layout pixels
         const cssW = physicalW * inner / outer;          // convert to CSS pixels
         document.documentElement.style.setProperty('--topo-width', `${Math.round(cssW)}px`);
       }
