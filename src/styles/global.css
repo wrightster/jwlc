@@ -140,6 +140,8 @@
     letter-spacing: 0.05em;
     transition: color 400ms ease;
   }
+  .btn-arrow__label { transition: transform 400ms ease; }
+  .btn-arrow:hover .btn-arrow__label { transform: scale(1.143); }
 
   .btn-arrow__inner {
     display: inline-flex;

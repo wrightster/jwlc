@@ -17,7 +17,7 @@ const { href = '#', variant = 'primary', class: className = '' } = Astro.props;
     </svg>
 
     <!-- Shaft body: stretches to fill text width; background covers only the shaft band -->
-    <span class="btn-arrow__body"><slot /></span>
+    <span class="btn-arrow__body"><span class="btn-arrow__label"><slot /></span></span>
 
     <!-- Right cap: notch tip at 690.75+72.66=763.41, arrow tip at 885.73+72.66=958.39; viewBox width 267.64 -->
     <svg class="btn-arrow__rcap" viewBox="690.75 0 267.64 251.68" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
