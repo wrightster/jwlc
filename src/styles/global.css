@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@property --_btn-arrow-fill {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
 @theme {
   /* Crimson — Dark Accent / Red Clay */
   --color-red-50:  #fff3f2;
@@ -132,16 +138,54 @@
     font-weight: var(--font-display-weight);
     font-size: 0.875rem;
     letter-spacing: 0.05em;
-    transition: filter 200ms ease;
+    transition: color 400ms ease;
   }
-  .btn-arrow:hover { filter: brightness(0.88); }
+
+  .btn-arrow__inner {
+    display: inline-flex;
+    align-items: stretch;
+    gap: 0;
+    position: relative;
+    transition: transform 400ms ease;
+  }
+  .btn-arrow:hover .btn-arrow__inner { transform: translateX(8px); }
+
+  /* Shaft stroke rectangle — absolutely overlays the body span area.
+     Left/right borders are hidden by cap fills; top/bottom provide the shaft outline.
+     top/bottom: -1px centers the 2px border on the element boundary to align with SVG stroke. */
+  .btn-arrow__shaft {
+    position: absolute;
+    top: calc(var(--btn-arrow-h) * 0.125 - 2px);
+    bottom: calc(var(--btn-arrow-h) * 0.125 - 2px);
+    left: calc(var(--btn-arrow-h) * 72.66 / 251.68);
+    right: calc(var(--btn-arrow-h) * 72.64 / 251.68);
+    box-sizing: border-box;
+    background: transparent;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    pointer-events: none;
+  }
+  .btn-arrow:hover .btn-arrow__shaft {
+    background: var(--_btn-arrow-fill);
+    border-top-color: var(--color-red-600);
+    border-bottom-color: var(--color-red-600);
+    transition: background-color 400ms ease, border-color 400ms ease;
+  }
 
   .btn-arrow__lcap,
   .btn-arrow__rcap {
     flex-shrink: 0;
     height: var(--btn-arrow-h);
     display: block;
+    overflow: visible;
+    transition: transform 400ms ease;
   }
+  .btn-arrow__lcap polygon,
+  .btn-arrow__rcap polygon {
+    vector-effect: non-scaling-stroke;
+  }
+  .btn-arrow:hover .btn-arrow__lcap,
+  .btn-arrow:hover .btn-arrow__rcap { transform: scaleY(1.1); }
   .btn-arrow__lcap {
     /* viewBox 324.34 wide: shoulder (251.68) + 30°-from-vertical depth (72.66) */
     aspect-ratio: 324.34 / 251.68;
@@ -163,21 +207,33 @@
     white-space: nowrap;
     position: relative;
     z-index: 1; /* shaft renders on top of both caps */
-    /* Fill only the shaft band (20.2%–79.8% of total height) */
-    background: linear-gradient(
-      to bottom,
-      transparent 12.5%,
-      var(--_btn-arrow-fill) 12.5%,
-      var(--_btn-arrow-fill) 87.5%,
-      transparent 87.5%
-    );
+    height: calc(var(--btn-arrow-h) * 0.75);
+    align-self: center;
+    transition: --_btn-arrow-fill 100ms ease;
+    background: var(--_btn-arrow-fill);
   }
 
   .btn-arrow--primary {
     color: var(--color-earth-50);
     --_btn-arrow-fill: var(--color-red-600);
   }
-  .btn-arrow--primary svg { fill: var(--color-red-600); }
+  .btn-arrow--primary svg {
+    fill: var(--color-red-600);
+    stroke: var(--color-red-600);
+    stroke-width: 4px;
+    stroke-opacity: 0;
+    paint-order: stroke fill;
+    transition: transform 400ms ease, fill 100ms ease;
+  }
+  .btn-arrow--primary:hover {
+    color: var(--color-red-600);
+    --_btn-arrow-fill: var(--color-gold-300);
+  }
+  .btn-arrow--primary:hover svg {
+    fill: var(--color-gold-300);
+    stroke-opacity: 1;
+    transition: transform 400ms ease, fill 100ms ease, stroke-opacity 400ms ease;
+  }
 
   .btn-arrow--secondary {
     color: var(--color-earth-50);
