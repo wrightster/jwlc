@@ -1072,17 +1072,18 @@
 }
 #jwrg-form .jwrg-field input,
 #jwrg-form .jwrg-field textarea {
-  @apply w-full px-4 py-3 bg-white border border-earth-200 rounded-sm text-earth-900 focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-colors;
+  @apply w-full px-4 py-3 bg-white border border-earth-200 rounded-sm text-earth-900 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-colors;
 }
 #jwrg-form .jwrg-field textarea { resize: none; min-height: 8rem; }
 #jwrg-form .jwrg-hp { display: none; }
 #jwrg-form .jwrg-submit {
   @apply inline-flex items-center justify-center px-7 py-2 font-display font-medium border-2 tracking-wide rounded-sm transition-all duration-300 cursor-pointer;
-  @apply border-brand-primary text-brand-primary;
+  @apply border-red-600 text-red-600;
   background-color: transparent;
 }
 #jwrg-form .jwrg-submit:hover {
-  @apply bg-brand-primary text-brand-bg;
+  @apply bg-red-600 text-white;
+}
 .topo-bg-wrap-fixed {
   position: fixed;
   inset: 0;

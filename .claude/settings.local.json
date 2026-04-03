@@ -13,10 +13,15 @@
       "Bash(cd:*)",
       "Bash(code:*)",
       "Bash(git checkout:*)",
+      "Bash(netstat:*)",
+      "Bash(tasklist:*)",
+      "Bash(git fetch:*)",
       "Bash(npm run:*)",
       "Bash(start msedge:*)",
+      "Bash(git pull:*)",
+      "Bash(git stash:*)",
       "WebFetch(domain:office.jwrgnc.com)",
-      "Bash(python3 -m json.tool)"
+      "Bash(python3 -m json.tool)",
       "Bash(node scripts/check-listings.js)"
     ]
   }
