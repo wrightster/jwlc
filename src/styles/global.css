@@ -1060,6 +1060,29 @@
 }
 .topo-bg--light  { opacity: 0.2; }
 .topo-bg--faint  { opacity: 0.035; }
+
+/* ══════════════════════════════════════════════════
+   EMBEDDED BACK-OFFICE FORM OVERRIDES
+   Outside @layer so these beat forms.js injected styles.
+   #jwrg-form parent gives specificity edge over forms.js selectors.
+══════════════════════════════════════════════════ */
+#jwrg-form .jwrg-field { margin-bottom: 0; }
+#jwrg-form .jwrg-field label {
+  @apply block text-sm font-medium text-earth-700 mb-2;
+}
+#jwrg-form .jwrg-field input,
+#jwrg-form .jwrg-field textarea {
+  @apply w-full px-4 py-3 bg-white border border-earth-200 rounded-sm text-earth-900 focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-colors;
+}
+#jwrg-form .jwrg-field textarea { resize: none; min-height: 8rem; }
+#jwrg-form .jwrg-hp { display: none; }
+#jwrg-form .jwrg-submit {
+  @apply inline-flex items-center justify-center px-7 py-2 font-display font-medium border-2 tracking-wide rounded-sm transition-all duration-300 cursor-pointer;
+  @apply border-brand-primary text-brand-primary;
+  background-color: transparent;
+}
+#jwrg-form .jwrg-submit:hover {
+  @apply bg-brand-primary text-brand-bg;
 .topo-bg-wrap-fixed {
   position: fixed;
   inset: 0;

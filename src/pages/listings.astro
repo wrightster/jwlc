@@ -2,17 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import ListingCard from '../components/ListingCard.astro';
 import ListingRow from '../components/ListingRow.astro';
-import { listings } from '../data/listings';
-export const prerender = true;
+import { fetchListings, formatPrice } from '../lib/api';
 
-function parsePrice(price: string): number {
-  const match = price.replace(/[$,]/g, '').match(/[\d.]+/);
-  return match ? parseFloat(match[0]) : 0;
-}
-function parseAcres(acreage: string): number {
-  const match = acreage.match(/[\d.]+/);
-  return match ? parseFloat(match[0]) : 0;
-}
+const listings = await fetchListings();
+
+const counties = [...new Set(listings.map(l => l.county))].sort();
+const cities   = [...new Set(listings.map(l => l.city))].sort();
 ---
 
 <Layout title="Listings — Julie Wright Land Company" description="Browse available land, lots, and investment properties across the North Carolina Triangle area.">
@@ -51,7 +46,7 @@ function parseAcres(acreage: string): number {
               </button>
               <ul class="custom-select-list" role="listbox">
                 <li class="custom-select-option is-selected" data-value="all" role="option">All Counties</li>
-                {[...new Set(listings.map(l => l.county))].sort().map((county) => (
+                {counties.map((county) => (
                   <li class="custom-select-option" data-value={county} role="option">{county}</li>
                 ))}
               </ul>
@@ -68,7 +63,7 @@ function parseAcres(acreage: string): number {
               </button>
               <ul class="custom-select-list" role="listbox">
                 <li class="custom-select-option is-selected" data-value="all" role="option">All Cities</li>
-                {[...new Set(listings.map(l => l.city))].sort().map((city) => (
+                {cities.map((city) => (
                   <li class="custom-select-option" data-value={city} role="option">{city}</li>
                 ))}
               </ul>
@@ -85,8 +80,10 @@ function parseAcres(acreage: string): number {
               </button>
               <ul class="custom-select-list" role="listbox">
                 <li class="custom-select-option is-selected" data-value="all" role="option">All Statuses</li>
-                <li class="custom-select-option" data-value="available" role="option">Available</li>
+                <li class="custom-select-option" data-value="active" role="option">Active</li>
+                <li class="custom-select-option" data-value="coming_soon" role="option">Coming Soon</li>
                 <li class="custom-select-option" data-value="pending" role="option">Pending</li>
+                <li class="custom-select-option" data-value="under_contract" role="option">Under Contract</li>
                 <li class="custom-select-option" data-value="sold" role="option">Sold</li>
               </ul>
             </div>
@@ -150,7 +147,15 @@ function parseAcres(acreage: string): number {
       <!-- Listings container -->
       <div class="listings-grid" id="listings-grid">
         {listings.map((listing, i) => (
-          <div class="listing-item" data-county={listing.county} data-city={listing.city} data-status={listing.status} data-price={parsePrice(listing.price)} data-acres={parseAcres(listing.acreage)} id={listing.id}>
+          <div
+            class="listing-item"
+            data-county={listing.county}
+            data-city={listing.city}
+            data-status={listing.status}
+            data-price={Math.round(parseFloat(listing.list_price))}
+            data-acres={listing.lot_size_acres ? parseFloat(listing.lot_size_acres) : 0}
+            id={listing.slug}
+          >
             <ListingCard listing={listing} index={i} />
             <ListingRow listing={listing} />
           </div>
@@ -240,8 +245,13 @@ function parseAcres(acreage: string): number {
     let priceMin = 0, priceMax = MAX_PRICE;
     let acresMin = 0, acresMax = MAX_ACRES;
 
-    const statusToShort: Record<string, string> = { available: 'a', pending: 'p', sold: 's' };
-    const shortToStatus: Record<string, string> = { a: 'available', p: 'pending', s: 'sold' };
+    // Status values map to URL shorthand
+    const statusToShort: Record<string, string> = {
+      active: 'a', coming_soon: 'c', pending: 'p', under_contract: 'u', sold: 's'
+    };
+    const shortToStatus: Record<string, string> = {
+      a: 'active', c: 'coming_soon', p: 'pending', u: 'under_contract', s: 'sold'
+    };
 
     function updateURL() {
       const params = new URLSearchParams();
