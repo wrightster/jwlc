@@ -13,8 +13,7 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
 <Layout title="Listings — Julie Wright Land Company" description="Browse available land, lots, and investment properties across the North Carolina Triangle area.">
   <!-- Page Header -->
   <section class="page-banner">
-    <img src="/FallTopo_v2.svg" class="topo-bg topo-bg--light" alt="" aria-hidden="true" />
-    <div class="relative content-wrap">
+    <div class="content-wrap">
       <h1 class="page-banner-title">Available Listings</h1>
       <p class="page-banner-desc">
         Land, lots, and investment properties across Wake, Durham, Granville, Franklin, Nash, and Vance counties.
@@ -26,8 +25,16 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
   <section class="listings-section">
     <div class="content-wrap">
       <!-- Filter bar -->
-      <div class="filter-bar">
-        <div class="filter-controls-row">
+      <div class="filter-bar" id="filter-bar">
+        <button class="filter-toggle-btn" id="filter-toggle" type="button" aria-expanded="true" aria-controls="filter-collapse">
+          <svg class="filter-toggle-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          <span class="filter-toggle-label">Filters</span>
+          <span class="filter-toggle-count" id="filter-active-count" aria-live="polite"></span>
+          <svg class="filter-toggle-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="filter-collapse" id="filter-collapse">
+          <div class="filter-collapse-inner">
+            <div class="filter-controls-row">
 
           <!-- County dropdown -->
           <div class="filter-select-wrap">
@@ -112,6 +119,8 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
             </div>
           </div>
 
+            </div>
+          </div>
         </div>
       </div>
 
@@ -171,8 +180,9 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
   <script>
     const MAX_PRICE = 500000;
 
-    const items   = document.querySelectorAll('.listing-item');
-    const countEl = document.getElementById('count');
+    const items          = document.querySelectorAll('.listing-item');
+    const countEl        = document.getElementById('count');
+    const filterCountEl  = document.getElementById('filter-active-count')!
 
     const highestAcres = Math.max(...Array.from(items).map(el => parseFloat((el as HTMLElement).dataset.acres ?? '0')));
     const MAX_ACRES = Math.ceil(highestAcres / 2) * 2;
@@ -271,6 +281,18 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
       });
       if (countEl) countEl.textContent = String(visible);
       updateURL();
+      updateFilterCount();
+    }
+
+    function updateFilterCount() {
+      let active = 0;
+      if (filterValues.county !== 'all') active++;
+      if (filterValues.city   !== 'all') active++;
+      if (filterValues.status !== 'all') active++;
+      if (priceMin > 0 || priceMax < MAX_PRICE) active++;
+      if (acresMin > 0 || acresMax < MAX_ACRES)  active++;
+      filterCountEl.textContent = active > 0 ? String(active) : '';
+      filterCountEl.classList.toggle('is-visible', active > 0);
     }
 
     // ── Range sliders ─────────────────────────────────────────────────────
@@ -372,6 +394,44 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
 
       applyFilters();
     })();
+
+    // ── Filter collapse toggle ────────────────────────────────────────────
+    const filterBar     = document.getElementById('filter-bar')!;
+    const filterToggle  = document.getElementById('filter-toggle') as HTMLButtonElement;
+    const filterInner   = document.querySelector('.filter-collapse-inner') as HTMLElement;
+
+    function setFilterCollapsed(collapsed: boolean, save = true, animate = true) {
+      filterBar.classList.toggle('is-collapsed', collapsed);
+      filterToggle.setAttribute('aria-expanded', String(!collapsed));
+      if (collapsed) {
+        if (animate) {
+          filterInner.style.height = filterInner.scrollHeight + 'px';
+          filterInner.getBoundingClientRect(); // force reflow
+        }
+        filterInner.style.overflow = 'hidden';
+        filterInner.style.height = '0';
+      } else {
+        filterInner.style.overflow = 'hidden';
+        filterInner.style.height = filterInner.scrollHeight + 'px';
+        if (animate) {
+          filterInner.addEventListener('transitionend', () => {
+            filterInner.style.height = '';
+            filterInner.style.overflow = '';
+          }, { once: true });
+        } else {
+          filterInner.style.height = '';
+          filterInner.style.overflow = '';
+        }
+      }
+      if (save) localStorage.setItem('jwlc-filters-open', collapsed ? '0' : '1');
+    }
+
+    const savedOpen = localStorage.getItem('jwlc-filters-open');
+    setFilterCollapsed(savedOpen === '0', false, false);
+
+    filterToggle.addEventListener('click', () => {
+      setFilterCollapsed(!filterBar.classList.contains('is-collapsed'));
+    });
 
     // ── View toggle ───────────────────────────────────────────────────────
     const grid     = document.getElementById('listings-grid') as HTMLElement;

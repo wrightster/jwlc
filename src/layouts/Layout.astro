@@ -34,9 +34,14 @@ const navLinks = [
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Funnel+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Anek+Latin:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet" />
   </head>
   <body class="site-body">
+    <!-- Global topo background overlay -->
+    <div class="topo-bg-wrap-fixed">
+      <img src="/FallTopo_v2.svg" class="topo-bg" alt="" aria-hidden="true" />
+    </div>
+
     <!-- Navigation -->
     <header class="site-header" id="site-header">
       <div class="header-bg" id="header-bg"></div>
@@ -59,6 +64,7 @@ const navLinks = [
                     : 'nav-link-inactive',
                 ]}
               >
+                <span class="nav-link-bg" aria-hidden="true"></span>
                 {link.label}
                 {(currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))) && (
                   <span class="nav-active-bar" />
@@ -175,7 +181,7 @@ const navLinks = [
       function updateTopoWidth() {
         const outer = window.outerWidth;
         const inner = window.innerWidth;
-        const physicalW = Math.max(2880, outer / 0.95); // layout pixels
+        const physicalW = Math.max(2160, outer / 0.95); // layout pixels
         const cssW = physicalW * inner / outer;          // convert to CSS pixels
         document.documentElement.style.setProperty('--topo-width', `${Math.round(cssW)}px`);
       }
@@ -234,6 +240,37 @@ const navLinks = [
 
       updateParallax();
       window.addEventListener('scroll', scheduleParallax, { passive: true });
+
+      // Nav click animations
+      document.querySelectorAll<HTMLAnchorElement>('.nav-desktop-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+
+          // Deactivate current active link
+          const activeLink = document.querySelector<HTMLElement>('.nav-link-active');
+          if (activeLink && activeLink !== link) {
+            activeLink.classList.add('nav-link-deactivating');
+          }
+
+          // Drive click animation via inline styles so hover/CSS specificity can't interfere
+          const bg = link.querySelector<HTMLElement>('.nav-link-bg');
+          if (bg) {
+            // Snap to start state (scaleY 0, red, no transition)
+            bg.style.transition = 'none';
+            bg.style.backgroundColor = 'var(--color-red-600)';
+            bg.style.transform = 'scaleY(0)';
+            bg.style.opacity = '1';
+            // Next frame: re-enable transition and animate to full height
+            requestAnimationFrame(() => {
+              bg.style.transition = 'transform 100ms ease';
+              bg.style.transform = 'scaleY(1)';
+            });
+          }
+
+          link.classList.add('nav-link-clicking');
+          setTimeout(() => { window.location.href = link.href; }, 100);
+        });
+      });
 
       // Mobile menu
       const menuBtn = document.getElementById('mobile-menu-btn');

@@ -1,0 +1,419 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ListingCard from '../../components/ListingCard.astro';
+import ServiceIcon from '../../components/ServiceIcon.astro';
+import { listings } from '../../data/listings';
+
+// Redirect to home in production
+if (import.meta.env.PROD) {
+  return Astro.redirect('/');
+}
+
+const sampleListing = listings[1]; // private-homesite-falls-lake (has many images)
+---
+
+<Layout title="Design System — Dev Only">
+  <div class="content-wrap py-12 space-y-20">
+
+    <!-- Header -->
+    <div class="border-b-2 border-red-600 pb-6">
+      <p class="section-label">Internal Tool</p>
+      <h1 class="section-heading">Design System</h1>
+      <p class="text-earth-600 mt-2">Dev-only reference page. Not linked in production nav. Redirects to / in production builds.</p>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         COLOR TOKENS
+    ══════════════════════════════════════════ -->
+    <section>
+      <h2 class="font-display text-2xl text-earth-900 mb-6 pb-3 border-b border-earth-200">Color Tokens</h2>
+
+      <h3 class="text-xs uppercase tracking-widest text-earth-500 font-semibold mb-4">Crimson — Dark Accent / Red Clay</h3>
+      <div class="flex flex-wrap gap-3 mb-8">
+        {[
+          { name: 'red-50',  bg: 'bg-red-50',  hex: '#fff3f2' },
+          { name: 'red-100', bg: 'bg-red-100', hex: '#fde4e1' },
+          { name: 'red-200', bg: 'bg-red-200', hex: '#f9c4bc' },
+          { name: 'red-300', bg: 'bg-red-300', hex: '#f29388' },
+          { name: 'red-400', bg: 'bg-red-400', hex: '#e85f50' },
+          { name: 'red-500', bg: 'bg-red-500', hex: '#d14338' },
+          { name: 'red-600', bg: 'bg-red-600', hex: '#be3528', note: '★ Dark Accent / Red Clay' },
+          { name: 'red-700', bg: 'bg-red-700', hex: '#9e2c20' },
+          { name: 'red-800', bg: 'bg-red-800', hex: '#7c2218' },
+          { name: 'red-900', bg: 'bg-red-900', hex: '#551710' },
+          { name: 'red-950', bg: 'bg-red-950', hex: '#330d09' },
+        ].map(c => (
+          <div class="flex flex-col gap-1 w-24">
+            <div class={`${c.bg} h-10 rounded-sm border border-earth-200`}></div>
+            <span class="text-[11px] font-mono font-semibold text-earth-800">{c.name}</span>
+            <span class="text-[10px] text-earth-500 font-mono">{c.hex}</span>
+            {c.note && <span class="text-[10px] text-red-600 font-semibold">{c.note}</span>}
+          </div>
+        ))}
+      </div>
+
+      <h3 class="text-xs uppercase tracking-widest text-earth-500 font-semibold mb-4">Gold — Light Accent / Muted Gold</h3>
+      <div class="flex flex-wrap gap-3 mb-8">
+        {[
+          { name: 'gold-50',  bg: 'bg-gold-50',  hex: '#fff9f0' },
+          { name: 'gold-100', bg: 'bg-gold-100', hex: '#fef0d5' },
+          { name: 'gold-200', bg: 'bg-gold-200', hex: '#fde1ab' },
+          { name: 'gold-300', bg: 'bg-gold-300', hex: '#fac984', note: '★ Light Accent / Muted Gold' },
+          { name: 'gold-400', bg: 'bg-gold-400', hex: '#f5b35a' },
+          { name: 'gold-500', bg: 'bg-gold-500', hex: '#e89537' },
+          { name: 'gold-600', bg: 'bg-gold-600', hex: '#c07622' },
+          { name: 'gold-700', bg: 'bg-gold-700', hex: '#935919' },
+          { name: 'gold-800', bg: 'bg-gold-800', hex: '#6a3f10' },
+          { name: 'gold-900', bg: 'bg-gold-900', hex: '#45280a' },
+          { name: 'gold-950', bg: 'bg-gold-950', hex: '#281706' },
+        ].map(c => (
+          <div class="flex flex-col gap-1 w-24">
+            <div class={`${c.bg} h-10 rounded-sm border border-earth-200`}></div>
+            <span class="text-[11px] font-mono font-semibold text-earth-800">{c.name}</span>
+            <span class="text-[10px] text-earth-500 font-mono">{c.hex}</span>
+            {c.note && <span class="text-[10px] text-red-600 font-semibold">{c.note}</span>}
+          </div>
+        ))}
+      </div>
+
+      <h3 class="text-xs uppercase tracking-widest text-earth-500 font-semibold mb-4">Earth Scale (Browns)</h3>
+      <div class="flex flex-wrap gap-3 mb-8">
+        {[
+          { name: 'earth-50',  bg: 'bg-earth-50',  hex: '#f7f7f2', note: '★ Light Neutral / Clean Bone' },
+          { name: 'earth-100', bg: 'bg-earth-100', hex: '#f2e6c9', note: '★ Medium Neutral / Fine Sand' },
+          { name: 'earth-200', bg: 'bg-earth-200', hex: '#e8d9bb' },
+          { name: 'earth-300', bg: 'bg-earth-300', hex: '#d4bc96' },
+          { name: 'earth-400', bg: 'bg-earth-400', hex: '#bb9d72' },
+          { name: 'earth-500', bg: 'bg-earth-500', hex: '#a48a63' },
+          { name: 'earth-600', bg: 'bg-earth-600', hex: '#8d7350' },
+          { name: 'earth-700', bg: 'bg-earth-700', hex: '#745d42' },
+          { name: 'earth-800', bg: 'bg-earth-800', hex: '#5e4c38' },
+          { name: 'earth-900', bg: 'bg-earth-900', hex: '#3d3225', note: '★ Dark Neutral / Rich Soil' },
+          { name: 'earth-950', bg: 'bg-earth-950', hex: '#2a2119' },
+        ].map(c => (
+          <div class="flex flex-col gap-1 w-24">
+            <div class={`${c.bg} h-10 rounded-sm border border-earth-200`}></div>
+            <span class="text-[11px] font-mono font-semibold text-earth-800">{c.name}</span>
+            <span class="text-[10px] text-earth-500 font-mono">{c.hex}</span>
+            {c.note && <span class="text-[10px] text-red-600 font-semibold">{c.note}</span>}
+          </div>
+        ))}
+      </div>
+
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         TYPOGRAPHY
+    ══════════════════════════════════════════ -->
+    <section>
+      <h2 class="font-display text-2xl text-earth-900 mb-6 pb-3 border-b border-earth-200">Typography</h2>
+      <div class="space-y-8">
+
+        <div class="flex items-baseline gap-6">
+          <code class="text-xs font-mono text-red-600 w-44 flex-shrink-0">.section-label</code>
+          <p class="section-label">Section Label</p>
+        </div>
+
+        <div class="flex items-baseline gap-6">
+          <code class="text-xs font-mono text-red-600 w-44 flex-shrink-0">.section-heading</code>
+          <h2 class="section-heading">Section Heading</h2>
+        </div>
+
+        <div class="flex items-baseline gap-6">
+          <code class="text-xs font-mono text-red-600 w-44 flex-shrink-0">.page-banner-title</code>
+          <span class="page-banner-title">Page Banner Title</span>
+        </div>
+
+        <div class="flex items-baseline gap-6">
+          <code class="text-xs font-mono text-red-600 w-44 flex-shrink-0">font-display text-3xl</code>
+          <span class="font-display text-3xl text-earth-900">Display — 3xl</span>
+        </div>
+
+        <div class="flex items-baseline gap-6">
+          <code class="text-xs font-mono text-red-600 w-44 flex-shrink-0">font-display text-2xl</code>
+          <span class="font-display text-2xl text-earth-900">Display — 2xl</span>
+        </div>
+
+        <div class="flex items-baseline gap-6">
+          <code class="text-xs font-mono text-red-600 w-44 flex-shrink-0">font-display text-xl</code>
+          <span class="font-display text-xl text-earth-900">Display — xl</span>
+        </div>
+
+        <div class="flex items-baseline gap-6">
+          <code class="text-xs font-mono text-red-600 w-44 flex-shrink-0">body / text-base</code>
+          <span class="text-earth-700 leading-relaxed">Body text — Funnel Sans. Used for descriptions, paragraphs, and general content across the site.</span>
+        </div>
+
+        <div class="flex items-baseline gap-6">
+          <code class="text-xs font-mono text-red-600 w-44 flex-shrink-0">text-sm text-earth-600</code>
+          <span class="text-sm text-earth-600">Secondary body — used for captions, metadata, helper text.</span>
+        </div>
+
+        <div class="flex items-baseline gap-6">
+          <code class="text-xs font-mono text-red-600 w-44 flex-shrink-0">italic font-semibold</code>
+          <span class="font-body italic font-semibold text-earth-800 text-xl">Italic quote style — used in hero and testimonials.</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         BUTTONS
+    ══════════════════════════════════════════ -->
+    <section>
+      <h2 class="font-display text-2xl text-earth-900 mb-6 pb-3 border-b border-earth-200">Buttons</h2>
+      <div class="flex flex-wrap gap-4 items-center mb-6">
+        <button class="btn-primary">
+          btn-primary
+          <svg class="btn-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </button>
+        <button class="btn-secondary">
+          btn-secondary
+          <svg class="btn-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </button>
+        <button class="btn-nav">btn-nav</button>
+      </div>
+      <p class="text-xs text-earth-500 font-mono">All share: px-7 py-2 font-display border-2 rounded-sm tracking-wide. Add <code>.btn-icon</code> svg inside for animated arrow.</p>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         BADGES & LABELS
+    ══════════════════════════════════════════ -->
+    <section>
+      <h2 class="font-display text-2xl text-earth-900 mb-6 pb-3 border-b border-earth-200">Badges & Labels</h2>
+      <div class="space-y-6">
+
+        <div>
+          <p class="text-xs text-earth-500 mb-3 font-mono">.listing-status-badge [data-status]</p>
+          <div class="flex flex-wrap gap-3">
+            <span class="listing-status-badge" data-status="available">Available</span>
+            <span class="listing-status-badge" data-status="pending">Pending</span>
+            <span class="listing-status-badge" data-status="sold">Sold</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs text-earth-500 mb-3 font-mono">.listing-county-badge</p>
+          <span class="listing-county-badge">Wake County</span>
+        </div>
+
+        <div>
+          <p class="text-xs text-earth-500 mb-3 font-mono">.team-tag</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="team-tag">Land Brokerage</span>
+            <span class="team-tag">Estate Planning</span>
+            <span class="team-tag">Investment Properties</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs text-earth-500 mb-3 font-mono">.sidebar-county-tag (hover changes bg)</p>
+          <div class="flex flex-wrap gap-2">
+            {['Wake', 'Durham', 'Granville', 'Franklin', 'Nash', 'Vance', 'Harnett', 'Chatham'].map(c => (
+              <span class="sidebar-county-tag">{c}</span>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs text-earth-500 mb-3 font-mono">.stat-card</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl">
+            <div class="stat-card">
+              <p class="stat-card-label">Years</p>
+              <p class="stat-card-value">40+</p>
+              <p class="stat-card-detail">In Triangle land sales</p>
+            </div>
+            <div class="stat-card">
+              <p class="stat-card-label">Counties</p>
+              <p class="stat-card-value">8</p>
+              <p class="stat-card-detail">Served across NC</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         FORM ELEMENTS
+    ══════════════════════════════════════════ -->
+    <section>
+      <h2 class="font-display text-2xl text-earth-900 mb-6 pb-3 border-b border-earth-200">Form Elements</h2>
+      <div class="max-w-lg space-y-5">
+        <div>
+          <label class="form-label">Text Input (.form-input)</label>
+          <input type="text" class="form-input" placeholder="e.g. Wake Forest" />
+        </div>
+        <div>
+          <label class="form-label">Textarea (.form-textarea)</label>
+          <textarea class="form-textarea" rows="3" placeholder="Tell us about the land you're looking for…"></textarea>
+        </div>
+        <div>
+          <p class="text-xs text-earth-500 font-mono">Focus ring: red-600. Placeholder: earth-400. Border default: earth-200.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SERVICE ICONS
+    ══════════════════════════════════════════ -->
+    <section>
+      <h2 class="font-display text-2xl text-earth-900 mb-6 pb-3 border-b border-earth-200">Service Icons</h2>
+      <div class="flex flex-wrap gap-6">
+        {(['handshake', 'clipboard', 'map', 'scroll', 'arrows', 'trees'] as const).map(icon => (
+          <div class="flex flex-col items-center gap-2">
+            <div class="service-card-icon-wrap">
+              <ServiceIcon icon={icon} class="service-card-icon" />
+            </div>
+            <code class="text-[11px] font-mono text-earth-500">{icon}</code>
+          </div>
+        ))}
+      </div>
+      <p class="text-xs text-earth-500 font-mono mt-4">Used in ServiceIcon.astro. Wrap with .service-card-icon-wrap + .service-card-icon classes.</p>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         PAGE SECTION PATTERNS
+    ══════════════════════════════════════════ -->
+    <section>
+      <h2 class="font-display text-2xl text-earth-900 mb-6 pb-3 border-b border-earth-200">Page Section Patterns</h2>
+      <div class="space-y-4">
+        <p class="text-sm text-earth-600">These patterns are full-width sections — shown at reduced scale here for reference. View them in context on actual pages.</p>
+
+        <!-- Page Banner Preview -->
+        <div>
+          <p class="text-xs text-earth-500 mb-2 font-mono">.page-banner (bg-earth-100)</p>
+          <div class="page-banner">
+            <div class="relative content-wrap">
+              <p class="section-label">Category</p>
+              <h1 class="page-banner-title">Page Banner Title</h1>
+              <p class="page-banner-desc">Short description of this page and what visitors can expect to find here.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Dark Preview -->
+        <div>
+          <p class="text-xs text-earth-500 mb-2 font-mono">.cta-dark (bg-earth-900)</p>
+          <div class="cta-dark">
+            <div class="cta-wrap text-center py-4">
+              <h2 class="cta-dark-heading">Ready to Find Your Land?</h2>
+              <p class="cta-dark-body">Work with our expert team to find the perfect parcel.</p>
+              <div class="cta-btn-row">
+                <a href="#" class="btn-primary">Get Started</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Light Preview -->
+        <div>
+          <p class="text-xs text-earth-500 mb-2 font-mono">.cta-light (bg-earth-100/50)</p>
+          <div class="cta-light">
+            <div class="cta-wrap text-center py-4">
+              <h2 class="cta-light-heading">Don't See What You're Looking For?</h2>
+              <p class="cta-light-body">Our team has access to off-market properties. Reach out and we'll help you find the right land.</p>
+              <div class="cta-btn-row">
+                <a href="#" class="btn-primary">Contact Us</a>
+                <a href="#" class="btn-secondary">Browse Listings</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         LISTING CARD
+    ══════════════════════════════════════════ -->
+    <section>
+      <h2 class="font-display text-2xl text-earth-900 mb-6 pb-3 border-b border-earth-200">Listing Card Component</h2>
+      <p class="text-sm text-earth-600 mb-6">Rendered via <code class="font-mono text-red-600">ListingCard.astro</code>. Used in homepage featured grid and listings page grid view.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-3xl">
+        <ListingCard listing={sampleListing} />
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         NETWORK CARD
+    ══════════════════════════════════════════ -->
+    <section>
+      <h2 class="font-display text-2xl text-earth-900 mb-6 pb-3 border-b border-earth-200">Network Card</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl">
+        <div class="network-card">
+          <div class="network-icon-wrap">
+            <svg class="network-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12h20M12 2v20"/></svg>
+          </div>
+          <h3 class="network-title">Custom Builders</h3>
+          <p class="network-desc">Trusted residential builder partners across the Triangle.</p>
+        </div>
+        <div class="network-card">
+          <div class="network-icon-wrap">
+            <svg class="network-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+          </div>
+          <h3 class="network-title">Developers</h3>
+          <p class="network-desc">Commercial and mixed-use development contacts.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         QUICK REFERENCE
+    ══════════════════════════════════════════ -->
+    <section>
+      <h2 class="font-display text-2xl text-earth-900 mb-6 pb-3 border-b border-earth-200">Quick Reference</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="font-display text-lg text-earth-900 mb-3">If you want to change…</h3>
+          <table class="w-full text-sm">
+            <tbody class="divide-y divide-earth-200">
+              {[
+                ['Nav/footer colors', 'global.css :root --color-nav-accent'],
+                ['All button shapes', 'global.css .btn-primary, .btn-secondary, .btn-nav shared rule'],
+                ['Brand colors', 'global.css @theme block'],
+                ['Fonts', 'global.css @theme --font-display / --font-body + Layout.astro Google Fonts link'],
+                ['Footer layout', 'global.css .footer-* + Layout.astro footer HTML'],
+                ['Page banners', 'global.css .page-banner-*'],
+                ['CTA sections', 'global.css .cta-dark / .cta-light'],
+                ['Listing cards', 'ListingCard.astro'],
+                ['Listing row (list view)', 'ListingRow.astro'],
+                ['Listing data', 'src/data/listings.ts'],
+                ['Team data', 'src/data/team.ts'],
+              ].map(([what, where]) => (
+                <tr>
+                  <td class="py-2 pr-4 text-earth-700">{what}</td>
+                  <td class="py-2 font-mono text-[11px] text-red-600">{where}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3 class="font-display text-lg text-earth-900 mb-3">Color token cheat-sheet</h3>
+          <table class="w-full text-sm">
+            <tbody class="divide-y divide-earth-200">
+              {[
+                ['bg-red-600', 'Crimson fill (CTAs, footer)'],
+                ['text-red-600', 'Crimson text (links, labels)'],
+                ['bg-earth-900', 'Dark section backgrounds'],
+                ['text-earth-900', 'Main body text'],
+                ['text-earth-600', 'Secondary / muted text'],
+                ['text-earth-400', 'Placeholder / disabled'],
+                ['bg-earth-100', 'Banner / card backgrounds'],
+                ['bg-earth-50', 'Page background'],
+                ['text-light-text', 'White text on dark bg'],
+                ['text-gold-300', 'Amber italic accents'],
+              ].map(([token, note]) => (
+                <tr>
+                  <td class="py-2 pr-4 font-mono text-[11px] text-red-600">{token}</td>
+                  <td class="py-2 text-earth-600">{note}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</Layout>
