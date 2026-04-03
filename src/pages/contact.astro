@@ -24,51 +24,8 @@ export const prerender = true;
           <h2 class="contact-form-heading">Schedule a Free Consultation</h2>
           <p class="contact-form-desc">Fill out the form below and we'll get back to you within one business day.</p>
 
-          <form class="form-stack" id="contact-form">
-            <div class="form-row-2">
-              <div>
-                <label for="firstName" class="form-label">First Name *</label>
-                <input type="text" id="firstName" name="firstName" required class="form-input" placeholder="Your first name" />
-              </div>
-              <div>
-                <label for="lastName" class="form-label">Last Name *</label>
-                <input type="text" id="lastName" name="lastName" required class="form-input" placeholder="Your last name" />
-              </div>
-            </div>
-
-            <div>
-              <label for="email" class="form-label">Email Address *</label>
-              <input type="email" id="email" name="email" required class="form-input" placeholder="you@example.com" />
-            </div>
-
-            <div class="form-row-3">
-              <div class="form-col-2">
-                <label for="city" class="form-label">City</label>
-                <input type="text" id="city" name="city" class="form-input" placeholder="Your city" />
-              </div>
-              <div>
-                <label for="state" class="form-label">State</label>
-                <input type="text" id="state" name="state" class="form-input" placeholder="NC" />
-              </div>
-            </div>
-
-            <div>
-              <label for="landSize" class="form-label">Land Size of Interest</label>
-              <input type="text" id="landSize" name="landSize" class="form-input" placeholder="e.g., 5-10 acres" />
-            </div>
-
-            <div>
-              <label for="comments" class="form-label">Comments</label>
-              <textarea id="comments" name="comments" rows="5" class="form-textarea" placeholder="Tell us about what you're looking for..."></textarea>
-            </div>
-
-            <button type="submit" class="btn-primary">
-              Send Message
-              <svg class="btn-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </form>
+          <div id="jwrg-form"></div>
+          <script src="https://office.jwrgnc.com/js/forms.js" data-form-token="zw4zEyoBAO1fjEB7rdHYdv5ka9i11t5A" data-target="#jwrg-form"></script>
         </div>
 
         <!-- Contact Info Sidebar -->

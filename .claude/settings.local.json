@@ -14,7 +14,9 @@
       "Bash(code:*)",
       "Bash(git checkout:*)",
       "Bash(npm run:*)",
-      "Bash(start msedge:*)"
+      "Bash(start msedge:*)",
+      "WebFetch(domain:office.jwrgnc.com)",
+      "Bash(python3 -m json.tool)"
     ]
   }
 }
