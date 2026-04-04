@@ -572,7 +572,7 @@
   .sidebar-dark-desc     { @apply text-sm text-earth-100/80 mb-5; }
   .sidebar-email-form    { @apply flex gap-2; }
   .sidebar-email-input   {
-    @apply flex-1 px-4 py-2.5 border border-earth-300 rounded-sm text-earth-900 placeholder:text-earth-600 text-sm focus:outline-none focus:border-red-600; background-color: var(--color-nav-bg);
+    @apply flex-1 px-4 py-2.5 bg-white border border-transparent rounded-sm text-earth-900 placeholder:text-earth-500 text-sm focus:outline-none focus:border-earth-100;
   }
   .sidebar-email-btn {
     @apply inline-flex items-center justify-center px-5 py-2.5 font-display font-medium border-2 border-earth-100 text-earth-100 text-sm tracking-wide rounded-sm transition-all duration-300 hover:bg-earth-100 hover:text-red-600 cursor-pointer;
@@ -799,6 +799,10 @@
 
   .listing-description-heading { @apply font-display text-2xl text-earth-900 mb-5; }
   .listing-description-body    { @apply space-y-4 text-earth-700 leading-relaxed; }
+
+  .listing-directions      { @apply mt-8 pt-8 border-t border-earth-200; }
+  .listing-directions-body { @apply flex items-start gap-3 text-earth-700 leading-relaxed; }
+  .listing-directions-icon { @apply shrink-0 w-5 h-5 mt-0.5 text-red-600; }
 
   .listing-sidebar      { @apply lg:col-span-1 space-y-6 pt-4 md:pt-5; }
   .listing-contact-card { @apply bg-white rounded-sm p-7 sticky top-28; }
@@ -1077,6 +1081,7 @@
 #jwrg-form .jwrg-field textarea { resize: none; min-height: 8rem; }
 #jwrg-form .jwrg-hp { display: none; }
 #jwrg-form .jwrg-submit {
+  margin-top: 0.75rem;
   @apply inline-flex items-center justify-center px-7 py-2 font-display font-medium border-2 tracking-wide rounded-sm transition-all duration-300 cursor-pointer;
   @apply border-red-600 text-red-600;
   background-color: transparent;
@@ -1092,11 +1097,11 @@
 }
 #jwrg-mailing-form .jwrg-field input,
 #jwrg-mailing-form .jwrg-field textarea {
-  @apply w-full px-4 py-3 bg-white/15 border border-white/30 rounded-sm text-white placeholder-earth-100/60 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-colors;
+  @apply w-full px-4 py-3 bg-white border border-transparent rounded-sm text-earth-900 placeholder:text-earth-500 focus:outline-none focus:border-earth-100 transition-colors;
 }
 #jwrg-mailing-form .jwrg-field textarea { resize: none; min-height: 8rem; }
 #jwrg-mailing-form .jwrg-hp { display: none; }
-#jwrg-mailing-form .jwrg-submit {
+#jwrg-mailing-form .jwrg-submit { margin-top: 0.75rem;
   @apply inline-flex items-center justify-center px-7 py-2 font-display font-medium border-2 tracking-wide rounded-sm transition-all duration-300 cursor-pointer;
   @apply border-white text-white;
   background-color: transparent;

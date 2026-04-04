@@ -47,6 +47,7 @@ export interface ApiListing {
   hoa_frequency: string | null;
   description: string;
   full_description: string | null;
+  directions: string | null;
   features: string[];
   virtual_tour_url: string | null;
   list_date: string | null;
