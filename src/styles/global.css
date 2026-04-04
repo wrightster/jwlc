@@ -800,6 +800,16 @@
   .listing-description-heading { @apply font-display text-2xl text-earth-900 mb-5; }
   .listing-description-body    { @apply space-y-4 text-earth-700 leading-relaxed; }
 
+  .listing-documents         { @apply mt-8 pt-8 border-t border-earth-200; }
+  .listing-documents-list    { @apply space-y-2; }
+  .listing-document-link {
+    @apply flex items-center gap-3 px-4 py-3 bg-earth-100 rounded-sm text-earth-900 transition-colors duration-200;
+  }
+  .listing-document-link:hover { @apply bg-earth-200 text-red-600; }
+  .listing-document-icon  { @apply shrink-0 w-5 h-5 text-red-600; }
+  .listing-document-arrow { @apply shrink-0 w-4 h-4 ml-auto opacity-40; }
+  .listing-document-link:hover .listing-document-arrow { @apply opacity-100; }
+
   .listing-directions      { @apply mt-8 pt-8 border-t border-earth-200; }
   .listing-directions-body { @apply flex items-start gap-3 text-earth-700 leading-relaxed; }
   .listing-directions-icon { @apply shrink-0 w-5 h-5 mt-0.5 text-red-600; }

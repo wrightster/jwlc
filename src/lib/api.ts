@@ -58,6 +58,17 @@ export interface ApiListing {
   photo_count: number;
   // Only present on detail endpoint
   photos?: ApiPhoto[];
+  documents?: ApiDocument[];
+}
+
+export interface ApiDocument {
+  id: string;
+  title: string;
+  description: string | null;
+  document_type: string;
+  sort_order: number;
+  url: string | null;
+  expires_at: string | null;
 }
 
 export function formatPrice(price: string): string {
