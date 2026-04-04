@@ -1084,6 +1084,26 @@
 #jwrg-form .jwrg-submit:hover {
   @apply bg-red-600 text-earth-50;
 }
+
+/* Mailing-list form on dark (red-600) sidebar */
+#jwrg-mailing-form .jwrg-field { margin-bottom: 0; }
+#jwrg-mailing-form .jwrg-field label {
+  @apply block text-sm font-medium text-earth-100 mb-2;
+}
+#jwrg-mailing-form .jwrg-field input,
+#jwrg-mailing-form .jwrg-field textarea {
+  @apply w-full px-4 py-3 bg-white/15 border border-white/30 rounded-sm text-white placeholder-earth-100/60 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-colors;
+}
+#jwrg-mailing-form .jwrg-field textarea { resize: none; min-height: 8rem; }
+#jwrg-mailing-form .jwrg-hp { display: none; }
+#jwrg-mailing-form .jwrg-submit {
+  @apply inline-flex items-center justify-center px-7 py-2 font-display font-medium border-2 tracking-wide rounded-sm transition-all duration-300 cursor-pointer;
+  @apply border-white text-white;
+  background-color: transparent;
+}
+#jwrg-mailing-form .jwrg-submit:hover {
+  @apply bg-white text-red-600;
+}
 .topo-bg-wrap-fixed {
   position: fixed;
   inset: 0;
