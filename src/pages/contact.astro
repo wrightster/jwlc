@@ -93,6 +93,16 @@ export const prerender = true;
             <p class="sidebar-dark-desc">Stay updated on new listings and land opportunities across the Triangle.</p>
             <div id="jwrg-mailing-form"></div>
             <script src="https://office.jwrgnc.com/js/forms.js" data-form-token="zIv605tA1VmUNA9twbeE3fr7oBuYcazC" data-target="#jwrg-mailing-form"></script>
+            <script>
+              const mailingObserver = new MutationObserver(() => {
+                const btn = document.querySelector('#jwrg-mailing-form .jwrg-submit');
+                if (btn && !btn.dataset.labeled) {
+                  btn.dataset.labeled = '1';
+                  btn.textContent = 'Subscribe';
+                }
+              });
+              mailingObserver.observe(document.getElementById('jwrg-mailing-form'), { childList: true, subtree: true });
+            </script>
           </div>
         </div>
       </div>

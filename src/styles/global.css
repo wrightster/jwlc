@@ -775,7 +775,7 @@
   /* ══════════════════════════════════════════════════
      LISTING DETAIL PAGE
   ══════════════════════════════════════════════════ */
-  .listing-back-bar  { @apply bg-earth-100 border-b border-earth-100; }
+  .listing-back-bar  { @apply bg-earth-50 border-b border-earth-50; }
   .listing-back-link {
     @apply inline-flex items-center gap-2 text-sm text-earth-500 hover:text-earth-800 transition-colors;
   }
@@ -783,7 +783,7 @@
   .listing-back-link:hover .listing-back-icon { transform: translateX(-4px); }
 
   .listing-gallery-inset {
-    @apply bg-earth-100 rounded-b-sm mb-8 p-4 md:p-5;
+    @apply bg-earth-50 rounded-b-sm mb-8 p-4 md:p-5;
   }
   .gallery-main-wrap {
     @apply relative aspect-[16/9] overflow-hidden cursor-pointer rounded-sm w-full md:w-4/5 mx-auto;
@@ -853,7 +853,7 @@
   .listing-directions-icon { @apply shrink-0 w-5 h-5 mt-0.5 text-red-600; }
 
   .listing-sidebar      { @apply lg:col-span-1 space-y-6 pt-4 md:pt-5; }
-  .listing-contact-card { @apply bg-white rounded-sm p-7 sticky top-28; }
+  .listing-contact-card { @apply bg-earth-50 rounded-sm p-7 sticky top-28; }
   .listing-contact-heading { @apply font-display text-lg text-earth-900 mb-1; }
   .listing-contact-desc    { @apply text-sm text-earth-500 mb-6; }
   .listing-broker-row      { @apply flex items-center gap-4 mb-6 pb-6 border-b border-earth-100; }
@@ -1132,12 +1132,10 @@
 #jwrg-form .jwrg-hp { display: none; }
 #jwrg-form .jwrg-submit {
   margin-top: 0.75rem;
-  @apply inline-flex items-center justify-center px-7 py-2 font-display font-medium border-2 tracking-wide rounded-sm transition-all duration-300 cursor-pointer;
-  @apply border-red-600 text-red-600;
-  background-color: transparent;
+  cursor: pointer; outline: none; appearance: none; border: none; background: none; padding: 0;
 }
 #jwrg-form .jwrg-submit:hover {
-  @apply bg-red-600 text-earth-50;
+  color: var(--color-red-600);
 }
 
 /* Mailing-list form on dark (red-600) sidebar */
@@ -1153,11 +1151,11 @@
 #jwrg-mailing-form .jwrg-hp { display: none; }
 #jwrg-mailing-form .jwrg-submit { margin-top: 0.75rem;
   @apply inline-flex items-center justify-center px-7 py-2 font-display font-medium border-2 tracking-wide rounded-sm transition-all duration-300 cursor-pointer;
-  @apply border-white text-white;
+  @apply border-red-600 text-red-600;
   background-color: transparent;
 }
 #jwrg-mailing-form .jwrg-submit:hover {
-  @apply bg-white text-red-600;
+  @apply bg-red-600 text-earth-50;
 }
 .topo-bg-wrap-fixed {
   position: fixed;
