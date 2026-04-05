@@ -26,7 +26,7 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
     <div class="content-wrap">
       <!-- Filter bar -->
       <div class="filter-bar" id="filter-bar">
-        <button class="filter-toggle-btn" id="filter-toggle" type="button" aria-expanded="true" aria-controls="filter-collapse">
+        <button class="filter-toggle-btn" id="filter-toggle" type="button" aria-expanded="false" aria-controls="filter-collapse">
           <svg class="filter-toggle-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
           <span class="filter-toggle-label">Filters</span>
           <span class="filter-toggle-count" id="filter-active-count" aria-live="polite"></span>
@@ -427,7 +427,7 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
     }
 
     const savedOpen = localStorage.getItem('jwlc-filters-open');
-    setFilterCollapsed(savedOpen === '0', false, false);
+    setFilterCollapsed(savedOpen !== '1', false, false);
 
     filterToggle.addEventListener('click', () => {
       setFilterCollapsed(!filterBar.classList.contains('is-collapsed'));

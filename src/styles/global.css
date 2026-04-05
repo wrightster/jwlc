@@ -107,6 +107,10 @@
   .btn-secondary {
     @apply border-earth-900 text-earth-900 hover:bg-earth-900 hover:text-earth-50;
   }
+  /* Inverted — white outlined on colored bg, fills white on hover */
+  .btn-inverted {
+    @apply border-earth-50 text-earth-50 hover:bg-earth-50 hover:text-red-600;
+  }
   /* Nav — uses CSS-variable accent color */
   .btn-nav {
     border-color: var(--color-nav-accent);
@@ -118,7 +122,8 @@
   }
   .btn-icon { @apply w-4 h-4 ml-1.5 transition-transform duration-300; }
   .btn-primary:hover .btn-icon,
-  .btn-secondary:hover .btn-icon { transform: translateX(4px); }
+  .btn-secondary:hover .btn-icon,
+  .btn-inverted:hover .btn-icon { transform: translateX(4px); }
   .btn-icon-lead { @apply w-4 h-4 mr-2; }
 
   /* ══════════════════════════════════════════════════
@@ -243,6 +248,32 @@
   }
   .btn-arrow--secondary svg { fill: var(--color-earth-900); }
 
+  .btn-arrow--inverted {
+    color: var(--color-red-600);
+    --_btn-arrow-fill: var(--color-gold-300);
+  }
+  .btn-arrow--inverted svg {
+    fill: var(--color-gold-300);
+    stroke: var(--color-gold-300);
+    stroke-width: 4px;
+    stroke-opacity: 0;
+    paint-order: stroke fill;
+    transition: transform 400ms ease, fill 100ms ease;
+  }
+  .btn-arrow--inverted:hover {
+    color: var(--color-earth-900);
+    --_btn-arrow-fill: var(--color-earth-50);
+  }
+  .btn-arrow--inverted:hover svg {
+    fill: var(--color-earth-50);
+    stroke-opacity: 1;
+    transition: transform 400ms ease, fill 100ms ease, stroke-opacity 400ms ease;
+  }
+  .btn-arrow--inverted:hover .btn-arrow__shaft {
+    border-top-color: var(--color-gold-300);
+    border-bottom-color: var(--color-gold-300);
+  }
+
   /* ══════════════════════════════════════════════════
      TYPOGRAPHY
   ══════════════════════════════════════════════════ */
@@ -260,7 +291,7 @@
   .site-main  { @apply flex-1 pt-20 relative z-[1]; }
 
   /* Header */
-  .site-header { @apply fixed top-0 left-0 right-0 z-50 transition-all duration-500; box-shadow: 0 1px 3px 0 oklch(from var(--color-earth-900) l c h / 0.15); }
+  .site-header { @apply fixed top-0 left-0 right-0 z-50 transition-all duration-500; box-shadow: 0 0px 16px 0px oklch(from var(--color-earth-900) l c h / 0.1); }
   .header-bg {
     @apply absolute inset-0;
     background-color: var(--color-nav-bg);
@@ -370,22 +401,22 @@
   .mobile-menu-link { @apply block px-2 py-2.5 text-lg font-display tracking-wide transition-colors text-center; }
 
   /* Footer */
-  .site-footer   { @apply relative z-[1] bg-red-600 text-earth-100 mt-auto overflow-hidden; }
+  .site-footer   { @apply relative z-[1] bg-gold-300 text-earth-900 mt-auto overflow-hidden; }
   .footer-inner  { @apply relative max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20; }
   .footer-grid   { @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8; }
   .footer-brand  { @apply lg:col-span-1; }
   .footer-logo   { @apply inline-block mb-5; }
   .footer-logo-img { @apply h-12 w-auto; }
-  .footer-tagline  { @apply text-sm leading-relaxed text-earth-100 max-w-xs; }
-  .footer-col-heading { @apply font-display text-lg text-earth-50 mb-5; }
+  .footer-tagline  { @apply text-sm leading-relaxed text-earth-800 max-w-xs; }
+  .footer-col-heading { @apply font-display text-lg text-earth-900 mb-5; }
   .footer-nav-list    { @apply space-y-3; }
-  .footer-nav-link    { @apply text-sm text-earth-100 hover:text-earth-50 transition-colors duration-300; }
-  .footer-services-list { @apply space-y-3 text-sm text-earth-100; }
-  .footer-contact      { @apply not-italic space-y-3 text-sm text-earth-100; }
-  .footer-contact-link { @apply hover:text-earth-50 transition-colors; }
-  .footer-bottom    { @apply mt-16 pt-8 border-t border-earth-100/30 flex flex-col md:flex-row items-center justify-between gap-4; }
-  .footer-copyright { @apply text-xs text-earth-100/70; }
-  .footer-location  { @apply text-xs text-earth-100/70; }
+  .footer-nav-link    { @apply text-sm text-earth-700 hover:text-red-600 transition-colors duration-300; }
+  .footer-services-list { @apply space-y-3 text-sm text-earth-700; }
+  .footer-contact      { @apply not-italic space-y-3 text-sm text-earth-700; }
+  .footer-contact-link { @apply hover:text-red-600 transition-colors; }
+  .footer-bottom    { @apply mt-16 pt-8 border-t border-earth-900/20 flex flex-col md:flex-row items-center justify-between gap-4; }
+  .footer-copyright { @apply text-xs text-earth-900/60; }
+  .footer-location  { @apply text-xs text-earth-900/60; }
 
   /* ══════════════════════════════════════════════════
      PAGE BANNER
@@ -406,6 +437,7 @@
   .cta-dark         { @apply py-7 bg-earth-900; --btn-bg: var(--color-earth-900); }
   .cta-dark-heading { @apply font-display text-3xl text-light-text; }
   .cta-dark-body    { @apply text-earth-400 mt-4; }
+  .cta-red          { @apply py-7 bg-red-600; --btn-bg: var(--color-red-600); }
   .cta-light         { @apply py-8 border-t border-earth-200; --btn-bg: var(--color-earth-50); }
   .cta-light-heading { @apply font-display text-3xl text-earth-900; }
   .cta-light-body    { @apply text-earth-600 mt-4; }
@@ -583,7 +615,7 @@
   ══════════════════════════════════════════════════ */
   .listings-section   { @apply py-8 lg:py-12; }
   .filter-bar {
-    @apply mb-8 border-b border-earth-200;
+    @apply mb-8 border-b border-earth-200 px-2;
     position: sticky;
     top: 5rem;
     z-index: 30;

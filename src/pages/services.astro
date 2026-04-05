@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import BtnArrow from '../components/BtnArrow.astro';
 import { services } from '../data/services';
 export const prerender = true;
 ---
@@ -92,14 +93,14 @@ export const prerender = true;
   </section>
 
   <!-- CTA -->
-  <section class="cta-dark">
+  <section class="cta-red">
     <div class="cta-wrap">
       <h2 class="cta-dark-heading">Inquire About Our Development Portfolio</h2>
-      <p class="cta-dark-body">
+      <p class="cta-dark-body text-earth-100">
         Let's discuss how our 40+ years of experience can help with your next project.
       </p>
       <div class="cta-btn-row">
-        <a href="/contact" class="btn-primary">Schedule a Consultation</a>
+        <BtnArrow href="/contact" variant="inverted">Schedule a Consultation</BtnArrow>
       </div>
     </div>
   </section>
