@@ -47,6 +47,7 @@ export interface ApiListing {
   hoa_frequency: string | null;
   description: string;
   full_description: string | null;
+  directions: string | null;
   features: string[];
   virtual_tour_url: string | null;
   list_date: string | null;
@@ -57,6 +58,17 @@ export interface ApiListing {
   photo_count: number;
   // Only present on detail endpoint
   photos?: ApiPhoto[];
+  documents?: ApiDocument[];
+}
+
+export interface ApiDocument {
+  id: string;
+  title: string;
+  description: string | null;
+  document_type: string;
+  sort_order: number;
+  url: string | null;
+  expires_at: string | null;
 }
 
 export function formatPrice(price: string): string {

@@ -609,7 +609,7 @@
   .sidebar-dark-desc     { @apply text-sm text-earth-600 mb-5; }
   .sidebar-email-form    { @apply flex gap-2; }
   .sidebar-email-input   {
-    @apply flex-1 px-4 py-2.5 border border-earth-200 rounded-sm text-earth-900 placeholder:text-earth-400 text-sm focus:outline-none focus:border-red-600; background-color: white;
+    @apply flex-1 px-4 py-2.5 bg-white border border-transparent rounded-sm text-earth-900 placeholder:text-earth-500 text-sm focus:outline-none focus:border-earth-100;
   }
   .sidebar-email-btn {
     @apply inline-flex items-center justify-center px-5 py-2.5 font-display font-medium border-2 border-red-600 text-red-600 text-sm tracking-wide rounded-sm transition-all duration-300 hover:bg-red-600 hover:text-white cursor-pointer;
@@ -837,6 +837,20 @@
 
   .listing-description-heading { @apply font-display text-2xl text-earth-900 mb-5; }
   .listing-description-body    { @apply space-y-4 text-earth-700 leading-relaxed; }
+
+  .listing-documents         { @apply mt-8 pt-8 border-t border-earth-200; }
+  .listing-documents-list    { @apply space-y-2; }
+  .listing-document-link {
+    @apply flex items-center gap-3 px-4 py-3 bg-earth-100 rounded-sm text-earth-900 transition-colors duration-200;
+  }
+  .listing-document-link:hover { @apply bg-earth-200 text-red-600; }
+  .listing-document-icon  { @apply shrink-0 w-5 h-5 text-red-600; }
+  .listing-document-arrow { @apply shrink-0 w-4 h-4 ml-auto opacity-40; }
+  .listing-document-link:hover .listing-document-arrow { @apply opacity-100; }
+
+  .listing-directions      { @apply mt-8 pt-8 border-t border-earth-200; }
+  .listing-directions-body { @apply flex items-start gap-3 text-earth-700 leading-relaxed; }
+  .listing-directions-icon { @apply shrink-0 w-5 h-5 mt-0.5 text-red-600; }
 
   .listing-sidebar      { @apply lg:col-span-1 space-y-6 pt-4 md:pt-5; }
   .listing-contact-card { @apply bg-white rounded-sm p-7 sticky top-28; }
@@ -1116,8 +1130,35 @@
 }
 #jwrg-form .jwrg-field textarea { resize: none; min-height: 8rem; }
 #jwrg-form .jwrg-hp { display: none; }
-#jwrg-form .jwrg-submit { cursor: pointer; outline: none; appearance: none; border: none; background: none; padding: 0; color: var(--color-earth-50); display: block; margin-left: auto; margin-right: auto; }
-#jwrg-form .jwrg-submit:hover { color: var(--color-red-600); }
+#jwrg-form .jwrg-submit {
+  margin-top: 0.75rem;
+  @apply inline-flex items-center justify-center px-7 py-2 font-display font-medium border-2 tracking-wide rounded-sm transition-all duration-300 cursor-pointer;
+  @apply border-red-600 text-red-600;
+  background-color: transparent;
+}
+#jwrg-form .jwrg-submit:hover {
+  @apply bg-red-600 text-earth-50;
+}
+
+/* Mailing-list form on dark (red-600) sidebar */
+#jwrg-mailing-form .jwrg-field { margin-bottom: 0; }
+#jwrg-mailing-form .jwrg-field label {
+  @apply block text-sm font-medium text-earth-100 mb-2;
+}
+#jwrg-mailing-form .jwrg-field input,
+#jwrg-mailing-form .jwrg-field textarea {
+  @apply w-full px-4 py-3 bg-white border border-transparent rounded-sm text-earth-900 placeholder:text-earth-500 focus:outline-none focus:border-earth-100 transition-colors;
+}
+#jwrg-mailing-form .jwrg-field textarea { resize: none; min-height: 8rem; }
+#jwrg-mailing-form .jwrg-hp { display: none; }
+#jwrg-mailing-form .jwrg-submit { margin-top: 0.75rem;
+  @apply inline-flex items-center justify-center px-7 py-2 font-display font-medium border-2 tracking-wide rounded-sm transition-all duration-300 cursor-pointer;
+  @apply border-white text-white;
+  background-color: transparent;
+}
+#jwrg-mailing-form .jwrg-submit:hover {
+  @apply bg-white text-red-600;
+}
 .topo-bg-wrap-fixed {
   position: fixed;
   inset: 0;
