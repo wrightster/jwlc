@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import BtnArrow from '../components/BtnArrow.astro';
 import ListingCard from '../components/ListingCard.astro';
 import ListingRow from '../components/ListingRow.astro';
 import { fetchListings, formatPrice } from '../lib/api';
@@ -165,14 +166,14 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
   </section>
 
   <!-- CTA -->
-  <section class="cta-light">
+  <section class="cta-red">
     <div class="cta-wrap">
-      <h2 class="cta-light-heading">Don't See What You're Looking For?</h2>
-      <p class="cta-light-body">
+      <h2 class="cta-dark-heading">Don't See What You're Looking For?</h2>
+      <p class="cta-dark-body text-earth-100">
         We have access to off-market properties and upcoming listings. Tell us what you need and we'll find it.
       </p>
       <div class="cta-btn-row">
-        <a href="/contact" class="btn-primary">Contact Us</a>
+        <BtnArrow href="/contact" variant="inverted">Contact Us</BtnArrow>
       </div>
     </div>
   </section>

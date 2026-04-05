@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import BtnArrow from '../components/BtnArrow.astro';
 import { testimonials } from '../data/testimonials';
 export const prerender = true;
 ---
@@ -42,15 +43,14 @@ export const prerender = true;
   </section>
 
   <!-- CTA -->
-  <section class="cta-light">
+  <section class="cta-red">
     <div class="cta-wrap">
-      <h2 class="cta-light-heading">Ready to Write Your Own Story?</h2>
-      <p class="cta-light-body">
+      <h2 class="cta-dark-heading">Ready to Write Your Own Story?</h2>
+      <p class="cta-dark-body text-earth-100">
         Join the hundreds of satisfied clients who have trusted us with their land needs.
       </p>
       <div class="cta-btn-row">
-        <a href="/contact" class="btn-primary">Get Started</a>
-        <a href="/listings" class="btn-secondary">Browse Listings</a>
+        <BtnArrow href="/contact" variant="inverted">Get Started</BtnArrow>
       </div>
     </div>
   </section>

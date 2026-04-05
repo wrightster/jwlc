@@ -294,7 +294,7 @@
   .site-header { @apply fixed top-0 left-0 right-0 z-50 transition-all duration-500; border-bottom: 3px solid var(--color-earth-50); }
   .header-bg {
     @apply absolute inset-0;
-    background-color: var(--color-nav-bg);
+    background: linear-gradient(200deg, var(--color-gold-300) -100%, var(--color-earth-100) 200%);
   }
   .site-nav { @apply relative z-10 max-w-7xl mx-auto px-6 lg:px-8 flex items-center h-20; }
 
@@ -403,7 +403,7 @@
   .mobile-menu-link { @apply block px-2 py-2.5 text-lg font-display tracking-wide transition-colors text-center; }
 
   /* Footer */
-  .site-footer   { @apply relative z-[1] bg-gold-300 text-earth-900 mt-auto overflow-hidden; }
+  .site-footer   { @apply relative z-[1] text-earth-900 mt-auto overflow-hidden; background: linear-gradient(200deg, var(--color-gold-300) -100%, var(--color-earth-100) 200%); }
   .footer-inner  { @apply relative max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20; }
   .footer-grid   { @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8; }
   .footer-brand  { @apply lg:col-span-1; }

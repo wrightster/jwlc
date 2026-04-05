@@ -154,45 +154,14 @@ const featuredListings = allListings.filter(l => l.featured);
   <!-- ═══════════════════════════════════════════
        TESTIMONIAL + CTA
   ════════════════════════════════════════════════ -->
-  <section class="home-dark-section">
-    <img src="/FallTopo_v2.svg" class="topo-bg topo-bg--light" alt="" aria-hidden="true" />
-    <div class="home-dark-inner">
-      <div class="home-dark-grid">
-
-        <!-- Testimonial -->
-        <div>
-          <svg class="home-testimonial-icon" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H0z" />
-          </svg>
-          <blockquote class="home-testimonial-quote">
-            "{testimonials[0].quote}"
-          </blockquote>
-          <footer class="home-testimonial-footer">
-            <cite class="home-testimonial-cite">— {testimonials[0].author}</cite>
-          </footer>
-          <a href="/testimonials" class="home-testimonial-link">
-            Read more testimonials
-            <svg class="home-link-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
-        </div>
-
-        <!-- CTA -->
-        <div class="home-cta-block">
-          <h2 class="home-cta-heading">
-            Ready to Find Your<br />
-            <span class="home-cta-accent">Perfect Piece of Land?</span>
-          </h2>
-          <p class="home-cta-body">
-            Whether you're buying, selling, or investing — our team has the local knowledge to guide you every step of the way.
-          </p>
-          <div class="home-cta-actions">
-            <a href="/contact" class="btn-primary">Schedule a Free Consultation</a>
-            <a href="tel:9198475731" class="home-cta-phone">(919) 847-5731</a>
-          </div>
-        </div>
-
+  <section class="cta-red">
+    <div class="cta-wrap">
+      <h2 class="cta-dark-heading">Ready to Find Your Perfect Piece of Land?</h2>
+      <p class="cta-dark-body text-earth-100">
+        Whether you're buying, selling, or investing — our team has the local knowledge to guide you every step of the way.
+      </p>
+      <div class="cta-btn-row">
+        <BtnArrow href="/contact" variant="inverted">Schedule a Free Consultation</BtnArrow>
       </div>
     </div>
   </section>
