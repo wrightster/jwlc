@@ -291,7 +291,7 @@
   .site-main  { @apply flex-1 pt-20 relative z-[1]; }
 
   /* Header */
-  .site-header { @apply fixed top-0 left-0 right-0 z-50 transition-all duration-500; box-shadow: 0 0px 16px 0px oklch(from var(--color-earth-900) l c h / 0.1); }
+  .site-header { @apply fixed top-0 left-0 right-0 z-50 transition-all duration-500; border-bottom: 3px solid var(--color-earth-50); }
   .header-bg {
     @apply absolute inset-0;
     background-color: var(--color-nav-bg);
@@ -338,6 +338,8 @@
   .nav-link-inactive:hover .nav-link-bg {
     transform: scaleY(1);
     opacity: 1;
+    background-color: var(--color-earth-50);
+    border: 2px solid var(--color-red-600);
   }
   .nav-active-bar   {
     @apply absolute bottom-0 left-4 right-4 h-0.5 rounded-full;
@@ -421,8 +423,8 @@
   /* ══════════════════════════════════════════════════
      PAGE BANNER
   ══════════════════════════════════════════════════ */
-  .page-banner       { @apply relative py-5 overflow-hidden bg-earth-50; --btn-bg: var(--color-earth-50); }
-  .page-banner-title { @apply font-display italic text-4xl md:text-6xl text-earth-900 leading-tight; }
+  .page-banner       { @apply relative py-5 overflow-hidden; background: linear-gradient(200deg, var(--color-gold-300) -100%, var(--color-earth-100) 200%); --btn-bg: var(--color-gold-300); }
+  .page-banner-title { @apply font-display italic text-4xl md:text-6xl text-red-600 leading-tight; }
   .page-banner-desc  { @apply text-earth-700 mt-5 text-lg max-w-[75%] text-balance; }
 
   /* ══════════════════════════════════════════════════
