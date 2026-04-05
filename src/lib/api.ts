@@ -70,11 +70,16 @@ export function formatAcres(acres: string | null): string {
   return n % 1 === 0 ? n.toFixed(0) + ' ac' : n + ' ac';
 }
 
+function normalizeLabel(listing: ApiListing): ApiListing {
+  if (listing.status === 'active') return { ...listing, status_label: 'Available' };
+  return listing;
+}
+
 export async function fetchListings(): Promise<ApiListing[]> {
   const res = await fetch(`${BASE_URL}/listings?site=jwlc&per_page=50`);
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   const json = await res.json();
-  return json.data as ApiListing[];
+  return (json.data as ApiListing[]).map(normalizeLabel);
 }
 
 export async function fetchListing(slug: string): Promise<ApiListing | null> {
@@ -82,5 +87,5 @@ export async function fetchListing(slug: string): Promise<ApiListing | null> {
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   const json = await res.json();
-  return json.data as ApiListing;
+  return normalizeLabel(json.data as ApiListing);
 }
