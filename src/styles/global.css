@@ -54,6 +54,9 @@
   --font-body:    'Anek Latin', system-ui, sans-serif;
   --font-display-weight: 700;
   --font-body-weight:    400;
+
+  /* Border radius — single token controls all rounded-sm usage site-wide */
+  --radius-sm: 2px;
 }
 
 /* Nav accent/menu are runtime-switchable via FontSwitcher; default to brand tokens */
@@ -291,7 +294,7 @@
   .site-main  { @apply flex-1 pt-20 relative z-[1]; }
 
   /* Header */
-  .site-header { @apply fixed top-0 left-0 right-0 z-50 transition-all duration-500; border-bottom: 3px solid var(--color-earth-50); }
+  .site-header { @apply fixed top-0 left-0 right-0 z-50 transition-all duration-500; }
   .header-bg {
     @apply absolute inset-0;
     background: linear-gradient(200deg, var(--color-gold-300) -100%, var(--color-earth-100) 200%);
