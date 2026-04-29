@@ -319,9 +319,9 @@ const relatedListings = otherListings.filter(l => l.slug !== listing.slug).slice
     const lbPrev = document.getElementById('lb-prev');
     const lbNext = document.getElementById('lb-next');
 
-    let lightboxTrigger: HTMLElement | null = null;
+    let lightboxTrigger = null;
 
-    function openLightbox(index, trigger?: HTMLElement) {
+    function openLightbox(index, trigger) {
       currentIndex = index;
       lightboxTrigger = trigger ?? null;
       if (lbBg) { lbBg.src = fullImageList[currentIndex]; lbBg.style.opacity = '0.50'; }
@@ -373,11 +373,11 @@ const relatedListings = otherListings.filter(l => l.slug !== listing.slug).slice
       updateLightbox();
     }
 
-    mainWrap?.addEventListener('click', () => openLightbox(currentIndex, mainWrap as HTMLElement));
+    mainWrap?.addEventListener('click', () => openLightbox(currentIndex, mainWrap));
     mainWrap?.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        openLightbox(currentIndex, mainWrap as HTMLElement);
+        openLightbox(currentIndex, mainWrap);
       }
     });
     lbClose?.addEventListener('click', closeLightbox);
@@ -397,8 +397,8 @@ const relatedListings = otherListings.filter(l => l.slug !== listing.slug).slice
       if (e.key === 'ArrowLeft') { prevImage(); return; }
       if (e.key === 'Tab') {
         e.preventDefault();
-        const focusable = [lbClose, lbPrev, lbNext].filter(Boolean) as HTMLElement[];
-        const idx = focusable.indexOf(document.activeElement as HTMLElement);
+        const focusable = [lbClose, lbPrev, lbNext].filter(Boolean);
+        const idx = focusable.indexOf(document.activeElement);
         const next = e.shiftKey
           ? (idx - 1 + focusable.length) % focusable.length
           : (idx + 1) % focusable.length;

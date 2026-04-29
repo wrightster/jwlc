@@ -190,3 +190,4 @@ Edit `src/data/services.ts`. The `photo` field accepts a URL (currently Unsplash
 - `nav-logo-icon` uses CSS `mask-image` to color the SVG — changing nav accent color works via the `--color-nav-accent` CSS variable (set by FontSwitcher in dev, hardcoded to `red-600` in prod)
 - The topo SVG width calculation script in `Layout.astro` uses `getBoundingClientRect()` to handle zoom-independent sizing
 - Listing detail page breaks descriptions into 3-sentence paragraphs client-side
+- **`<script define:vars>` blocks are plain JavaScript — no TypeScript.** Astro treats these as `is:inline` (no TS transform), so any TS syntax (type annotations, `as` casts, `?:` params) causes a silent `SyntaxError` that kills all event listeners on the page.
