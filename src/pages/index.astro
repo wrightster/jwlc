@@ -1,12 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ListingCard from '../components/ListingCard.astro';
-import { fetchListings } from '../lib/api';
+import { fetchListings, type ApiListing } from '../lib/api';
 import BtnArrow from '../components/BtnArrow.astro';
 import { testimonials } from '../data/testimonials';
 import { services } from '../data/services';
 
-const allListings = await fetchListings();
+let apiError = false;
+let allListings: ApiListing[] = [];
+try {
+  allListings = await fetchListings();
+} catch {
+  apiError = true;
+}
 const featuredListings = allListings.filter(l => l.featured);
 ---
 
@@ -94,11 +100,15 @@ const featuredListings = allListings.filter(l => l.featured);
         </div>
         <BtnArrow href="/listings" variant="primary">View All</BtnArrow>
       </div>
-      <div class="featured-grid">
-        {featuredListings.slice(0, 3).map((listing, i) => (
-          <ListingCard listing={listing} index={i} />
-        ))}
-      </div>
+      {apiError ? (
+        <p class="text-earth-600 text-center py-8">Listings are temporarily unavailable — please try again shortly.</p>
+      ) : (
+        <div class="featured-grid">
+          {featuredListings.slice(0, 3).map((listing, i) => (
+            <ListingCard listing={listing} index={i} />
+          ))}
+        </div>
+      )}
     </div>
   </section>
 

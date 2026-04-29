@@ -15,7 +15,6 @@ Real estate website for a North Carolina land brokerage. Astro 5 with SSR (Node.
 - `npm run dev` — Start dev server (localhost:4321)
 - `npm run build` — Production build to `./dist/`
 - `npm run start` — Run production server (`node ./dist/server/entry.mjs`)
-- `node scripts/check-listings.js` — Validate listing data and image files
 
 ## Architecture
 
@@ -204,8 +203,6 @@ Edit `src/data/services.ts`. The `photo` field accepts a URL (currently Unsplash
 
 - **Style guide**: `http://localhost:4321/dev/styleguide` — visual reference for all design tokens, components, and patterns. Redirects to `/` in production.
 - **FontSwitcher**: Fixed bottom-right panel in dev mode — switch fonts, weights, and nav colors live. Use "Copy Config" to get CSS variables for `global.css`.
-- **Listing validator**: `node scripts/check-listings.js` — checks all listing image files exist and broker names are valid. Exits with code 1 on errors.
-
 ---
 
 ## File Conventions

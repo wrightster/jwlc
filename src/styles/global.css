@@ -820,9 +820,11 @@
     @apply px-3 py-1 text-xs font-display font-semibold uppercase tracking-widest rounded-sm;
   }
   .listing-status-badge[data-status="available"],
-  .listing-status-badge[data-status="active"]    { @apply bg-red-600 text-earth-50; }
-  .listing-status-badge[data-status="pending"]   { @apply bg-gold-300 text-earth-900; }
-  .listing-status-badge[data-status="sold"]      { @apply bg-earth-900 text-light-text; }
+  .listing-status-badge[data-status="active"]         { @apply bg-red-600 text-earth-50; }
+  .listing-status-badge[data-status="coming_soon"]    { @apply bg-earth-200 text-earth-900; }
+  .listing-status-badge[data-status="pending"],
+  .listing-status-badge[data-status="under_contract"] { @apply bg-gold-300 text-earth-900; }
+  .listing-status-badge[data-status="sold"]           { @apply bg-earth-900 text-light-text; }
   .listing-county-badge { @apply text-xs font-display font-semibold text-earth-500 uppercase tracking-widest; }
   .listing-title        { @apply font-display text-4xl text-earth-900 leading-tight; }
   .listing-address-row  { @apply text-earth-500 mt-3 flex items-center gap-2; }
@@ -975,9 +977,11 @@
     @apply absolute top-4 right-0 pl-4 pr-4 py-1 rounded-l-sm text-xs font-display font-semibold uppercase tracking-widest;
   }
   .listing-card-status[data-status="available"],
-  .listing-card-status[data-status="active"]    { @apply bg-red-600 text-earth-50; }
-  .listing-card-status[data-status="pending"]   { @apply bg-gold-300 text-earth-900; }
-  .listing-card-status[data-status="sold"]      { @apply bg-earth-900 text-light-text; }
+  .listing-card-status[data-status="active"]         { @apply bg-red-600 text-earth-50; }
+  .listing-card-status[data-status="coming_soon"]    { @apply bg-earth-200 text-earth-900; }
+  .listing-card-status[data-status="pending"],
+  .listing-card-status[data-status="under_contract"] { @apply bg-gold-300 text-earth-900; }
+  .listing-card-status[data-status="sold"]           { @apply bg-earth-900 text-light-text; }
   .listing-card-body  { @apply p-5; }
   .listing-card-title { @apply font-display text-lg text-earth-900 leading-snug mb-2 transition-colors duration-300; }
   .listing-card:hover .listing-card-title { color: var(--color-red-600); }
@@ -1015,9 +1019,11 @@
     @apply shrink-0 text-[10px] font-display font-semibold uppercase tracking-widest px-2 py-0.5 rounded-sm;
   }
   .listing-row-status[data-status="available"],
-  .listing-row-status[data-status="active"]    { @apply bg-red-600 text-earth-50; }
-  .listing-row-status[data-status="pending"]   { @apply bg-gold-300 text-earth-900; }
-  .listing-row-status[data-status="sold"]      { @apply bg-earth-900 text-light-text; }
+  .listing-row-status[data-status="active"]         { @apply bg-red-600 text-earth-50; }
+  .listing-row-status[data-status="coming_soon"]    { @apply bg-earth-200 text-earth-900; }
+  .listing-row-status[data-status="pending"],
+  .listing-row-status[data-status="under_contract"] { @apply bg-gold-300 text-earth-900; }
+  .listing-row-status[data-status="sold"]           { @apply bg-earth-900 text-light-text; }
 
 .listing-row-title  {
     @apply font-display text-base text-earth-900 leading-snug truncate transition-colors duration-200;

@@ -22,7 +22,10 @@
       "Bash(git stash:*)",
       "WebFetch(domain:office.jwrgnc.com)",
       "Bash(python3 -m json.tool)",
-      "Bash(node scripts/check-listings.js)"
+      "Bash(node scripts/check-listings.js)",
+      "Bash(npm install *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }

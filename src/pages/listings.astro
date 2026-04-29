@@ -3,9 +3,15 @@ import Layout from '../layouts/Layout.astro';
 import BtnArrow from '../components/BtnArrow.astro';
 import ListingCard from '../components/ListingCard.astro';
 import ListingRow from '../components/ListingRow.astro';
-import { fetchListings, formatPrice } from '../lib/api';
+import { fetchListings, formatPrice, type ApiListing } from '../lib/api';
 
-const listings = await fetchListings();
+let apiError = false;
+let listings: ApiListing[] = [];
+try {
+  listings = await fetchListings();
+} catch {
+  apiError = true;
+}
 
 const counties = [...new Set(listings.map(l => l.county))].sort();
 const cities   = [...new Set(listings.map(l => l.city))].sort();
@@ -25,6 +31,13 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
   <!-- Listings Grid -->
   <section class="listings-section">
     <div class="content-wrap">
+      {apiError ? (
+        <div class="py-16 text-center">
+          <p class="text-earth-700">Our listings are temporarily unavailable — please try again shortly.</p>
+          <p class="text-earth-500 text-sm mt-2">Or <a href="/contact" class="text-red-600 underline underline-offset-2">contact us</a> directly and we'll be happy to help.</p>
+        </div>
+      ) : (
+        <>
       <!-- Filter bar -->
       <div class="filter-bar" id="filter-bar">
         <button class="filter-toggle-btn" id="filter-toggle" type="button" aria-expanded="false" aria-controls="filter-collapse">
@@ -162,6 +175,8 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
           </div>
         ))}
       </div>
+        </>
+      )}
     </div>
   </section>
 
@@ -178,6 +193,7 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
     </div>
   </section>
 
+  {!apiError && (
   <script>
     const MAX_PRICE = 500000;
 
@@ -453,4 +469,5 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
     btnGrid.addEventListener('click', () => setView('grid'));
     btnList.addEventListener('click', () => setView('list'));
   </script>
+  )}
 </Layout>

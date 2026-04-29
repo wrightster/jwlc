@@ -8,7 +8,7 @@ import { fetchListing, fetchListings, formatPrice, formatAcres } from '../../lib
 import { team } from '../../data/team';
 
 const { id } = Astro.params;
-const listing = await fetchListing(id!);
+const listing = await fetchListing(id!).catch(() => null);
 
 if (!listing) {
   return Astro.redirect('/listings');
@@ -26,7 +26,7 @@ const agentName = listing.agent?.name ?? null;
 const agentPhone = listing.agent?.phone ?? null;
 const brokerMember = agentName ? team.find((t) => t.name === agentName) : undefined;
 
-const otherListings = await fetchListings();
+const otherListings = await fetchListings().catch(() => []);
 const relatedListings = otherListings.filter(l => l.slug !== listing.slug).slice(0, 3);
 ---
 
