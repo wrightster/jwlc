@@ -3,12 +3,12 @@ import Layout from '../layouts/Layout.astro';
 import BtnArrow from '../components/BtnArrow.astro';
 import ListingCard from '../components/ListingCard.astro';
 import ListingRow from '../components/ListingRow.astro';
-import { fetchListings, formatPrice, type ApiListing } from '../lib/api';
+import { fetchAllListings, formatPrice, type ApiListing } from '../lib/api';
 
 let apiError = false;
 let listings: ApiListing[] = [];
 try {
-  listings = await fetchListings();
+  listings = await fetchAllListings();
 } catch {
   apiError = true;
 }
@@ -94,7 +94,7 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
               </button>
               <ul class="custom-select-list" role="listbox">
                 <li class="custom-select-option is-selected" data-value="all" role="option">All Statuses</li>
-                <li class="custom-select-option" data-value="active" role="option">Active</li>
+                <li class="custom-select-option" data-value="active" role="option">Available</li>
                 <li class="custom-select-option" data-value="coming_soon" role="option">Coming Soon</li>
                 <li class="custom-select-option" data-value="pending" role="option">Pending</li>
                 <li class="custom-select-option" data-value="under_contract" role="option">Under Contract</li>
@@ -138,11 +138,17 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
         </div>
       </div>
 
-      <!-- Results count + view toggle -->
+      <!-- Results count + per-page + view toggle -->
       <div class="results-bar">
-        <p class="results-count">
-          Showing <span id="count" class="results-count-val">{listings.length}</span> properties
+        <p class="results-count" id="results-count">
+          Showing <span class="results-count-val">{listings.length}</span> propert{listings.length === 1 ? 'y' : 'ies'}
         </p>
+        <div class="per-page-select">
+          <span class="per-page-label">Per page</span>
+          {([12, 24, 48, 96] as const).map(n => (
+            <button class:list={['per-page-btn', n === 24 && 'is-active']} data-pp={n} type="button">{n}</button>
+          ))}
+        </div>
         <div class="view-toggle" id="view-toggle" aria-label="Toggle view">
           <button class="view-toggle-btn is-active" id="btn-grid" type="button" aria-label="Grid view" title="Grid view">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -175,6 +181,17 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
           </div>
         ))}
       </div>
+
+      <!-- Pagination -->
+      <div class="pagination" id="pagination" style="display:none">
+        <button id="pg-prev" class="pg-btn" type="button" aria-label="Previous page" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <span id="pg-info" class="pg-info">Page 1 of 1</span>
+        <button id="pg-next" class="pg-btn" type="button" aria-label="Next page">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
         </>
       )}
     </div>
@@ -195,11 +212,16 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
 
   {!apiError && (
   <script>
-    const MAX_PRICE = 500000;
+    const items         = document.querySelectorAll('.listing-item');
+    const resultsCountEl = document.getElementById('results-count')!;
+    const filterCountEl = document.getElementById('filter-active-count')!;
 
-    const items          = document.querySelectorAll('.listing-item');
-    const countEl        = document.getElementById('count');
-    const filterCountEl  = document.getElementById('filter-active-count')!
+    let currentPage = 1;
+    let perPage = 24;
+
+    const sortedPrices = Array.from(items).map(el => parseFloat((el as HTMLElement).dataset.price ?? '0')).filter(p => p > 0).sort((a, b) => b - a);
+    const refPrice = sortedPrices.length >= 2 ? sortedPrices[1] : (sortedPrices[0] ?? 0);
+    const MAX_PRICE = refPrice > 0 ? Math.floor(refPrice / 50000) * 50000 : 500000;
 
     const highestAcres = Math.max(...Array.from(items).map(el => parseFloat((el as HTMLElement).dataset.acres ?? '0')));
     const MAX_ACRES = Math.ceil(highestAcres / 2) * 2;
@@ -241,7 +263,7 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
           valEl.textContent = el.textContent;
           options.forEach(o => o.classList.remove('is-selected'));
           el.classList.add('is-selected');
-          applyFilters();
+          applyFiltersReset();
         });
 
         // Double click → also close
@@ -277,12 +299,14 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
       if (filterValues.status !== 'all') params.set('status', statusToShort[filterValues.status] ?? filterValues.status);
       if (priceMin > 0 || priceMax < MAX_PRICE)   params.set('price', `${priceMin / 1000}-${priceMax / 1000}`);
       if (acresMin > 0 || acresMax < MAX_ACRES)   params.set('acres', `${acresMin}-${acresMax}`);
+      if (perPage !== 24)    params.set('pp',   String(perPage));
+      if (currentPage > 1)   params.set('page', String(currentPage));
       const qs = params.toString();
       history.replaceState(null, '', qs ? '?' + qs : window.location.pathname);
     }
 
     function applyFilters() {
-      let visible = 0;
+      const matched: HTMLElement[] = [];
       items.forEach(item => {
         const el        = item as HTMLElement;
         const itemPrice = parseFloat(el.dataset.price ?? '0');
@@ -292,13 +316,47 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
         const statusOk  = filterValues.status === 'all' || el.dataset.status === filterValues.status;
         const priceOk   = itemPrice >= priceMin && (priceMax >= MAX_PRICE || itemPrice <= priceMax);
         const acresOk   = itemAcres >= acresMin && (acresMax >= MAX_ACRES  || itemAcres <= acresMax);
-        const show = countyOk && cityOk && statusOk && priceOk && acresOk;
-        el.style.display = show ? '' : 'none';
-        if (show) visible++;
+        el.style.display = 'none';
+        if (countyOk && cityOk && statusOk && priceOk && acresOk) matched.push(el);
       });
-      if (countEl) countEl.textContent = String(visible);
+
+      const totalPages = Math.max(1, Math.ceil(matched.length / perPage));
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      const start = (currentPage - 1) * perPage;
+      const end   = Math.min(start + perPage, matched.length);
+      matched.slice(start, end).forEach(el => el.style.display = '');
+
+      updateResultsCount(matched.length, start, end);
+      updatePagination(totalPages);
       updateURL();
       updateFilterCount();
+    }
+
+    function applyFiltersReset() {
+      currentPage = 1;
+      applyFilters();
+    }
+
+    function updateResultsCount(total: number, start: number, end: number) {
+      if (total === 0) {
+        resultsCountEl.innerHTML = 'Showing <span class="results-count-val">0</span> properties';
+      } else if (total <= perPage) {
+        resultsCountEl.innerHTML = `Showing <span class="results-count-val">${total}</span> propert${total === 1 ? 'y' : 'ies'}`;
+      } else {
+        resultsCountEl.innerHTML = `Showing <span class="results-count-val">${start + 1}–${end}</span> of ${total} properties`;
+      }
+    }
+
+    function updatePagination(totalPages: number) {
+      const paginationEl = document.getElementById('pagination') as HTMLElement;
+      const prevBtn      = document.getElementById('pg-prev')    as HTMLButtonElement;
+      const nextBtn      = document.getElementById('pg-next')    as HTMLButtonElement;
+      const infoEl       = document.getElementById('pg-info')    as HTMLElement;
+      paginationEl.style.display = totalPages <= 1 ? 'none' : '';
+      prevBtn.disabled = currentPage <= 1;
+      nextBtn.disabled = currentPage >= totalPages;
+      infoEl.textContent = `Page ${currentPage} of ${totalPages}`;
     }
 
     function updateFilterCount() {
@@ -326,6 +384,11 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
     const priceMinLbl = document.getElementById('price-min-display') as HTMLElement;
     const priceMaxLbl = document.getElementById('price-max-display') as HTMLElement;
 
+    priceMinEl.max = String(MAX_PRICE);
+    priceMaxEl.max = String(MAX_PRICE);
+    priceMaxEl.value = String(MAX_PRICE);
+    priceMaxLbl.textContent = '$' + MAX_PRICE.toLocaleString() + '+';
+
     function onPriceChange(this: HTMLInputElement) {
       let lo = parseFloat(priceMinEl.value), hi = parseFloat(priceMaxEl.value);
       if (this === priceMinEl && lo >= hi) { lo = hi - 10000; priceMinEl.value = String(lo); }
@@ -334,7 +397,7 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
       priceMinLbl.textContent = '$' + lo.toLocaleString();
       priceMaxLbl.textContent = hi >= MAX_PRICE ? '$' + MAX_PRICE.toLocaleString() + '+' : '$' + hi.toLocaleString();
       updateFill(priceFill, priceMinEl, priceMaxEl, MAX_PRICE);
-      applyFilters();
+      applyFiltersReset();
     }
     priceMinEl.addEventListener('input', onPriceChange);
     priceMaxEl.addEventListener('input', onPriceChange);
@@ -361,11 +424,38 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
       acresMinLbl.textContent = fmtAcres(lo) + ' ac';
       acresMaxLbl.textContent = (hi >= MAX_ACRES ? MAX_ACRES + '+' : fmtAcres(hi)) + ' ac';
       updateFill(acresFill, acresMinEl, acresMaxEl, MAX_ACRES);
-      applyFilters();
+      applyFiltersReset();
     }
     acresMinEl.addEventListener('input', onAcresChange);
     acresMaxEl.addEventListener('input', onAcresChange);
     updateFill(acresFill, acresMinEl, acresMaxEl, MAX_ACRES);
+
+    // ── Per-page selector ─────────────────────────────────────────────────
+    const perPageBtns = document.querySelectorAll('.per-page-btn');
+
+    function setPerPage(n: number) {
+      perPage = n;
+      perPageBtns.forEach(btn => btn.classList.toggle('is-active', parseInt((btn as HTMLElement).dataset.pp ?? '0') === n));
+      localStorage.setItem('jwlc-per-page', String(n));
+    }
+
+    perPageBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        setPerPage(parseInt((btn as HTMLElement).dataset.pp ?? '24'));
+        applyFiltersReset();
+      });
+    });
+
+    const savedPP = parseInt(localStorage.getItem('jwlc-per-page') ?? '24');
+    if ([12, 24, 48, 96].includes(savedPP)) setPerPage(savedPP);
+
+    // ── Pagination buttons ────────────────────────────────────────────────
+    document.getElementById('pg-prev')?.addEventListener('click', () => {
+      if (currentPage > 1) { currentPage--; applyFilters(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    });
+    document.getElementById('pg-next')?.addEventListener('click', () => {
+      currentPage++; applyFilters(); window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 
     // ── Initialize from URL params (runs after all vars are ready) ────────
     (function initFromURL() {
@@ -408,6 +498,12 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
         if (!isNaN(aHi)) { acresMax = aHi; acresMaxEl.value = String(aHi); acresMaxLbl.textContent = fmtAcres(aHi) + ' ac'; }
         updateFill(acresFill, acresMinEl, acresMaxEl, MAX_ACRES);
       }
+
+      // Per-page and page
+      const ppParam = parseInt(params.get('pp') ?? '0');
+      if ([12, 24, 48, 96].includes(ppParam)) setPerPage(ppParam);
+      const pageParam = parseInt(params.get('page') ?? '1');
+      if (pageParam > 1) currentPage = pageParam;
 
       applyFilters();
     })();

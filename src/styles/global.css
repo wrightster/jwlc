@@ -741,6 +741,24 @@
   .view-toggle-btn:hover   { @apply bg-earth-200/50 text-earth-700; }
   .view-toggle-btn.is-active { @apply bg-earth-900 text-earth-50; }
 
+  /* Per-page selector */
+  .per-page-select { @apply flex items-center gap-1.5; }
+  .per-page-label  { @apply text-xs text-earth-500 mr-1 hidden sm:block; }
+  .per-page-btn {
+    @apply text-xs px-2 py-1.5 border border-earth-200 rounded-sm text-earth-600 transition-colors duration-150 cursor-pointer leading-none;
+  }
+  .per-page-btn:hover     { @apply bg-earth-100 text-earth-800; }
+  .per-page-btn.is-active { @apply bg-earth-900 text-earth-50 border-earth-900; }
+
+  /* Pagination */
+  .pagination { @apply flex items-center justify-center gap-4 mt-10 mb-2; }
+  .pg-btn {
+    @apply flex items-center justify-center w-9 h-9 border border-earth-200 rounded-sm text-earth-500 transition-colors duration-150 cursor-pointer;
+  }
+  .pg-btn:hover:not(:disabled) { @apply bg-earth-100 text-earth-800; }
+  .pg-btn:disabled { @apply opacity-30 cursor-not-allowed; }
+  .pg-info { @apply text-sm text-earth-600; }
+
   /* Grid / list container */
   .listings-grid                    { @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8; }
   .listings-grid[data-view="grid"]  { @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8; }

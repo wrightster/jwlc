@@ -12,13 +12,13 @@
 
 ## Functional Gaps
 
-- [ ] **Status filter label vs. badge are inconsistent.** `normalizeLabel()` in `api.ts` rewrites `status_label` of `active` listings to `"Available"`, so the badge says "Available". But the filter dropdown option for that status says "Active". Users filtering by "Active" get listings whose badge says "Available".
+- [x] **Status filter label vs. badge are inconsistent.** `normalizeLabel()` in `api.ts` rewrites `status_label` of `active` listings to `"Available"`, so the badge says "Available". But the filter dropdown option for that status says "Active". Users filtering by "Active" get listings whose badge says "Available".
 
-- [ ] **Price range slider has a hardcoded $500k ceiling.** HTML inputs have `max="500000"`. The JS reads actual prices from `data-price` attributes but doesn't adjust the slider max dynamically (unlike acreage). Any listing above $500k is silently capped.
+- [x] **Price range slider has a hardcoded $500k ceiling.** HTML inputs have `max="500000"`. The JS reads actual prices from `data-price` attributes but doesn't adjust the slider max dynamically (unlike acreage). Any listing above $500k is silently capped.
 
-- [ ] **Listing detail page makes two API calls.** `[id].astro` calls `fetchListings()` just to populate 3 "More Properties" cards — every detail page visit costs 2 serial API round trips, fetching up to 50 listings to use 3.
+- [x] **Listing detail page makes two API calls.** `[id].astro` calls `fetchListings()` just to populate 3 "More Properties" cards — every detail page visit costs 2 serial API round trips, fetching up to 50 listings to use 3.
 
-- [ ] **`per_page=50` hard limit in `fetchListings()`.** If the API ever exceeds 50 listings, the extras silently disappear. No pagination is handled.
+- [x] **`per_page=50` hard limit in `fetchListings()`.** If the API ever exceeds 50 listings, the extras silently disappear. No pagination is handled.
 
 ---
 

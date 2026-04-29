@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ListingCard from '../components/ListingCard.astro';
-import { fetchListings, type ApiListing } from '../lib/api';
+import { fetchAllListings, type ApiListing } from '../lib/api';
 import BtnArrow from '../components/BtnArrow.astro';
 import { testimonials } from '../data/testimonials';
 import { services } from '../data/services';
@@ -9,7 +9,7 @@ import { services } from '../data/services';
 let apiError = false;
 let allListings: ApiListing[] = [];
 try {
-  allListings = await fetchListings();
+  allListings = await fetchAllListings();
 } catch {
   apiError = true;
 }

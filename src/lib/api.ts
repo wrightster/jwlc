@@ -87,11 +87,30 @@ function normalizeLabel(listing: ApiListing): ApiListing {
   return listing;
 }
 
-export async function fetchListings(): Promise<ApiListing[]> {
-  const res = await fetch(`${BASE_URL}/listings?site=jwlc&per_page=50`);
+export async function fetchListings(perPage = 50): Promise<ApiListing[]> {
+  const res = await fetch(`${BASE_URL}/listings?site=jwlc&per_page=${perPage}`);
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   const json = await res.json();
   return (json.data as ApiListing[]).map(normalizeLabel);
+}
+
+export async function fetchAllListings(): Promise<ApiListing[]> {
+  const first = await fetch(`${BASE_URL}/listings?site=jwlc&per_page=50&page=1`);
+  if (!first.ok) throw new Error(`API error: ${first.status}`);
+  const firstJson = await first.json();
+  const all: ApiListing[] = [...firstJson.data];
+  const lastPage: number = firstJson.meta?.last_page ?? 1;
+  if (lastPage > 1) {
+    const rest = await Promise.all(
+      Array.from({ length: lastPage - 1 }, (_, i) => i + 2).map(async page => {
+        const res = await fetch(`${BASE_URL}/listings?site=jwlc&per_page=50&page=${page}`);
+        if (!res.ok) throw new Error(`API error: ${res.status}`);
+        return (await res.json()).data as ApiListing[];
+      })
+    );
+    all.push(...rest.flat());
+  }
+  return all.map(normalizeLabel);
 }
 
 export async function fetchListing(slug: string): Promise<ApiListing | null> {
