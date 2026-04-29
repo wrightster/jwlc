@@ -1,7 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ListingCard from '../../components/ListingCard.astro';
-import ServiceIcon from '../../components/ServiceIcon.astro';
 import { fetchAllListings } from '../../lib/api';
 
 // Redirect to home in production
@@ -254,24 +253,6 @@ const sampleListing = listings[1]; // private-homesite-falls-lake (has many imag
           <p class="text-xs text-earth-500 font-mono">Focus ring: red-600. Placeholder: earth-400. Border default: earth-200.</p>
         </div>
       </div>
-    </section>
-
-    <!-- ══════════════════════════════════════════
-         SERVICE ICONS
-    ══════════════════════════════════════════ -->
-    <section>
-      <h2 class="font-display text-2xl text-earth-900 mb-6 pb-3 border-b border-earth-200">Service Icons</h2>
-      <div class="flex flex-wrap gap-6">
-        {(['handshake', 'clipboard', 'map', 'scroll', 'arrows', 'trees'] as const).map(icon => (
-          <div class="flex flex-col items-center gap-2">
-            <div class="service-card-icon-wrap">
-              <ServiceIcon icon={icon} class="service-card-icon" />
-            </div>
-            <code class="text-[11px] font-mono text-earth-500">{icon}</code>
-          </div>
-        ))}
-      </div>
-      <p class="text-xs text-earth-500 font-mono mt-4">Used in ServiceIcon.astro. Wrap with .service-card-icon-wrap + .service-card-icon classes.</p>
     </section>
 
     <!-- ══════════════════════════════════════════

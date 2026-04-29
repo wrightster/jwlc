@@ -716,9 +716,11 @@
     cursor: pointer; white-space: nowrap;
     transition: background 150ms, color 150ms;
   }
-  .custom-select-option:hover {
+  .custom-select-option:hover,
+  .custom-select-option:focus-visible {
     background: var(--color-red-600);
     color: #fff;
+    outline: none;
   }
   .custom-select-option.is-selected {
     font-weight: 600; color: var(--color-red-600);
@@ -837,12 +839,13 @@
   .listing-status-badge   {
     @apply px-3 py-1 text-xs font-display font-semibold uppercase tracking-widest rounded-sm;
   }
-  .listing-status-badge[data-status="available"],
-  .listing-status-badge[data-status="active"]         { @apply bg-red-600 text-earth-50; }
-  .listing-status-badge[data-status="coming_soon"]    { @apply bg-earth-200 text-earth-900; }
-  .listing-status-badge[data-status="pending"],
-  .listing-status-badge[data-status="under_contract"] { @apply bg-gold-300 text-earth-900; }
-  .listing-status-badge[data-status="sold"]           { @apply bg-earth-900 text-light-text; }
+  /* Shared status colors — applied via :is() to avoid repeating across badge variants */
+  :is(.listing-status-badge, .listing-card-status, .listing-row-status)[data-status="available"],
+  :is(.listing-status-badge, .listing-card-status, .listing-row-status)[data-status="active"]         { @apply bg-red-600 text-earth-50; }
+  :is(.listing-status-badge, .listing-card-status, .listing-row-status)[data-status="coming_soon"]    { @apply bg-earth-200 text-earth-900; }
+  :is(.listing-status-badge, .listing-card-status, .listing-row-status)[data-status="pending"],
+  :is(.listing-status-badge, .listing-card-status, .listing-row-status)[data-status="under_contract"] { @apply bg-gold-300 text-earth-900; }
+  :is(.listing-status-badge, .listing-card-status, .listing-row-status)[data-status="sold"]           { @apply bg-earth-900 text-light-text; }
   .listing-county-badge { @apply text-xs font-display font-semibold text-earth-500 uppercase tracking-widest; }
   .listing-title        { @apply font-display text-4xl text-earth-900 leading-tight; }
   .listing-address-row  { @apply text-earth-500 mt-3 flex items-center gap-2; }
@@ -994,12 +997,6 @@
   .listing-card-status {
     @apply absolute top-4 right-0 pl-4 pr-4 py-1 rounded-l-sm text-xs font-display font-semibold uppercase tracking-widest;
   }
-  .listing-card-status[data-status="available"],
-  .listing-card-status[data-status="active"]         { @apply bg-red-600 text-earth-50; }
-  .listing-card-status[data-status="coming_soon"]    { @apply bg-earth-200 text-earth-900; }
-  .listing-card-status[data-status="pending"],
-  .listing-card-status[data-status="under_contract"] { @apply bg-gold-300 text-earth-900; }
-  .listing-card-status[data-status="sold"]           { @apply bg-earth-900 text-light-text; }
   .listing-card-body  { @apply p-5; }
   .listing-card-title { @apply font-display text-lg text-earth-900 leading-snug mb-2 transition-colors duration-300; }
   .listing-card:hover .listing-card-title { color: var(--color-red-600); }
@@ -1036,12 +1033,6 @@
   .listing-row-status {
     @apply shrink-0 text-[10px] font-display font-semibold uppercase tracking-widest px-2 py-0.5 rounded-sm;
   }
-  .listing-row-status[data-status="available"],
-  .listing-row-status[data-status="active"]         { @apply bg-red-600 text-earth-50; }
-  .listing-row-status[data-status="coming_soon"]    { @apply bg-earth-200 text-earth-900; }
-  .listing-row-status[data-status="pending"],
-  .listing-row-status[data-status="under_contract"] { @apply bg-gold-300 text-earth-900; }
-  .listing-row-status[data-status="sold"]           { @apply bg-earth-900 text-light-text; }
 
 .listing-row-title  {
     @apply font-display text-base text-earth-900 leading-snug truncate transition-colors duration-200;
@@ -1049,10 +1040,10 @@
   .listing-row:hover .listing-row-title { color: var(--color-red-600); }
 
   .listing-row-county { @apply text-[11px] text-earth-600 uppercase tracking-wide truncate; }
-  .listing-row-acreage { @apply absolute top-2.5 right-4 font-display font-bold text-base text-earth-900 leading-snug; }
+  .listing-row-acreage { @apply font-display font-bold text-base text-earth-900 leading-snug; }
 
   .listing-row-right {
-    @apply relative shrink-0 flex flex-col items-end justify-center pr-4 pl-4 self-stretch;
+    @apply shrink-0 flex flex-col items-end justify-between py-[18px] pr-4 pl-4 self-stretch;
   }
   .listing-row-price { @apply font-display font-bold text-lg text-red-600 leading-none; }
   .listing-row-link  {

@@ -23,26 +23,26 @@ src/
 ├── components/     # Astro components
 │   ├── FontSwitcher.astro   # Dev-only design testing panel (fonts, colors)
 │   ├── ListingCard.astro    # Card view for a listing (grid layout)
-│   ├── ListingRow.astro     # Row view for a listing (list layout)
-│   └── ServiceIcon.astro    # Inline SVG icons for service cards
-├── data/           # All site content as TypeScript
-│   ├── listings.ts     # Listing interface + 16 properties
-│   ├── services.ts     # Service interface + 6 services
-│   ├── team.ts         # TeamMember interface + 5 brokers
-│   └── testimonials.ts # Testimonial interface + 7 quotes
+│   └── ListingRow.astro     # Row view for a listing (list layout)
+├── data/           # Static site content as TypeScript
+│   ├── services.ts     # Service interface + data
+│   ├── team.ts         # TeamMember interface + broker profiles
+│   └── testimonials.ts # Testimonial interface + quotes
 ├── layouts/
 │   └── Layout.astro    # Main shell: fixed nav + footer + FontSwitcher
+├── lib/
+│   └── api.ts          # API client: fetchListings(), fetchListing(slug)
 ├── pages/
 │   ├── dev/
 │   │   └── styleguide.astro  # Dev-only design system reference (redirects in prod)
 │   ├── listings/
-│   │   └── [id].astro        # Dynamic property detail page
+│   │   └── [slug].astro      # Dynamic property detail page
 │   └── *.astro               # index, about, listings, services, contact, testimonials
 └── styles/
     └── global.css    # @import tailwindcss + @theme tokens + all component classes
 ```
 
-- **No database** — all content lives in `src/data/*.ts` files
+- **Listings via API** — property data fetched from an external API via `src/lib/api.ts`; services, team, and testimonials still live in `src/data/*.ts`
 - **No React/Vue** — pure Astro components only
 - **SSR mode** via `@astrojs/node` standalone adapter, all pages prerendered
 - **Image optimization** via Sharp
@@ -61,35 +61,35 @@ The user may refer to colors by these descriptive names — map them as follows:
 
 | User may say | Hex | Token |
 |---|---|---|
-| Dark Accent, Red Clay | `#be3528` | `red-600` |
-| Light Accent, Muted Gold | `#fac984` | `gold-300` |
-| Medium Neutral, Fine Sand | `#f2e6c9` | `earth-100` |
-| Light Neutral, Clean Bone | `#f7f7f2` | `earth-50` |
-| Dark Neutral, Rich Soil | `#3d3225` | `earth-900` |
+| Dark Accent, Red Clay | `#b52126` | `red-600` |
+| Light Accent, Muted Gold | `#ffcf7d` | `gold-300` |
+| Medium Neutral, Fine Sand | `#ebd9bc` | `earth-100` |
+| Light Neutral, Clean Bone | `#edeae6` | `earth-50` |
+| Dark Neutral, Rich Soil | `#3a3023` | `earth-900` |
 
 ### Key Tokens
 
 | Token | Hex | Usage |
 |-------|-----|-------|
-| `red-600` | `#be3528` | Dark Accent / Red Clay — CTAs, links, footer bg, section labels, hover states |
-| `gold-300` | `#faca83` | Light Accent / Muted Gold — selection highlight, pending badge bg |
-| `earth-50` | `#f7f7f2` | Page background, service icon wrapper bg |
-| `earth-100` | `#f2e6c9` | Banners, card backgrounds, team section bg |
+| `red-600` | `#b52126` | Dark Accent / Red Clay — CTAs, links, footer bg, section labels, hover states |
+| `gold-300` | `#ffcf7d` | Light Accent / Muted Gold — selection highlight, pending badge bg |
+| `earth-50` | `#edeae6` | Page background, service icon wrapper bg |
+| `earth-100` | `#ebd9bc` | Banners, card backgrounds, team section bg |
 | `earth-200` | `#e8d9bb` | Dividers, input borders |
 | `earth-400` | `#bb9d72` | Placeholders, borders |
 | `earth-500` | `#a48a63` | Subtle labels, muted text (county, address) |
 | `earth-600` | `#8d7350` | Secondary / muted text |
 | `earth-700` | `#745d42` | Body text on light bg |
-| `earth-900` | `#3d3225` | Main dark text, dark section backgrounds |
+| `earth-900` | `#3a3023` | Main dark text, dark section backgrounds |
 | `light-text` | `#ffffff` | White text on dark backgrounds |
 
 Full red and gold palettes (50–950) are defined in `global.css` for use when lighter/darker shades are needed.
 
 ### Typography
 
-- **Display font**: `Jost` — used for all `h1–h5`, `.font-display`, buttons, labels
+- **Display font**: `Gabarito` — used for all `h1–h5`, `.font-display`, buttons, labels
   - Weight controlled via `--font-display-weight` CSS variable (default 700)
-- **Body font**: `Funnel Sans` — used for all body text
+- **Body font**: `Anek Latin` — used for all body text
   - Weight controlled via `--font-body-weight` CSS variable (default 400)
 - Fonts loaded via Google Fonts in `Layout.astro`; switchable at dev time via `FontSwitcher`
 
@@ -126,30 +126,9 @@ Full red and gold palettes (50–950) are defined in `global.css` for use when l
 
 ### Adding a New Listing
 
-1. Add entry to `src/data/listings.ts` — copy an existing object as template:
-   ```ts
-   {
-     id: "kebab-case-id",          // used for URL and image path
-     title: "...",
-     price: "$xxx,xxx",
-     acreage: "x.x acres",
-     location: "Descriptive location name",
-     address: "Optional street address",  // omit if not available
-     city: "City Name",
-     county: "County",             // must match filter options in listings.astro
-     description: "1-2 sentence teaser",
-     fullDescription: "Full property description for detail page",
-     status: "available",          // "available" | "pending" | "sold"
-     featured: true,               // omit or false if not homepage-featured
-     imageCount: N,                // number of images you're adding
-     broker: "Broker Name",        // should match a name in team.ts
-     brokerPhone: "(919) xxx-xxxx",
-   }
-   ```
-2. Create image directory: `public/images/listings/{id}/`
-3. Add images named `1.jpg`, `2.jpg`, … `N.jpg` (matching `imageCount`)
-4. Run `node scripts/check-listings.js` to verify everything is in order
-5. If `featured: true`, confirm only ~5 listings are featured (homepage shows 3)
+Listings are managed through the external API — the website fetches them automatically. To add, update, or remove a listing, use the API admin interface. No code changes are needed.
+
+Key API fields the site uses: `slug` (URL path), `marketing_title`, `address`, `city`, `county`, `status`, `status_label`, `list_price`, `lot_size_acres`, `description`, `primary_photo`, `photos`, `agent`.
 
 ### Adding a Team Member
 
@@ -180,13 +159,6 @@ Edit `src/data/services.ts`. The `photo` field accepts a URL (currently Unsplash
 - Used in: listings page list view only
 - Shows: thumbnail, title/status/county, acreage, price, "View Details" link
 
-### `ServiceIcon.astro`
-```astro
-<ServiceIcon icon="handshake" class="service-card-icon" />
-```
-- Available icons: `'handshake' | 'clipboard' | 'map' | 'scroll' | 'arrows' | 'trees'`
-- Renders inline SVG; apply size/color via the `class` prop
-
 ---
 
 ## Tailwind v4 Notes
@@ -208,14 +180,13 @@ Edit `src/data/services.ts`. The `photo` field accepts a URL (currently Unsplash
 ## File Conventions
 
 - Static assets (images, SVGs, favicon) → `public/`
-- Property images → `public/images/listings/{listing-id}/1.jpg`, `2.jpg`, …
 - Team photos → `public/images/team/{firstname-lastname}.jpg`
-- Topo SVG overlay → `public/FallsLakeTopoContours.svg` (used with `filter: invert(1)` on dark sections, `opacity-[0.09]`)
+- Topo SVG overlay → `public/FallTopo_v2.svg`
 - All pages use `export const prerender = true` except `src/pages/dev/styleguide.astro`
 
 ## Known Quirks
 
-- The `listings.astro` filter uses client-side JS; county/status values must exactly match what's used in `listings.ts`
+- The `listings.astro` filter uses client-side JS against `data-county`, `data-status`, etc. attributes rendered from the API response
 - `nav-logo-icon` uses CSS `mask-image` to color the SVG — changing nav accent color works via the `--color-nav-accent` CSS variable (set by FontSwitcher in dev, hardcoded to `red-600` in prod)
 - The topo SVG width calculation script in `Layout.astro` uses `getBoundingClientRect()` to handle zoom-independent sizing
 - Listing detail page breaks descriptions into 3-sentence paragraphs client-side

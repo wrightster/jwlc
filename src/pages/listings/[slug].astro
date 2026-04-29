@@ -7,8 +7,8 @@ import ListingCard from '../../components/ListingCard.astro';
 import { fetchListing, fetchListings, formatPrice, formatAcres } from '../../lib/api';
 import { team } from '../../data/team';
 
-const { id } = Astro.params;
-const listing = await fetchListing(id!).catch(() => null);
+const { slug } = Astro.params;
+const listing = await fetchListing(slug!).catch(() => null);
 
 if (!listing) {
   return Astro.redirect('/listings');
@@ -33,6 +33,7 @@ const relatedListings = otherListings.filter(l => l.slug !== listing.slug).slice
 <Layout
   title={`${title} — Julie Wright Land Company`}
   description={listing.description}
+  image={imageList[0]}
 >
   <!-- Back Link -->
   <div class="listing-back-bar">
@@ -55,7 +56,7 @@ const relatedListings = otherListings.filter(l => l.slug !== listing.slug).slice
           <!-- Gallery -->
           <div class="listing-gallery-inset">
             <!-- Main Image -->
-            <div class="gallery-main-wrap" id="main-image-wrap">
+            <div class="gallery-main-wrap" id="main-image-wrap" tabindex="0" aria-label="Open photo gallery">
               {photos.length > 0 ? (
                 <img
                   src={imageList[0]}
@@ -312,7 +313,10 @@ const relatedListings = otherListings.filter(l => l.slug !== listing.slug).slice
     const lbPrev = document.getElementById('lb-prev');
     const lbNext = document.getElementById('lb-next');
 
+    let lbOpener: Element | null = null;
+
     function openLightbox(index) {
+      lbOpener = document.activeElement;
       currentIndex = index;
       if (lbBg) { lbBg.src = fullImageList[currentIndex]; lbBg.style.opacity = '0.50'; }
       if (lbImage) { lbImage.src = fullImageList[currentIndex]; lbImage.alt = `Photo ${currentIndex + 1}`; lbImage.style.opacity = '1'; }
@@ -320,12 +324,15 @@ const relatedListings = otherListings.filter(l => l.slug !== listing.slug).slice
       setMainImage(currentIndex);
       lightbox?.classList.add('is-open');
       document.body.style.overflow = 'hidden';
+      lbClose?.focus();
     }
 
     function closeLightbox() {
       lightbox?.classList.remove('is-open');
       lightbox?.addEventListener('transitionend', () => {
         document.body.style.overflow = '';
+        (lbOpener as HTMLElement | null)?.focus();
+        lbOpener = null;
       }, { once: true });
     }
 
@@ -361,6 +368,9 @@ const relatedListings = otherListings.filter(l => l.slug !== listing.slug).slice
     }
 
     mainWrap?.addEventListener('click', () => openLightbox(currentIndex));
+    mainWrap?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(currentIndex); }
+    });
     lbClose?.addEventListener('click', closeLightbox);
     lbPrev?.addEventListener('click', prevImage);
     lbNext?.addEventListener('click', nextImage);
@@ -373,9 +383,18 @@ const relatedListings = otherListings.filter(l => l.slug !== listing.slug).slice
 
     document.addEventListener('keydown', (e) => {
       if (!lightbox?.classList.contains('is-open')) return;
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowRight') nextImage();
-      if (e.key === 'ArrowLeft') prevImage();
+      if (e.key === 'Escape') { closeLightbox(); return; }
+      if (e.key === 'ArrowRight') { nextImage(); return; }
+      if (e.key === 'ArrowLeft') { prevImage(); return; }
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const focusable = [lbClose, lbPrev, lbNext].filter(Boolean) as HTMLElement[];
+        const idx = focusable.indexOf(document.activeElement as HTMLElement);
+        const next = e.shiftKey
+          ? (idx - 1 + focusable.length) % focusable.length
+          : (idx + 1) % focusable.length;
+        focusable[next].focus();
+      }
     });
   </script>
 </Layout>
