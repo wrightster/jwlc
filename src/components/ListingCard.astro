@@ -28,11 +28,11 @@ const image = listing.primary_photo?.urls.web;
       </div>
     </div>
     {listing.photo_count > 1 && (
-      <span class="listing-card-photos-badge">
-        <svg class="listing-card-photos-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <span class="listing-card-photos-badge" aria-label={`${listing.photo_count} photos`}>
+        <svg class="listing-card-photos-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.41a2.25 2.25 0 013.182 0l2.909 2.91M3.75 21h16.5a2.25 2.25 0 002.25-2.25V5.25a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 003.75 21z" />
         </svg>
-        {listing.photo_count}
+        <span aria-hidden="true">{listing.photo_count}</span>
       </span>
     )}
     <span class="listing-card-status" data-status={listing.status}>
@@ -48,7 +48,7 @@ const image = listing.primary_photo?.urls.web;
       <span class="listing-card-price">{formatPrice(listing.list_price)}</span>
       <span class="listing-card-link">
         View Details
-        <svg class="listing-card-link-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <svg class="listing-card-link-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
         </svg>
       </span>

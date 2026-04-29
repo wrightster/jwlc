@@ -59,9 +59,9 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
                 <svg class="custom-select-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
               </button>
               <ul class="custom-select-list" role="listbox">
-                <li class="custom-select-option is-selected" data-value="all" role="option">All Counties</li>
+                <li class="custom-select-option is-selected" data-value="all" role="option" aria-selected="true">All Counties</li>
                 {counties.map((county) => (
-                  <li class="custom-select-option" data-value={county} role="option">{county}</li>
+                  <li class="custom-select-option" data-value={county} role="option" aria-selected="false">{county}</li>
                 ))}
               </ul>
             </div>
@@ -76,9 +76,9 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
                 <svg class="custom-select-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
               </button>
               <ul class="custom-select-list" role="listbox">
-                <li class="custom-select-option is-selected" data-value="all" role="option">All Cities</li>
+                <li class="custom-select-option is-selected" data-value="all" role="option" aria-selected="true">All Cities</li>
                 {cities.map((city) => (
-                  <li class="custom-select-option" data-value={city} role="option">{city}</li>
+                  <li class="custom-select-option" data-value={city} role="option" aria-selected="false">{city}</li>
                 ))}
               </ul>
             </div>
@@ -93,25 +93,25 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
                 <svg class="custom-select-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
               </button>
               <ul class="custom-select-list" role="listbox">
-                <li class="custom-select-option is-selected" data-value="all" role="option">All Statuses</li>
-                <li class="custom-select-option" data-value="active" role="option">Available</li>
-                <li class="custom-select-option" data-value="coming_soon" role="option">Coming Soon</li>
-                <li class="custom-select-option" data-value="pending" role="option">Pending</li>
-                <li class="custom-select-option" data-value="under_contract" role="option">Under Contract</li>
-                <li class="custom-select-option" data-value="sold" role="option">Sold</li>
+                <li class="custom-select-option is-selected" data-value="all" role="option" aria-selected="true">All Statuses</li>
+                <li class="custom-select-option" data-value="active" role="option" aria-selected="false">Available</li>
+                <li class="custom-select-option" data-value="coming_soon" role="option" aria-selected="false">Coming Soon</li>
+                <li class="custom-select-option" data-value="pending" role="option" aria-selected="false">Pending</li>
+                <li class="custom-select-option" data-value="under_contract" role="option" aria-selected="false">Under Contract</li>
+                <li class="custom-select-option" data-value="sold" role="option" aria-selected="false">Sold</li>
               </ul>
             </div>
           </div>
 
           <!-- Price slider -->
           <div class="filter-range-wrap">
-            <p class="filter-select-label">Price Range</p>
+            <p class="filter-select-label" id="price-range-label">Price Range</p>
             <div class="range-slider">
               <div class="range-track"><div class="range-fill" id="price-fill"></div></div>
-              <input type="range" id="price-min" min="0" max="500000" step="10000" value="0" class="range-input" />
-              <input type="range" id="price-max" min="0" max="500000" step="10000" value="500000" class="range-input" />
+              <input type="range" id="price-min" min="0" max="500000" step="10000" value="0" class="range-input" aria-label="Minimum price" aria-labelledby="price-range-label" />
+              <input type="range" id="price-max" min="0" max="500000" step="10000" value="500000" class="range-input" aria-label="Maximum price" />
             </div>
-            <div class="filter-range-display">
+            <div class="filter-range-display" aria-hidden="true">
               <span id="price-min-display" class="filter-range-val">$0</span>
               <span class="filter-range-sep">–</span>
               <span id="price-max-display" class="filter-range-val">$500,000+</span>
@@ -120,13 +120,13 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
 
           <!-- Acreage slider -->
           <div class="filter-range-wrap">
-            <p class="filter-select-label">Acreage</p>
+            <p class="filter-select-label" id="acres-range-label">Acreage</p>
             <div class="range-slider">
               <div class="range-track"><div class="range-fill" id="acres-fill"></div></div>
-              <input type="range" id="acres-min" min="0" max="50" step="1" value="0" class="range-input" />
-              <input type="range" id="acres-max" min="0" max="50" step="1" value="50" class="range-input" />
+              <input type="range" id="acres-min" min="0" max="50" step="1" value="0" class="range-input" aria-label="Minimum acreage" aria-labelledby="acres-range-label" />
+              <input type="range" id="acres-max" min="0" max="50" step="1" value="50" class="range-input" aria-label="Maximum acreage" />
             </div>
-            <div class="filter-range-display">
+            <div class="filter-range-display" aria-hidden="true">
               <span id="acres-min-display" class="filter-range-val">0</span>
               <span class="filter-range-sep">–</span>
               <span id="acres-max-display" class="filter-range-val">50+ ac</span>
@@ -140,7 +140,7 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
 
       <!-- Results count + per-page + view toggle -->
       <div class="results-bar">
-        <p class="results-count" id="results-count">
+        <p class="results-count" id="results-count" aria-live="polite" aria-atomic="true">
           Showing <span class="results-count-val">{listings.length}</span> propert{listings.length === 1 ? 'y' : 'ies'}
         </p>
         <div class="per-page-select">
@@ -587,6 +587,8 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
       grid.dataset.view = mode;
       btnGrid.classList.toggle('is-active', mode === 'grid');
       btnList.classList.toggle('is-active', mode === 'list');
+      document.querySelectorAll<HTMLElement>('.listing-card').forEach(el => el.setAttribute('aria-hidden', mode === 'list' ? 'true' : 'false'));
+      document.querySelectorAll<HTMLElement>('.listing-row').forEach(el => el.setAttribute('aria-hidden', mode === 'grid' ? 'true' : 'false'));
       localStorage.setItem('jwlc-view', mode);
     }
 

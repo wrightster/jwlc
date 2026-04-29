@@ -85,9 +85,42 @@
     background-color: var(--color-gold-300);
     color: var(--color-earth-950);
   }
+
+  /* Global focus-visible ring — applies to anything that hasn't set its own */
+  :focus-visible {
+    outline: 2px solid var(--color-red-600);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    html { scroll-behavior: auto; }
+  }
 }
 
 @layer components {
+
+  /* Skip link */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0.5rem;
+    z-index: 9999;
+    padding: 0.5rem 1rem;
+    background: var(--color-earth-900);
+    color: #fff;
+    font-size: 0.875rem;
+    font-family: var(--font-display);
+    border-radius: 0.25rem;
+    text-decoration: none;
+  }
+  .skip-link:focus {
+    left: 0.5rem;
+  }
 
   /* ══════════════════════════════════════════════════
      BUTTONS
@@ -725,7 +758,8 @@
     outline: none; border: none;
   }
   .custom-select-trigger:hover,
-  .custom-select.is-open .custom-select-trigger {
+  .custom-select.is-open .custom-select-trigger,
+  .custom-select-trigger:focus-visible {
     box-shadow: inset 0 0 0 3px var(--color-red-600);
   }
   .custom-select-chevron {
@@ -1183,6 +1217,10 @@
 #jwrg-form .jwrg-submit {
   margin-top: 0.75rem;
   cursor: pointer; outline: none; appearance: none; border: none; background: none; padding: 0;
+}
+#jwrg-form .jwrg-submit:focus-visible {
+  outline: 2px solid var(--color-red-600);
+  outline-offset: 2px;
 }
 #jwrg-form .jwrg-submit:hover {
   color: var(--color-red-600);
