@@ -1035,7 +1035,32 @@
   .lightbox-nav-icon { @apply w-12 h-12 pointer-events-none; }
   .lightbox-body     { @apply relative z-10 max-w-6xl max-h-[85vh] mx-auto px-16; }
   .lightbox-img      { @apply max-w-full max-h-[85vh] object-contain mx-auto transition-opacity duration-300; }
+  .lightbox-img.crop-landscape {
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    max-width: min(100%, calc(85vh * 16 / 9));
+  }
+  .lightbox-img.crop-portrait {
+    aspect-ratio: 9/16;
+    object-fit: cover;
+    max-width: min(100%, calc(85vh * 9 / 16));
+  }
   .lightbox-counter  { @apply absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-earth-50/60 text-sm; }
+  @media (max-width: 767px) {
+    .lightbox-body { padding-left: 1rem; padding-right: 1rem; }
+    .lightbox-prev {
+      width: 3.5rem; height: 3.5rem;
+      top: auto; bottom: 1rem;
+      left: 50%; transform: translateX(calc(-100% - 0.5rem));
+    }
+    .lightbox-next {
+      width: 3.5rem; height: 3.5rem;
+      top: auto; bottom: 1rem;
+      right: auto; left: 50%; transform: translateX(0.5rem);
+    }
+    .lightbox-nav-icon { width: 1.75rem; height: 1.75rem; }
+    .lightbox-counter  { bottom: 5.5rem; }
+  }
 
   /* ══════════════════════════════════════════════════
      LISTING CARD COMPONENT

@@ -321,6 +321,19 @@ const relatedListings = otherListings.filter(l => l.slug !== listing.slug).slice
 
     let lightboxTrigger = null;
 
+    function applyImageCrop() {
+      if (!lbImage || !lbImage.naturalWidth) return;
+      var ratio = lbImage.naturalWidth / lbImage.naturalHeight;
+      lbImage.classList.remove('crop-landscape', 'crop-portrait');
+      if (ratio > 16 / 9) {
+        lbImage.classList.add('crop-landscape');
+      } else if (ratio < 9 / 16) {
+        lbImage.classList.add('crop-portrait');
+      }
+    }
+
+    if (lbImage) lbImage.addEventListener('load', applyImageCrop);
+
     function openLightbox(index, trigger) {
       currentIndex = index;
       lightboxTrigger = trigger ?? null;
@@ -405,5 +418,34 @@ const relatedListings = otherListings.filter(l => l.slug !== listing.slug).slice
         focusable[next].focus();
       }
     });
+
+    var wheelAccumX = 0;
+    var wheelCooldown = false;
+    lightbox?.addEventListener('wheel', function(e) {
+      if (!lightbox.classList.contains('is-open')) return;
+      e.preventDefault();
+      if (wheelCooldown) return;
+      wheelAccumX += e.deltaX;
+      if (Math.abs(wheelAccumX) > 60) {
+        if (wheelAccumX > 0) nextImage(); else prevImage();
+        wheelAccumX = 0;
+        wheelCooldown = true;
+        setTimeout(function() { wheelCooldown = false; wheelAccumX = 0; }, 500);
+      }
+    }, { passive: false });
+
+    var swipeStartX = 0;
+    var swipeStartY = 0;
+    lightbox?.addEventListener('touchstart', function(e) {
+      swipeStartX = e.touches[0].clientX;
+      swipeStartY = e.touches[0].clientY;
+    }, { passive: true });
+    lightbox?.addEventListener('touchend', function(e) {
+      var dx = e.changedTouches[0].clientX - swipeStartX;
+      var dy = e.changedTouches[0].clientY - swipeStartY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+        if (dx < 0) nextImage(); else prevImage();
+      }
+    }, { passive: true });
   </script>
 </Layout>
