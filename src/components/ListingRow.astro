@@ -1,6 +1,6 @@
 ---
 import type { ApiListing } from '../lib/api';
-import { formatPrice, formatAcres } from '../lib/api';
+import { formatPrice, formatAcres, photoSrc } from '../lib/api';
 
 interface Props {
   listing: ApiListing;
@@ -8,7 +8,7 @@ interface Props {
 
 const { listing } = Astro.props;
 const title = listing.marketing_title || listing.address;
-const image = listing.primary_photo?.urls.web;
+const image = photoSrc(listing.primary_photo, 800);
 ---
 
 <a href={`/listings/${listing.slug}`} class="listing-row">
