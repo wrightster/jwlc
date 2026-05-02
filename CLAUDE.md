@@ -2,7 +2,9 @@
 
 ## Project Overview
 
-Real estate website for a North Carolina land brokerage. Astro 5 with SSR (Node.js adapter), Tailwind CSS 4, TypeScript strict mode. All pages use `export const prerender = true` (static output).
+Real estate website for a North Carolina land brokerage. Astro 5 with SSR (Node.js adapter), Tailwind CSS 4, TypeScript strict mode. All pages use `export const prerender = true` (static output). Sister site to **JWRG** (`~/code/jwrg`) — both consume the same backend at `office.jwrgnc.com`.
+
+> **Read this first when editing:** `~/code/jwrg/SHARED_FRONTEND_GUIDE.md`. It defines rules that apply to both JWLC and JWRG (API client contract, image handling, status mapping, etc.). This CLAUDE.md only covers JWLC-specific details.
 
 ## Environments
 
@@ -42,10 +44,10 @@ src/
     └── global.css    # @import tailwindcss + @theme tokens + all component classes
 ```
 
-- **Listings via API** — property data fetched from an external API via `src/lib/api.ts`; services, team, and testimonials still live in `src/data/*.ts`
+- **Listings via API** — property data fetched from `office.jwrgnc.com/api/v1` (filtered by `?site=jwlc`) via `src/lib/api.ts`; services, team, and testimonials still live in `src/data/*.ts`. See `~/code/jwrg/SHARED_FRONTEND_GUIDE.md` for the contract.
 - **No React/Vue** — pure Astro components only
 - **SSR mode** via `@astrojs/node` standalone adapter, all pages prerendered
-- **Image optimization** via Sharp
+- **Image handling** — Sharp + Astro's `<Image>` for **local assets only** (team photos, hero shots in `public/images/`). Listing images come from the API as pre-rendered URLs and must not be re-optimized client-side. See `~/code/jwrg/SHARED_FRONTEND_GUIDE.md` §"Image handling".
 
 ---
 
@@ -126,9 +128,11 @@ Full red and gold palettes (50–950) are defined in `global.css` for use when l
 
 ### Adding a New Listing
 
-Listings are managed through the external API — the website fetches them automatically. To add, update, or remove a listing, use the API admin interface. No code changes are needed.
+Listings are managed in the office Filament admin (`office.jwrgnc.com`) — the website fetches them automatically. To publish on JWLC, ensure `jwlc` is in the listing's `marketing_sites` set. No code changes needed.
 
 Key API fields the site uses: `slug` (URL path), `marketing_title`, `address`, `city`, `county`, `status`, `status_label`, `list_price`, `lot_size_acres`, `description`, `primary_photo`, `photos`, `agent`.
+
+> Backend asks should go in `~/code/jwrg/OFFICE_MCP_REQUESTS.md` rather than ad-hoc messages to the office Claude.
 
 ### Adding a Team Member
 
@@ -191,3 +195,7 @@ Edit `src/data/services.ts`. The `photo` field accepts a URL (currently Unsplash
 - The topo SVG width calculation script in `Layout.astro` uses `getBoundingClientRect()` to handle zoom-independent sizing
 - Listing detail page breaks descriptions into 3-sentence paragraphs client-side
 - **`<script define:vars>` blocks are plain JavaScript — no TypeScript.** Astro treats these as `is:inline` (no TS transform), so any TS syntax (type annotations, `as` casts, `?:` params) causes a silent `SyntaxError` that kills all event listeners on the page.
+
+## Sister Site (JWRG)
+
+`~/code/jwrg` is the Julie Wright Realty Group site (full-service residential brokerage). Same backend, different brand/audience. When changing shared concerns (API client, image handling, status mapping), make the change in both repos and update `~/code/jwrg/SHARED_FRONTEND_GUIDE.md` if the rule itself changes.
