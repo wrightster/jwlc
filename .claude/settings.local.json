@@ -28,7 +28,14 @@
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
       "Bash(pkill -f \"astro dev\")",
-      "Bash(pkill -f \"node.*astro\")"
+      "Bash(pkill -f \"node.*astro\")",
+      "Bash(git commit *)",
+      "Bash(npm run *)",
+      "Bash(echo \"PID: $!\")",
+      "Bash(python3 -c ' *)",
+      "Bash(osascript -e ' *)",
+      "Bash(osascript *)",
+      "Bash(chrome-cli execute *)"
     ]
   }
 }
