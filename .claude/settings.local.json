@@ -35,7 +35,30 @@
       "Bash(python3 -c ' *)",
       "Bash(osascript -e ' *)",
       "Bash(osascript *)",
-      "Bash(chrome-cli execute *)"
+      "Bash(chrome-cli execute *)",
+      "Bash(git -C /Users/mw/Projects/github/jwrg_workspace/jwlc push)",
+      "Bash(git -C /Users/mw/Projects/github/jwrg_workspace/jwlc stash pop)",
+      "Bash(git *)",
+      "WebFetch(domain:juliewrightlandcompany.com)",
+      "mcp__office-jwrg__search-listings",
+      "Read(//private/tmp/**)",
+      "mcp__office-jwrg__search-users",
+      "mcp__office-jwrg__list-sites",
+      "mcp__office-jwrg__create-listing",
+      "mcp__office-jwrg__get-listing",
+      "mcp__office-jwrg__attach-listing-photos-from-urls",
+      "mcp__office-jwrg__set-listing-sites",
+      "mcp__office-jwrg__update-listing",
+      "mcp__office-jwrg__delete-listing-photo",
+      "Bash(grep -oE '\"description\":\"[^\"]{50,2000}\"' /tmp/zillow.html)",
+      "Bash(grep -oE '\"description\":\"[^\"]{100,3000}\"' /tmp/zillow.html)",
+      "Bash(sed -n '/id=\"__NEXT_DATA__\"/,/<\\\\/script>/p' /tmp/zillow.html)",
+      "Bash(grep -oE '\\\\\\\\\"description\\\\\\\\\":\\\\\\\\\"[^\"]{50,500}' /tmp/zillow_next.json)",
+      "Bash(grep -oE '\\\\\\\\\"attribution[A-Za-z]*\\\\\\\\\":[^,]{1,400}' /tmp/zillow_next.json)"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "office-jwrg"
+  ]
 }
