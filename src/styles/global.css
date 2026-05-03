@@ -931,13 +931,21 @@
   .listing-description-body    { @apply space-y-4 text-earth-700 leading-relaxed; }
 
   .listing-documents         { @apply mt-8 pt-8 border-t border-earth-200; }
+  .listing-documents-intro   { @apply text-earth-600 text-sm mb-4 -mt-3; }
   .listing-documents-list    { @apply space-y-2; }
   .listing-document-link {
-    @apply flex items-center gap-3 px-4 py-3 bg-earth-100 rounded-sm text-earth-900 transition-colors duration-200;
+    @apply flex items-start gap-3 px-4 py-3 bg-earth-100 rounded-sm text-earth-900 transition-colors duration-200;
   }
   .listing-document-link:hover { @apply bg-earth-200 text-red-600; }
-  .listing-document-icon  { @apply shrink-0 w-5 h-5 text-red-600; }
-  .listing-document-arrow { @apply shrink-0 w-4 h-4 ml-auto opacity-40; }
+  .listing-document-icon   { @apply shrink-0 w-5 h-5 mt-0.5 text-red-600; }
+  .listing-document-body   { @apply flex-1 min-w-0; }
+  .listing-document-row    { @apply flex flex-wrap items-baseline gap-2; }
+  .listing-document-title  { @apply font-display text-base; }
+  .listing-document-pill   { @apply inline-block text-[10px] tracking-widest uppercase font-display text-red-600 bg-earth-50 border border-earth-200 rounded-sm px-2 py-0.5; }
+  .listing-document-desc   { @apply block text-earth-700 text-sm mt-1; }
+  .listing-document-expiry { @apply block text-xs mt-1 text-earth-500; }
+  .listing-document-expiry--warn { @apply text-red-600 font-display; }
+  .listing-document-arrow  { @apply shrink-0 w-4 h-4 mt-1 ml-auto opacity-40; }
   .listing-document-link:hover .listing-document-arrow { @apply opacity-100; }
 
   .listing-directions      { @apply mt-8 pt-8 border-t border-earth-200; }
