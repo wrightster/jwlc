@@ -136,9 +136,7 @@ Key API fields the site uses: `slug` (URL path), `marketing_title`, `address`, `
 
 ### Adding a Team Member
 
-1. Add entry to `src/data/team.ts`
-2. Add photo to `public/images/team/{firstname-lastname}.jpg`
-3. Photo dimensions: ~300×300px square, JPG
+Team members are managed in the office Filament admin (`office.jwrgnc.com` → Settings → Users) and surfaced via `/api/v1/team?site=jwlc`. To publish a user on JWLC, attach a `TeamMemberSiteProfile` for the `jwlc` site under the Public Site Profiles relation manager. Headshots upload through the Photos relation manager. Per-site bio overrides go on the site profile itself; otherwise the User's default `bio` is used. No code change needed here.
 
 ### Updating a Service
 
