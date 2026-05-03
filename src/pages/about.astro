@@ -1,8 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import BtnArrow from '../components/BtnArrow.astro';
-import { team } from '../data/team';
+import { fetchTeam, photoSrc } from '../lib/api';
 export const prerender = true;
+
+const team = await fetchTeam();
 ---
 
 <Layout title="About Us — Julie Wright Land Company" description="Meet the experienced team behind Julie Wright Land Company. Over 40 years of Triangle area land expertise.">
@@ -58,51 +60,70 @@ export const prerender = true;
         <h2 class="section-heading">Meet Our Brokers</h2>
       </div>
 
-      <div class="team-list">
-        {team.map((member) => (
-          <div class="team-card" id={member.name.toLowerCase().replace(/\s/g, '-')}>
-            <div class="team-card-inner">
-              <div class="team-card-layout">
-                <img
-                  src={member.photo}
-                  alt={member.name}
-                  class="team-photo"
-                  loading="lazy"
-                />
+      {team.length === 0 ? (
+        <p class="text-earth-700">Our team will be listed here shortly.</p>
+      ) : (
+        <div class="team-list">
+          {team.map((member) => {
+            const photo = photoSrc(member.primary_photo, 800);
+            const phoneDigits = member.public_phone?.replace(/\D/g, '') ?? '';
+            const longBio = member.bio ?? member.short_bio ?? '';
+            return (
+              <div class="team-card" id={member.slug}>
+                <div class="team-card-inner">
+                  <div class="team-card-layout">
+                    {photo ? (
+                      <img
+                        src={photo}
+                        alt={member.primary_photo?.alt ?? member.name}
+                        class="team-photo"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div class="team-photo bg-earth-100" />
+                    )}
 
-                <div class="team-info">
-                  <div class="team-name-row">
-                    <h3 class="team-name">{member.name}</h3>
-                    <span class="team-role">{member.role}</span>
-                  </div>
-                  <p class="team-bio">{member.bio}</p>
+                    <div class="team-info">
+                      <div class="team-name-row">
+                        <h3 class="team-name">{member.name}</h3>
+                        {member.title && <span class="team-role">{member.title}</span>}
+                      </div>
+                      {longBio && <p class="team-bio whitespace-pre-line">{longBio}</p>}
 
-                  <div class="team-tags">
-                    {member.specialties.map((s) => (
-                      <span class="team-tag">{s}</span>
-                    ))}
-                  </div>
+                      {member.specialties.length > 0 && (
+                        <div class="team-tags">
+                          {member.specialties.map((s) => (
+                            <span class="team-tag">{s}</span>
+                          ))}
+                        </div>
+                      )}
 
-                  <div class="team-contacts">
-                    <a href={`tel:${member.phone.replace(/\D/g, '')}`} class="team-contact-link">
-                      <svg class="team-contact-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-                      </svg>
-                      {member.phone}
-                    </a>
-                    <a href={`mailto:${member.email}`} class="team-contact-link">
-                      <svg class="team-contact-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                      </svg>
-                      {member.email}
-                    </a>
+                      <div class="team-contacts">
+                        {member.public_phone && (
+                          <a href={`tel:${phoneDigits}`} class="team-contact-link">
+                            <svg class="team-contact-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                            </svg>
+                            {member.public_phone}
+                          </a>
+                        )}
+                        {member.public_email && (
+                          <a href={`mailto:${member.public_email}`} class="team-contact-link">
+                            <svg class="team-contact-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                            </svg>
+                            {member.public_email}
+                          </a>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        ))}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   </section>
 

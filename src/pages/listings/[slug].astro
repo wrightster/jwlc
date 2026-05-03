@@ -4,8 +4,7 @@ export const prerender = false;
 import Layout from '../../layouts/Layout.astro';
 import BtnArrow from '../../components/BtnArrow.astro';
 import ListingCard from '../../components/ListingCard.astro';
-import { fetchListing, fetchListings, formatPrice, formatAcres, photoSrc } from '../../lib/api';
-import { team } from '../../data/team';
+import { fetchListing, fetchListings, fetchTeam, formatPrice, formatAcres, photoSrc } from '../../lib/api';
 
 const { slug } = Astro.params;
 const listing = await fetchListing(slug!).catch(() => null);
@@ -24,7 +23,9 @@ const fullAddress = [listing.address, listing.city, listing.state, listing.zip].
 
 const agentName = listing.agent?.name ?? null;
 const agentPhone = listing.agent?.phone ?? null;
+const team = agentName ? await fetchTeam().catch(() => []) : [];
 const brokerMember = agentName ? team.find((t) => t.name === agentName) : undefined;
+const brokerPhoto = photoSrc(brokerMember?.primary_photo, 400);
 
 const otherListings = await fetchListings(4).catch(() => []);
 const relatedListings = otherListings.filter(l => l.slug !== listing.slug).slice(0, 3);
@@ -197,10 +198,10 @@ const relatedListings = otherListings.filter(l => l.slug !== listing.slug).slice
 
             {agentName && (
               <div class="listing-broker-row">
-                {brokerMember ? (
+                {brokerPhoto ? (
                   <img
-                    src={brokerMember.photo}
-                    alt={agentName}
+                    src={brokerPhoto}
+                    alt={brokerMember?.primary_photo?.alt ?? agentName}
                     class="listing-broker-photo"
                     loading="lazy"
                   />
