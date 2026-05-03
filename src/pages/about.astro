@@ -24,31 +24,28 @@ export const prerender = true;
           <h2 class="section-heading">Four Decades of<br />Land Expertise</h2>
           <div class="story-body">
             <p>
-              Julie Wright Land Company has been the Triangle's trusted land brokerage for over 40 years. Founded by Julie Wright — a registered nurse turned real estate visionary — the company was built on a simple premise: helping people find the right piece of land, or the right use for their land.
+              Julie Wright Land Company has helped people buy and sell land across the Triangle for more than 40 years. Julie started the company in 1972 after leaving a career in nursing, and the idea behind it was straightforward: find the right piece of land for the right buyer, or find the right use for a piece of land somebody already owns. That has not really changed.
             </p>
             <p>
-              That means understanding not just the market, but the land itself. Soil composition. Topography. Zoning regulations. Access considerations. Tax implications. Estate planning. We navigate all of it so our clients can make informed, confident decisions.
-            </p>
-            <p>
-              Today, our team of five experienced brokers covers eight counties — Wake, Durham, Granville, Franklin, Vance, Harnett, Nash, and Chatham — with the kind of deep local knowledge that only comes from decades of relationships and transactions in these communities.
+              What has changed is how much there is to know. Soil and topography, zoning rules and road access, taxes and estate planning all factor in, and we work through them with you so the decision feels clear by the end. Our five brokers cover eight counties across central North Carolina, including Wake, Durham, Granville, Franklin, Vance, Harnett, Nash, and Chatham, and most of what we know about these communities came from spending decades in them.
             </p>
           </div>
         </div>
 
         <!-- Sidebar stats -->
         <div class="stat-sidebar">
-          {[
-            { label: 'Years in Business', value: '40+', detail: 'Founded in 1972' },
-            { label: 'Counties Covered', value: '8', detail: 'Across the Triangle' },
-            { label: 'Team Members', value: '5', detail: 'Experienced Brokers' },
-            { label: 'Core Values', value: '—', detail: 'Integrity, Knowledge, Relationships' },
-          ].map((stat) => (
-            <div class="stat-card">
-              <p class="stat-card-label">{stat.label}</p>
-              <p class="stat-card-value">{stat.value}</p>
-              <p class="stat-card-detail">{stat.detail}</p>
-            </div>
-          ))}
+          <div class="stat-card">
+            {[
+              { label: 'Years in Business', value: '40+', detail: 'Founded in 1972' },
+              { label: 'Counties Covered', value: '8', detail: 'Across the Triangle' },
+              { label: 'Team Members', value: '5', detail: 'Experienced Brokers' },
+            ].map((stat) => (
+              <div class="stat-row">
+                <p class="stat-card-headline"><span>{stat.value} {stat.label}</span></p>
+                <p class="stat-card-detail">{stat.detail}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

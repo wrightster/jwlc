@@ -588,10 +588,10 @@
   .story-grid      { @apply grid lg:grid-cols-5 gap-16; }
   .story-text-col  { @apply lg:col-span-3; }
   .story-body      { @apply mt-8 space-y-5 text-earth-700 leading-relaxed; }
-  .stat-sidebar    { @apply lg:col-span-2 space-y-6; }
-  .stat-card       { @apply bg-earth-100/60 rounded-sm p-6; }
-  .stat-card-label  { @apply text-xs uppercase tracking-[0.2em] text-red-600 font-semibold; }
-  .stat-card-value  { @apply font-display text-3xl text-earth-900 mt-1; }
+  .stat-sidebar    { @apply lg:col-span-2; }
+  .stat-card       { @apply bg-earth-100/60 rounded-sm p-6 divide-y divide-earth-200/70; }
+  .stat-row        { @apply py-4 first:pt-0 last:pb-0; }
+  .stat-card-headline { @apply font-display text-xl text-red-600; }
   .stat-card-detail { @apply text-sm text-earth-600 mt-1; }
 
   .team-section  { @apply py-10 lg:py-14 border-t border-earth-200; }
