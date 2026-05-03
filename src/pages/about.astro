@@ -88,7 +88,24 @@ const team = await fetchTeam();
                         <h3 class="team-name">{member.name}</h3>
                         {member.title && <span class="team-role">{member.title}</span>}
                       </div>
-                      {longBio && <p class="team-bio whitespace-pre-line">{longBio}</p>}
+                      {longBio && (
+                        longBio.length > 400 ? (
+                          <div class="team-bio-expander">
+                            <input type="checkbox" id={`bio-${member.slug}`} class="bio-toggle peer sr-only" />
+                            <p class="team-bio whitespace-pre-line max-h-[8rem] overflow-hidden peer-checked:max-h-[200rem] transition-[max-height] duration-300 [mask-image:linear-gradient(to_bottom,black_70%,transparent)] peer-checked:[mask-image:none]">
+                              {longBio}
+                            </p>
+                            <label for={`bio-${member.slug}`} class="mt-2 inline-block cursor-pointer text-red-600 hover:text-red-700 text-sm font-display tracking-wide peer-checked:hidden">
+                              Read more →
+                            </label>
+                            <label for={`bio-${member.slug}`} class="mt-2 hidden cursor-pointer text-red-600 hover:text-red-700 text-sm font-display tracking-wide peer-checked:inline-block">
+                              ← Show less
+                            </label>
+                          </div>
+                        ) : (
+                          <p class="team-bio whitespace-pre-line">{longBio}</p>
+                        )
+                      )}
 
                       {member.specialties.length > 0 && (
                         <div class="team-tags">
