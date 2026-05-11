@@ -78,6 +78,7 @@ export interface ApiListing {
   sold_date: string | null;
   days_on_market: number | null;
   agent: { name: string; phone: string } | null;
+  co_agent: { name: string; phone: string } | null;
   primary_photo: ApiPhoto | null;
   photo_count: number;
   // Only present on detail endpoint

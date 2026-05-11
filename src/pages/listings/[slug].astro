@@ -23,9 +23,13 @@ const fullAddress = [listing.address, listing.city, listing.state, listing.zip].
 
 const agentName = listing.agent?.name ?? null;
 const agentPhone = listing.agent?.phone ?? null;
-const team = agentName ? await fetchTeam().catch(() => []) : [];
+const coAgentName = listing.co_agent?.name ?? null;
+const coAgentPhone = listing.co_agent?.phone ?? null;
+const team = (agentName || coAgentName) ? await fetchTeam().catch(() => []) : [];
 const brokerMember = agentName ? team.find((t) => t.name === agentName) : undefined;
 const brokerPhoto = photoSrc(brokerMember?.primary_photo, 400);
+const coBrokerMember = coAgentName ? team.find((t) => t.name === coAgentName) : undefined;
+const coBrokerPhoto = photoSrc(coBrokerMember?.primary_photo, 400);
 
 const otherListings = await fetchListings(4).catch(() => []);
 const relatedListings = otherListings.filter(l => l.slug !== listing.slug).slice(0, 3);
@@ -243,6 +247,29 @@ function expiryState(iso: string | null): { label: string; warn: boolean } | nul
                 <div>
                   <p class="listing-broker-name">{agentName}</p>
                   <p class="listing-broker-role">Listing Broker</p>
+                </div>
+              </div>
+            )}
+
+            {coAgentName && (
+              <div class="listing-broker-row">
+                {coBrokerPhoto ? (
+                  <img
+                    src={coBrokerPhoto}
+                    alt={coBrokerMember?.primary_photo?.alt ?? coAgentName}
+                    class="listing-broker-photo"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="listing-broker-avatar">
+                    <span class="listing-broker-initials">
+                      {coAgentName.split(' ').map((n: string) => n[0]).join('')}
+                    </span>
+                  </div>
+                )}
+                <div>
+                  <p class="listing-broker-name">{coAgentName}</p>
+                  <p class="listing-broker-role">Co-Listing Broker</p>
                 </div>
               </div>
             )}
