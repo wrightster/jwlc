@@ -196,4 +196,4 @@ Edit `src/data/services.ts`. The `photo` field accepts a URL (currently Unsplash
 
 ## Sister Site (JWRG)
 
-`~/code/jwrg` is the Julie Wright Realty Group site (full-service residential brokerage). Same backend, different brand/audience. When changing shared concerns (API client, image handling, status mapping), make the change in both repos and update `../SHARED_FRONTEND_GUIDE.md` if the rule itself changes.
+`~/code/jwrg` is the Julie Wright Realty Group site (full-service residential brokerage). Same backend and — since the 2026 rebrand — the **same design system** (red·earth·gold + Gabarito/Anek Latin); the sites differ only in logo, content, and audience (land vs. residential). JWLC is the reference implementation for shared design patterns. When changing shared concerns (API client, image handling, status mapping, design tokens/component classes), make the change in both repos and update `../SHARED_FRONTEND_GUIDE.md` if the rule itself changes.
