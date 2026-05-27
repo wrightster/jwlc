@@ -73,10 +73,10 @@ The user may refer to colors by these descriptive names — map them as follows:
 
 | Token | Hex | Usage |
 |-------|-----|-------|
-| `red-600` | `#b52126` | Dark Accent / Red Clay — CTAs, links, footer bg, section labels, hover states |
-| `gold-300` | `#ffcf7d` | Light Accent / Muted Gold — selection highlight, pending badge bg |
+| `red-600` | `#b52126` | Dark Accent / Red Clay — CTAs, links, footer bg, top page-banner bg, section labels, hover states |
+| `gold-300` | `#ffcf7d` | Light Accent / Muted Gold — selection highlight, pending badge bg, page-banner title/label, above-footer CTA band bg |
 | `earth-50` | `#edeae6` | Page background, service icon wrapper bg |
-| `earth-100` | `#ebd9bc` | Banners, card backgrounds, team section bg |
+| `earth-100` | `#ebd9bc` | Card backgrounds, team section bg |
 | `earth-200` | `#e8d9bb` | Dividers, input borders |
 | `earth-400` | `#bb9d72` | Placeholders, borders |
 | `earth-500` | `#a48a63` | Subtle labels, muted text (county, address) |
@@ -104,18 +104,19 @@ Full red and gold palettes (50–950) are defined in `global.css` for use when l
 - Add `<svg class="btn-icon">` inside for animated right-arrow
 
 **Typography**
-- `.section-label` — uppercase, tracked, red, `text-xs`
+- `.section-label` — uppercase, tracked, red, `text-xs` (gold inside `.page-banner`)
 - `.section-heading` — display font, `text-4xl md:text-5xl`, earth-900
-- `.page-banner-title` — italic display, `text-4xl md:text-6xl`, red
+- `.page-banner-title` — italic display, `text-4xl md:text-6xl`, gold (on the red banner)
 
 **Layout**
 - `.content-wrap` — `max-w-7xl mx-auto px-6 lg:px-8`
 - `.cta-wrap` — `max-w-3xl mx-auto px-6 lg:px-8 text-center`
 
-**Page Section Patterns**
-- `.page-banner` — `bg-earth-100` header sections (About, Services, etc.)
-- `.cta-dark` — `bg-earth-900` CTA block with `.cta-dark-heading` / `.cta-dark-body`
-- `.cta-light` — `bg-earth-100/50 border-t` CTA block
+**Page Section Patterns** (inverted scheme — flat fills, no gradients)
+- `.page-banner` — top header band, solid `bg-red-600` with gold title/label and light description (About, Services, etc.)
+- `.cta-bold` — dark `bg-earth-900` CTA block with `.cta-bold-heading` / `.cta-bold-body`
+- `.cta-feature` — above-footer CTA, gold `bg-gold-300` with dark text and red `primary` buttons. Reuses `.cta-bold-heading`/`.cta-bold-body`; overrides live under `.cta-feature` in `global.css`; its body `<p>`s use a bare `.cta-bold-body` (the old `text-earth-100` was removed so the dark override beats Tailwind's utilities layer).
+- `.cta-subtle` — light `bg-earth-100/50 border-t` CTA block
 - `.cta-btn-row` — `flex flex-wrap justify-center gap-4 mt-8`
 
 **Badges**
@@ -169,7 +170,7 @@ Edit `src/data/services.ts`. The `photo` field accepts a URL (currently Unsplash
 - Arbitrary values work normally: `opacity-[0.09]`, `w-[42%]`, `text-[11px]`
 - Custom tokens become Tailwind utilities automatically: `bg-red-600`, `text-earth-900`, etc.
 - CSS variables in `@theme` are also available as `var(--color-red-600)` in non-Tailwind CSS
-- `--btn-bg` is a local CSS variable used to pass context color into button hover states (set on section wrappers like `.page-banner`, `.cta-dark`)
+- `--btn-bg` is a local CSS variable used to pass context color into button hover states (set on section wrappers like `.page-banner`, `.cta-bold`)
 
 ---
 
