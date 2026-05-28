@@ -73,8 +73,8 @@ The user may refer to colors by these descriptive names — map them as follows:
 
 | Token | Hex | Usage |
 |-------|-----|-------|
-| `red-600` | `#b52126` | Dark Accent / Red Clay — CTAs, links, footer bg, top page-banner bg, section labels, hover states |
-| `gold-300` | `#ffcf7d` | Light Accent / Muted Gold — selection highlight, pending badge bg, page-banner title/label, above-footer CTA band bg |
+| `red-600` | `#b52126` | Dark Accent / Red Clay — CTAs, links, above-footer feature CTA bg, section labels, hover states |
+| `gold-300` | `#ffcf7d` | Light Accent / Muted Gold — selection highlight, pending badge bg, banner/footer gradient |
 | `earth-50` | `#edeae6` | Page background, service icon wrapper bg |
 | `earth-100` | `#ebd9bc` | Card backgrounds, team section bg |
 | `earth-200` | `#e8d9bb` | Dividers, input borders |
@@ -104,18 +104,18 @@ Full red and gold palettes (50–950) are defined in `global.css` for use when l
 - Add `<svg class="btn-icon">` inside for animated right-arrow
 
 **Typography**
-- `.section-label` — uppercase, tracked, red, `text-xs` (gold inside `.page-banner`)
+- `.section-label` — uppercase, tracked, red, `text-xs`
 - `.section-heading` — display font, `text-4xl md:text-5xl`, earth-900
-- `.page-banner-title` — italic display, `text-4xl md:text-6xl`, gold (on the red banner)
+- `.page-banner-title` — italic display, `text-4xl md:text-6xl`, red
 
 **Layout**
 - `.content-wrap` — `max-w-7xl mx-auto px-6 lg:px-8`
 - `.cta-wrap` — `max-w-3xl mx-auto px-6 lg:px-8 text-center`
 
-**Page Section Patterns** (inverted scheme — flat fills, no gradients)
-- `.page-banner` — top header band, solid `bg-red-600` with gold title/label and light description (About, Services, etc.)
+**Page Section Patterns**
+- `.page-banner` — `bg-earth-100`-leaning gold→sand gradient header sections (About, Services, etc.)
 - `.cta-bold` — dark `bg-earth-900` CTA block with `.cta-bold-heading` / `.cta-bold-body`
-- `.cta-feature` — above-footer CTA, gold `bg-gold-300` with dark text and red `primary` buttons. Reuses `.cta-bold-heading`/`.cta-bold-body`; overrides live under `.cta-feature` in `global.css`; its body `<p>`s use a bare `.cta-bold-body` (the old `text-earth-100` was removed so the dark override beats Tailwind's utilities layer).
+- `.cta-feature` — above-footer CTA, red `bg-red-600` band. Reuses `.cta-bold-heading`/`.cta-bold-body`; bodies add inline `text-earth-100` to lighten the text on red; uses gold-fill `.btn-arrow--inverted` buttons.
 - `.cta-subtle` — light `bg-earth-100/50 border-t` CTA block
 - `.cta-btn-row` — `flex flex-wrap justify-center gap-4 mt-8`
 
@@ -197,4 +197,4 @@ Edit `src/data/services.ts`. The `photo` field accepts a URL (currently Unsplash
 
 ## Sister Site (JWRG)
 
-`~/code/jwrg` is the Julie Wright Realty Group site (full-service residential brokerage). Same backend and — since the 2026 rebrand — the **same design system** (red·earth·gold + Gabarito/Anek Latin); the sites differ only in logo, content, and audience (land vs. residential). JWLC is the reference implementation for shared design patterns. When changing shared concerns (API client, image handling, status mapping, design tokens/component classes), make the change in both repos and update `../SHARED_FRONTEND_GUIDE.md` if the rule itself changes.
+`~/code/jwrg` is the Julie Wright Realty Group site (full-service residential brokerage). Same backend and **shared brand tokens + fonts** (red·earth·gold + Gabarito/Anek Latin) from the 2026 rebrand; the sites differ in logo, content, audience (land vs. residential), and — as of the JWRG inversion work — in chrome treatment too: JWRG now uses an inverted red/gold scheme on nav, footer, and page banners, while JWLC keeps the original light gold→sand gradient nav/footer/banner. The CTA class names (`.cta-bold`/`.cta-feature`/`.cta-subtle`) are still kept in sync; visuals are not. When changing shared concerns (API client, image handling, status mapping, brand tokens, class names), make the change in both repos and update `../SHARED_FRONTEND_GUIDE.md` if the rule itself changes — but treat per-site chrome (nav/footer/banner color treatment) as site-specific.
