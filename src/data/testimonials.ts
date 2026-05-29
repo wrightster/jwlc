@@ -10,10 +10,6 @@ export const testimonials: Testimonial[] = [
     author: "A.W. and Mary Lee Stuart",
   },
   {
-    quote: "I love you so much right now! Seriously, this was one of those projects that didn't seem to go right.",
-    author: "Greg Platt",
-  },
-  {
     quote: "In the last thirty years, Julie Wright Land Company helped me invest in North Carolina — even after I moved to California 18 years ago.",
     author: "Lin Su Peng",
   },
