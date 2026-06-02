@@ -48,6 +48,16 @@
     mask-repeat: no-repeat;
   }
 
+  /* Sister site icon (right) */
+  .nav-sister { @apply relative flex items-center flex-shrink-0; }
+  .nav-sister-icon {
+    height: 2.25rem;
+    width: auto;
+    opacity: 0.25;
+    transition: opacity 200ms ease;
+  }
+  .nav-sister:hover .nav-sister-icon { opacity: 1; }
+
   /* Desktop nav */
   .nav-desktop      { @apply hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2; }
   .nav-desktop-link {
