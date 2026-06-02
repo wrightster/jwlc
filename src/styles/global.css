@@ -24,7 +24,10 @@
      SITE CHROME
   ══════════════════════════════════════════════════ */
   .site-body  { @apply min-h-screen flex flex-col; }
-  .site-main  { @apply flex-1 pt-20 relative z-[1]; }
+  .site-main  {
+    @apply flex-1 relative z-[1];
+    padding-top: clamp(60px, calc(48px + 3vw), 80px);
+  }
 
   /* Header */
   .site-header { @apply fixed top-0 left-0 right-0 z-50 transition-all duration-500; }
@@ -32,16 +35,19 @@
     @apply absolute inset-0;
     background: var(--color-gold-300);
   }
-  .site-nav { @apply relative z-10 max-w-7xl mx-auto px-6 lg:px-8 flex items-center h-20; }
+  .site-nav {
+    @apply relative z-10 max-w-7xl mx-auto px-6 lg:px-8 flex items-center;
+    height: clamp(60px, calc(48px + 3vw), 80px);
+  }
 
   /* Logo */
   .nav-logo { @apply relative flex items-center flex-shrink-0; }
   .nav-logo-icon {
-    height: 2.25rem;
-    aspect-ratio: 50 / 46;
+    height: 1.5rem;
+    aspect-ratio: 100 / 24;
     background-color: var(--color-nav-accent);
-    -webkit-mask-image: url('/JWLC_Icon_Positive.svg');
-    mask-image: url('/JWLC_Icon_Positive.svg');
+    -webkit-mask-image: url('/JWLC_Icon_Horizontal.svg');
+    mask-image: url('/JWLC_Icon_Horizontal.svg');
     -webkit-mask-size: contain;
     mask-size: contain;
     -webkit-mask-repeat: no-repeat;
@@ -53,7 +59,7 @@
 
   /* Sister site icon (right) */
   .nav-sister {
-    @apply relative flex items-center flex-shrink-0 gap-2;
+    @apply relative hidden lg:flex items-center flex-shrink-0 gap-2;
     opacity: 0.2;
     transform-origin: center center;
     transition: opacity 200ms ease, transform 200ms ease;
