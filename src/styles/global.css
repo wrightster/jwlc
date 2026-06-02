@@ -30,7 +30,7 @@
   .site-header { @apply fixed top-0 left-0 right-0 z-50 transition-all duration-500; }
   .header-bg {
     @apply absolute inset-0;
-    background: linear-gradient(200deg, var(--color-gold-300) -100%, var(--color-earth-100) 200%);
+    background: var(--color-gold-300);
   }
   .site-nav { @apply relative z-10 max-w-7xl mx-auto px-6 lg:px-8 flex items-center h-20; }
 
@@ -198,7 +198,7 @@
   .mobile-menu-link.nav-link-active { color: var(--color-earth-900); }
 
   /* Footer */
-  .site-footer   { @apply relative z-[1] text-earth-900 mt-auto overflow-hidden; background: linear-gradient(200deg, var(--color-gold-300) -100%, var(--color-earth-100) 200%); }
+  .site-footer   { @apply relative z-[1] text-earth-900 mt-auto overflow-hidden; background: var(--color-gold-300); }
   .footer-inner  { @apply relative max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20; }
   .footer-grid   { @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8; }
   .footer-brand  { @apply lg:col-span-1; }
@@ -218,7 +218,7 @@
   /* ══════════════════════════════════════════════════
      PAGE BANNER
   ══════════════════════════════════════════════════ */
-  .page-banner       { @apply relative py-5 overflow-hidden; background: linear-gradient(200deg, var(--color-gold-300) -100%, var(--color-earth-100) 200%); --btn-bg: var(--color-gold-300); }
+  .page-banner       { @apply relative py-5 overflow-hidden; background: var(--color-gold-300); --btn-bg: var(--color-gold-300); }
   .page-banner-title { @apply font-display italic text-4xl md:text-6xl text-red-600 leading-tight; }
   .page-banner-desc  { @apply text-earth-700 mt-5 text-lg max-w-[75%] text-balance; }
 
