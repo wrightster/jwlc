@@ -84,6 +84,23 @@ export interface ApiListing {
   // Only present on detail endpoint
   photos?: ApiPhoto[];
   documents?: ApiDocument[];
+  videos?: ApiVideo[];
+}
+
+export interface ApiVideo {
+  id: string;
+  source: 'embed' | 'upload';
+  provider: string | null;
+  title: string | null;
+  caption: string | null;
+  type: string | null;
+  sort_order: number;
+  is_public: boolean;
+  embed_url: string | null;
+  file_url: string | null;
+  playback_url: string | null;
+  thumbnail_url: string | null;
+  created_at: string | null;
 }
 
 export interface ApiDocument {
