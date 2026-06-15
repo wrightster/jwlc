@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "@jw/shared/styles/tokens.css";
 @import "@jw/shared/styles/components.css";
+/* Scan shared components so their inline Tailwind utilities (VideoSection) generate. */
+@source "../../node_modules/@jw/shared/src/**/*.astro";
 
 @property --_btn-arrow-fill {
   syntax: "<color>";
