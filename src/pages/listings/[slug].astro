@@ -4,7 +4,7 @@ export const prerender = false;
 import Layout from '../../layouts/Layout.astro';
 import BtnArrow from '../../components/BtnArrow.astro';
 import ListingCard from '../../components/ListingCard.astro';
-import VideoSection from '../../components/VideoSection.astro';
+import VideoSection from '@jw/shared/components/VideoSection.astro';
 import { fetchListing, fetchListings, fetchTeam, formatPrice, formatAcres, photoSrc, documentTypeLabel } from '../../lib/api';
 
 const { slug } = Astro.params;
@@ -34,7 +34,7 @@ const brokerPhoto = photoSrc(brokerMember?.primary_photo, 400);
 const coBrokerMember = coAgentName ? team.find((t) => t.name === coAgentName) : undefined;
 const coBrokerPhoto = photoSrc(coBrokerMember?.primary_photo, 400);
 
-const otherListings = await fetchListings(4).catch(() => []);
+const otherListings = await fetchListings({ perPage: 4 }).catch(() => []);
 const relatedListings = otherListings.filter(l => l.slug !== listing.slug).slice(0, 3);
 
 const documents = (listing.documents ?? [])
