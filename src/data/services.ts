@@ -13,7 +13,7 @@ export const services: Service[] = [
     photo: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&h=400",
   },
   {
-    title: "Appraisal Services",
+    title: "Opinions of Value",
     description: "Professional property valuation backed by decades of local market knowledge. Accurate assessments for estates, transactions, and investment planning.",
     icon: "clipboard",
     photo: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&h=400",
@@ -37,9 +37,9 @@ export const services: Service[] = [
     photo: "https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=800&h=400",
   },
   {
-    title: "Timber Management",
-    description: "Expert evaluation and management of timber resources. Maximize the value of your wooded acreage with sustainable harvesting strategies.",
-    icon: "trees",
-    photo: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&h=400",
+    title: "Range of Properties",
+    description: "Julie Wright Land Company offers development tracts suitable for high end development as well as affordable housing, appealing to buyers ranging from experienced developers to first time home buyers.",
+    icon: "buildings",
+    photo: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&h=400",
   },
 ];
