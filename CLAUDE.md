@@ -44,7 +44,7 @@ src/
     └── global.css    # @import tailwindcss + @theme tokens + all component classes
 ```
 
-- **Listings via API** — property data fetched from `office.jwrgnc.com/api/v1` (filtered by `?site=jwlc`) via `src/lib/api.ts`; services, team, and testimonials still live in `src/data/*.ts`. See `../SHARED_FRONTEND_GUIDE.md` for the contract.
+- **Listings & team via API** — property data and team members fetched from `office.jwrgnc.com/api/v1` (filtered by `?site=jwlc`) via `src/lib/api.ts` (`fetchListings`, `fetchTeam`). Only `services` and `testimonials` still live in `src/data/*.ts` — there is no `src/data/team.ts`. See `../SHARED_FRONTEND_GUIDE.md` for the contract.
 - **No React/Vue** — pure Astro components only
 - **SSR mode** via `@astrojs/node` standalone adapter, all pages prerendered
 - **Image handling** — Sharp + Astro's `<Image>` for **local assets only** (team photos, hero shots in `public/images/`). Listing images come from the API as pre-rendered URLs and must not be re-optimized client-side. See `../SHARED_FRONTEND_GUIDE.md` §"Image handling".
