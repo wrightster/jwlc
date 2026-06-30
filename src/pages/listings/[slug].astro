@@ -3,10 +3,15 @@ export const prerender = false;
 
 import Layout from '../../layouts/Layout.astro';
 import BtnArrow from '../../components/BtnArrow.astro';
+import EmbedForm from '../../components/EmbedForm.astro';
 import ListingCard from '../../components/ListingCard.astro';
 import VideoSection from '@jw/shared/components/VideoSection.astro';
 import { fetchListing, fetchListings, fetchTeam, formatPrice, formatAcres, photoSrc, photoSrcSet, photoDimensions, photoAlt, documentTypeLabel } from '../../lib/api';
 import { listingJsonLd, breadcrumbJsonLd } from '@jw/shared/jsonLd';
+
+// Office "JWLC Listing Inquiry" embed form — routes to the listing broker via
+// the listing_id forwarded by the widget. Empty string → phone/email fallback.
+const listingInquiryToken = 'tjxTU4oNWK0bwRREQlkr76SQkMyTVB3z';
 
 const { slug } = Astro.params;
 const listing = await fetchListing(slug!).catch(() => null);
@@ -309,7 +314,11 @@ function expiryState(iso: string | null): { label: string; warn: boolean } | nul
             )}
 
             <div class="listing-contact-actions">
-              <BtnArrow href="/contact" class="w-full justify-center">Get in Touch</BtnArrow>
+              {listingInquiryToken ? (
+                <EmbedForm id="listing-inquiry-form" token={listingInquiryToken} listingId={listing.id} />
+              ) : (
+                <BtnArrow href="/contact" class="w-full justify-center">Get in Touch</BtnArrow>
+              )}
             </div>
 
             <div class="listing-contact-meta">

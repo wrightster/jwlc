@@ -1,0 +1,53 @@
+---
+// JWLC's adapter for the office's embed-form widget (mirrors JWRG's
+// src/components/EmbedForm.astro — shared brand tokens, so the styling matches).
+//
+// Render a host div + the office forms.js script bound to a form token, then
+// style the rendered submit button via MutationObserver (the widget renders
+// asynchronously, so we can't style the button at parse time).
+//
+// `listingId` / `agentId` / `neighborhoodId`, when passed, are forwarded on the
+// script tag so the office resolves the submission's subject and routes/notifies
+// the right agent (e.g. a listing inquiry → that listing's broker). forms.js
+// reads these off the <script> tag. Astro omits any attribute whose value is
+// undefined. When `token` is empty, renders nothing — callers show a fallback.
+
+interface Props {
+  id: string;
+  token: string;
+  listingId?: string;
+  agentId?: string;
+  neighborhoodId?: string;
+}
+
+const { id, token, listingId, agentId, neighborhoodId } = Astro.props;
+---
+
+{token && (
+  <>
+    <div id={id}></div>
+    <script
+      is:inline
+      src="https://office.jwrgnc.com/js/forms.js"
+      data-form-token={token}
+      data-target={`#${id}`}
+      data-listing-id={listingId}
+      data-agent-id={agentId}
+      data-neighborhood-id={neighborhoodId}
+    ></script>
+    <script define:vars={{ hostId: id }}>
+      const host = document.getElementById(hostId);
+      if (host) {
+        const obs = new MutationObserver(function () {
+          const btn = host.querySelector('.jwrg-submit');
+          if (btn && !btn.dataset.styled) {
+            btn.dataset.styled = '1';
+            btn.className =
+              'w-full py-3 font-display font-medium border-2 border-red-600 bg-red-600 text-earth-50 tracking-wide rounded-sm transition-all duration-300 hover:bg-red-700 hover:border-red-700 cursor-pointer';
+          }
+        });
+        obs.observe(host, { childList: true, subtree: true });
+      }
+    </script>
+  </>
+)}
