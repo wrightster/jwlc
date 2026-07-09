@@ -25,7 +25,8 @@ src/
 ├── components/     # Astro components
 │   ├── FontSwitcher.astro   # Dev-only design testing panel (fonts, colors)
 │   ├── ListingCard.astro    # Card view for a listing (grid layout)
-│   └── ListingRow.astro     # Row view for a listing (list layout)
+│   ├── ListingRow.astro     # Row view for a listing (list layout)
+│   └── TeamCard.astro       # Grid team card on About (matches JWRG card look; non-linking)
 ├── data/           # Static site content as TypeScript
 │   ├── services.ts     # Service interface + data
 │   ├── team.ts         # TeamMember interface + broker profiles
