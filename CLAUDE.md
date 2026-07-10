@@ -56,7 +56,7 @@ src/
 
 ### Brand Colors (defined in `global.css` @theme)
 
-All color tokens use the `--color-*` naming. In Tailwind use `bg-red-600`, `text-earth-900`, etc.
+All color tokens use the `--color-*` naming. In Tailwind use `bg-red-600`, `text-earth-900`, etc. The muted text steps (`earth-500`/`earth-600`/`gold-600`) were darkened in `@jw/shared` v0.7.5 to meet WCAG AA text contrast — secondary/caption text reads slightly darker than before.
 
 ### Color Name Aliases
 

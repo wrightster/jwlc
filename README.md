@@ -44,7 +44,7 @@ Talks to `https://office.jwrgnc.com/api/v1`, filtered by `?site=jwlc`. The share
 
 ## Brand
 
-Red clay + earth + muted gold. Gabarito (display) + Anek Latin (body). All tokens and component classes (`.btn-primary`, `.section-heading`, etc.) live in `src/styles/global.css`.
+Red clay + earth + muted gold. Gabarito (display) + Anek Latin (body). All tokens and component classes (`.btn-primary`, `.section-heading`, etc.) live in `src/styles/global.css`. Muted text steps were darkened for WCAG AA contrast in the shared `@jw/shared` v0.7.5 tokens.
 
 `/dev/styleguide` (dev only — redirects to `/` in prod) is a visual reference for tokens, components, and patterns. The `FontSwitcher` panel in dev mode lets you swap fonts/weights/nav colors live and copy the resulting CSS variables.
 
