@@ -1,0 +1,20 @@
+---
+// Server island (used with `server:defer`): the team grid renders live from the
+// office API. Deferring it keeps the About shell static/instant while the team
+// streams in behind its skeleton fallback — and, unlike the old build-time
+// fetch, the grid now reflects office changes without a site rebuild. No client
+// script here, so it's safe inside an island (see listings.astro for the
+// script-in-island caveat, withastro/astro#12294).
+import TeamCard from './TeamCard.astro';
+import { fetchTeam } from '../lib/api';
+
+const team = await fetchTeam().catch(() => []);
+---
+
+{team.length === 0 ? (
+  <p class="text-center text-earth-500 py-12">Our team will be listed here shortly.</p>
+) : (
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    {team.map((member) => <TeamCard member={member} />)}
+  </div>
+)}

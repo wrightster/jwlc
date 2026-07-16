@@ -45,9 +45,10 @@ src/
     └── global.css    # @import tailwindcss + @theme tokens + all component classes
 ```
 
-- **Listings & team via API** — property data and team members fetched from `office.jwrgnc.com/api/v1` (filtered by `?site=jwlc`) via `src/lib/api.ts` (`fetchListings`, `fetchTeam`). Only `services` and `testimonials` still live in `src/data/*.ts` — there is no `src/data/team.ts`. See `../SHARED_FRONTEND_GUIDE.md` for the contract.
+- **Listings & team via API** — property data and team members fetched from `office.jwrgnc.com/api/v1` (filtered by `?site=jwlc`) via `src/lib/api.ts` (`fetchListings`, `fetchTeam`). Only `services` and `testimonials` still live in `src/data/*.ts` — there is no `src/data/team.ts`. See `../SHARED_FRONTEND_GUIDE.md` for the contract. **As of 2026-07 these fetches happen inside deferred island components, not the pages** — see "Server islands" below.
 - **No React/Vue** — pure Astro components only
 - **SSR mode** via `@astrojs/node` standalone adapter, all pages prerendered
+- **Server islands (perceived-perf, 2026-07)** — mirrors JWRG. `listings.astro` and `about.astro` are **prerendered static shells** whose data-bound section is a `server:defer` island that fetches its own data: `src/components/ListingsBrowser.astro` and `src/components/TeamGrid.astro`. The shell + banner paint instantly; the section streams in behind a `slot="fallback"` skeleton (`animate-pulse`). This also made the About team **live** (it used to bake at build time). **Caveat that shaped the design:** a client `<script>` placed *inside* a server island runs unreliably ([withastro/astro#12294](https://github.com/withastro/astro/issues/12294)) — so the `listings.astro` filter/pagination/view-toggle controller stays on the **page**, wrapped in `initListings()` and gated on the island: the island root carries `data-listings-ready`, and a `MutationObserver` on `#listings-mount` fires the controller once it appears. `TeamGrid` has no script, so it needs no gating. `Layout.astro` also `preconnect`s to `office.jwrgnc.com` (photo host). JWLC has no neighborhoods page, so only two islands (JWRG has three).
 - **Image handling** — Sharp + Astro's `<Image>` for **local assets only** (team photos, hero shots in `public/images/`). Listing images come from the API as pre-rendered URLs and must not be re-optimized client-side. See `../SHARED_FRONTEND_GUIDE.md` §"Image handling".
 
 ---
@@ -190,7 +191,7 @@ Edit `src/data/services.ts`. The `photo` field accepts a URL (currently Unsplash
 
 ## Known Quirks
 
-- The `listings.astro` filter uses client-side JS against `data-county`, `data-status`, etc. attributes rendered from the API response
+- The `listings.astro` filter uses client-side JS against `data-county`, `data-status`, etc. attributes rendered from the API response. Those `.listing-item` elements are now rendered by the `ListingsBrowser.astro` **server island**, not the page; the controller script lives on the page and only runs once the island's DOM lands (gated by a `MutationObserver` on `#listings-mount` watching for the `data-listings-ready` sentinel) — see "Server islands" in Architecture. Don't move that script into the island (astro#12294).
 - `nav-logo-icon` uses CSS `mask-image` to color the SVG — changing nav accent color works via the `--color-nav-accent` CSS variable (set by FontSwitcher in dev, hardcoded to `red-600` in prod)
 - The topo SVG width calculation script in `Layout.astro` uses `getBoundingClientRect()` to handle zoom-independent sizing
 - Listing detail page breaks descriptions into 3-sentence paragraphs client-side

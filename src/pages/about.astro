@@ -1,11 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import BtnArrow from '../components/BtnArrow.astro';
-import TeamCard from '../components/TeamCard.astro';
-import { fetchTeam } from '../lib/api';
+import TeamGrid from '../components/TeamGrid.astro';
 export const prerender = true;
 
-const team = await fetchTeam();
+// The team grid renders in a deferred server island (<TeamGrid server:defer>)
+// rather than a build-time fetch — the shell stays static/instant AND the team
+// reflects office changes without a site rebuild. The island is server-rendered
+// on demand.
 ---
 
 <Layout title="About Us — Julie Wright Land Company" description="Meet the experienced team behind Julie Wright Land Company. Over 50 years of Triangle area land expertise.">
@@ -43,13 +45,19 @@ const team = await fetchTeam();
         <h2 class="section-heading">Meet Our Brokers</h2>
       </div>
 
-      {team.length === 0 ? (
-        <p class="text-center text-earth-500 py-12">Our team will be listed here shortly.</p>
-      ) : (
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {team.map((member) => <TeamCard member={member} />)}
+      <TeamGrid server:defer>
+        <div slot="fallback" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" aria-hidden="true">
+          {Array.from({ length: 8 }).map(() => (
+            <div class="bg-white rounded-sm ring-1 ring-inset ring-earth-100 overflow-hidden">
+              <div class="aspect-square bg-earth-100 animate-pulse"></div>
+              <div class="p-4 space-y-2">
+                <div class="h-4 w-2/3 bg-earth-100 rounded animate-pulse"></div>
+                <div class="h-3 w-1/2 bg-earth-100 rounded animate-pulse"></div>
+              </div>
+            </div>
+          ))}
         </div>
-      )}
+      </TeamGrid>
     </div>
   </section>
 
