@@ -1,0 +1,13 @@
+# Keep the build context small; deps + build output are generated inside the image.
+node_modules
+dist
+.astro
+.git
+.github
+.vscode
+*.log
+npm-debug.log*
+.DS_Store
+.env
+.env.*
+deploy

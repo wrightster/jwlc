@@ -1,0 +1,36 @@
+name: Deploy to Coolify
+
+# Coolify's API is Tailscale-only, so GitHub webhooks can't reach it. On push to
+# the default branch this workflow joins the tailnet as an ephemeral node and
+# calls the Coolify deploy API directly. Mirrors jwrg (see
+# jwrg/deploy/COOLIFY-PILOT.md §"Auto-deploy").
+#
+# jwlc is a PUBLIC repo, so the shared secrets/vars are set ONCE at the GitHub
+# org level (wrightster) and apply here automatically:
+#   org secrets:   TS_OAUTH_CLIENT_ID, TS_OAUTH_SECRET, COOLIFY_TOKEN
+#   org variable:  COOLIFY_HOST = 100.94.121.24:8000
+# Only this repo's app uuid is per-repo:
+#   repo variable: COOLIFY_APP_UUID = <jwlc's Coolify app uuid>  (also the enable gate)
+#
+# Fleet prereq (already set for jwrg): Coolify API Allowed-IPs = 100.64.0.0/10.
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ vars.COOLIFY_APP_UUID != '' }}
+    steps:
+      - name: Join Tailscale (ephemeral)
+        uses: tailscale/github-action@v3
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+      - name: Trigger Coolify deploy
+        run: |
+          curl -fsS -X GET \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" \
+            "http://${{ vars.COOLIFY_HOST }}/api/v1/deploy?uuid=${{ vars.COOLIFY_APP_UUID }}&force=false"
