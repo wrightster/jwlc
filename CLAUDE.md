@@ -9,8 +9,8 @@ Real estate website for a North Carolina land brokerage. Astro 5 with SSR (Node.
 ## Environments
 
 - **Local dev**: `npm run dev` → localhost:4321
-- **Staging**: https://land.jwrglc.com
-- **Deploy**: Push to master triggers deploy via Ploi webhook (see `.claude/settings.local.json` for token)
+- **Production**: **https://juliewrightlandcompany.com** (apex + www) — **live on Coolify** (shared droplet with JWRG, zero-downtime deploys) since 2026-07, migrated off Ploi. See `deploy/COOLIFY.md` (jwlc-specifics) and `../jwrg/deploy/COOLIFY-PILOT.md` (canonical runbook).
+- **Deploy**: on Coolify. Push to `master` deploys once the `COOLIFY_APP_UUID` repo variable is set (the `.github/workflows/deploy-coolify.yml` workflow is committed; org secrets already cover this public repo); until then, deploy via the Coolify API/dashboard. Ploi auto-deploy for jwlc has been turned off. A `staging` tier (from a `staging` branch → `jwlc.stage.jwrgnc.com`) follows the JWRG pattern — not built yet.
 
 ## Commands
 
