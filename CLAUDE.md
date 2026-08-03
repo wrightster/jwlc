@@ -132,7 +132,7 @@ Full red and gold palettes (50–950) are defined in `global.css` for use when l
 
 ### Adding a New Listing
 
-Listings are managed in the office Filament admin (`office.jwrgnc.com`) — the website fetches them automatically. To publish on JWLC, ensure `jwlc` is in the listing's `marketing_sites` set. No code changes needed.
+Listings are managed in the office Filament admin (`office.jwrgnc.com`) — the website fetches them automatically. To publish on JWLC, ensure `jwlc` is in the listing's `marketing_sites` set. No code changes needed. Detaching `jwlc` removes it everywhere: the `/listings` index filters by `?site=jwlc`, and `fetchListing()` (the detail route) also enforces publication — the office's by-slug endpoint isn't site-scoped, so the shim in `src/lib/api.ts` returns `null` (→ the detail page redirects to `/listings`) when `marketing_sites` doesn't include the site slug.
 
 Key API fields the site uses: `slug` (URL path), `marketing_title`, `address`, `city`, `county`, `status`, `status_label`, `list_price`, `lot_size_acres`, `description`, `primary_photo`, `photos`, `agent`.
 
