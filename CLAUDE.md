@@ -192,6 +192,8 @@ Edit `src/data/services.ts`. The `photo` field accepts a URL (currently Unsplash
 
 ## Known Quirks
 
+- **Canonical URLs come from `Astro.site`, not the request origin.** `canonicalUrl` in `Layout.astro` is `new URL(Astro.url.pathname, Astro.site ?? Astro.url)` — the same basis as `ogImageUrl` right below it, so the two always agree. Don't rewrite it as `Astro.url.origin`: behind Coolify's proxy that's the container's internal host, and the SSR listing-detail pages shipped `<link rel="canonical" href="https://localhost/listings/…">`. The prerendered pages hid it (they bake `Astro.url` from `site`), so only `/listings/[slug]` was affected. Mirrors `jwrg`'s `BaseLayout.astro`.
+
 - The `listings.astro` filter uses client-side JS against `data-county`, `data-status`, etc. attributes rendered from the API response. Those `.listing-item` elements are now rendered by the `ListingsBrowser.astro` **server island**, not the page; the controller script lives on the page and only runs once the island's DOM lands (gated by a `MutationObserver` on `#listings-mount` watching for the `data-listings-ready` sentinel) — see "Server islands" in Architecture. Don't move that script into the island (astro#12294).
 - `nav-logo-icon` uses CSS `mask-image` to color the SVG — changing nav accent color works via the `--color-nav-accent` CSS variable (set by FontSwitcher in dev, hardcoded to `red-600` in prod)
 - The topo SVG width calculation script in `Layout.astro` uses `getBoundingClientRect()` to handle zoom-independent sizing

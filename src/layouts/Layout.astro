@@ -27,7 +27,12 @@ const {
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
-const canonicalUrl = `${Astro.url.origin}${Astro.url.pathname}`;
+// Canonical from the configured site host (astro.config `site`), NOT the request
+// origin — so the canonical never floats to whatever hostname a crawler used and
+// always agrees with ogImageUrl below. Behind Coolify's proxy the request origin
+// is the container's internal host, which emitted https://localhost/… on the SSR
+// listing-detail pages. Query strings are dropped by design. Mirrors jwrg.
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
 
 // Social share image. Pages pass a root-relative path or an absolute URL
 // (listing detail passes the listing's primary photo); both are resolved to an
