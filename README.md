@@ -50,7 +50,11 @@ Red clay + earth + muted gold. Gabarito (display) + Anek Latin (body). All token
 
 ## Deploy
 
-Deploys to a DigitalOcean droplet managed by Ploi.io at `land.jwrgnc.com`. Push to `master` triggers the deploy webhook. The Node SSR daemon binds to `127.0.0.1:4321` (set in `package.json`'s `start` script — keeps it on Astro's default port; the JWRG sister site uses 4342 on the same host).
+Production is **https://juliewrightlandcompany.com** (apex + www), running on **Coolify** on its own DigitalOcean droplet with zero-downtime rolling deploys. Push to `master` auto-deploys via `.github/workflows/deploy-coolify.yml`. The old Ploi site was deleted on 2026-07-30 — this repo no longer deploys anywhere else. Details in [`deploy/COOLIFY.md`](./deploy/COOLIFY.md).
+
+That production hostname is also the `site` value in `astro.config.mjs`, which is what canonical tags and `og:` URLs are built from. Don't derive them from the request origin instead — behind the proxy that's the container's internal host, which is how the SSR listing-detail pages ended up advertising `https://localhost/…`.
+
+Locally, `npm run start` binds `127.0.0.1:4321`; the container binds `0.0.0.0:4321`.
 
 ## Going deeper
 
