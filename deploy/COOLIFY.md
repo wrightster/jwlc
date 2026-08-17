@@ -20,7 +20,8 @@ jwlc runs on the shared **Coolify** droplet (same box as jwrg), migrated off Plo
 Push to `master` → GitHub Actions (`.github/workflows/deploy-coolify.yml`) →
 Coolify deploy API over Tailscale. jwlc is public, so the 3 secrets + `COOLIFY_HOST`
 come from **org**-level settings; only the repo variable **`COOLIFY_APP_UUID`**
-is jwlc-specific (and gates the workflow).
+is jwlc-specific (and gates the workflow). It's **set (2026-07-24), so push to
+`master` auto-deploys** — this is live, not pending.
 
 ## Coolify app
 Project `julie-wright-sites`, server `localhost` (`ibuz0zh31a8fy00sshxp2ou7`),
@@ -28,7 +29,8 @@ environment `production`. App **`jwlc`** uuid **`ax0tzvzncr2owidrd96mlkw8`** —
 this is the value for the `COOLIFY_APP_UUID` repo variable that lights up
 auto-deploy. Deploy manually via
 `GET http://100.94.121.24:8000/api/v1/deploy?uuid=ax0tzvzncr2owidrd96mlkw8&force=false`
-(Tailscale + `~/.config/coolify/token`), or push to `master` once the var is set.
+(Tailscale + the `coolify-token` helper), or just push to `master` (the var is
+set → auto-deploy).
 
 ## Staging (not built yet)
 Follow the jwrg pattern in `../../jwrg/deploy/COOLIFY-PILOT.md` §"Staging tier":
