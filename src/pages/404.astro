@@ -1,0 +1,55 @@
+---
+// Branded 404. Without this file Astro serves its own framework fallback — the
+// Astro logo on a dark page, with no nav, no footer, and no way back into the
+// site. JWRG has had one of these; JWLC did not.
+//
+// Prerendered on purpose: the node standalone adapter serves the prerendered
+// 404 for unmatched routes, and this page needs no request data. The path that
+// missed is filled in client-side so the page can stay static.
+export const prerender = true;
+
+import Layout from '../layouts/Layout.astro';
+import BtnArrow from '../components/BtnArrow.astro';
+---
+
+<Layout
+  title="Page Not Found | Julie Wright Land Company"
+  description="That page doesn't exist. Browse land and farm listings, our services, or get in touch with the Julie Wright Land Company team."
+>
+  <section class="page-banner">
+    <div class="content-wrap">
+      <h1 class="page-banner-title">Page Not Found</h1>
+      <p class="page-banner-desc">
+        We couldn't find <code id="nf-path" class="font-mono underline decoration-dotted underline-offset-4">that page</code>.
+        It may have moved, or the address may have a typo.
+      </p>
+    </div>
+  </section>
+
+  <section class="cta-feature">
+    <div class="cta-wrap">
+      <h2 class="cta-bold-heading">Let's get you back on track</h2>
+      <p class="cta-bold-body text-earth-100">
+        Land and farm listings, what we do, and how to reach us — all one hop away.
+      </p>
+      <div class="cta-btn-row">
+        <BtnArrow href="/" variant="inverted">Home</BtnArrow>
+        <BtnArrow href="/listings" variant="inverted">Listings</BtnArrow>
+        <BtnArrow href="/services" variant="inverted">Services</BtnArrow>
+        <BtnArrow href="/contact" variant="inverted">Contact</BtnArrow>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    // Show which URL missed. textContent (never innerHTML) so a crafted path
+    // can't inject markup, and truncated so a long one can't blow out the band.
+    (function () {
+      var el = document.getElementById('nf-path');
+      if (!el) return;
+      var path = window.location.pathname + window.location.search;
+      if (!path || path === '/') return;
+      el.textContent = path.length > 80 ? path.slice(0, 79) + '…' : path;
+    })();
+  </script>
+</Layout>
