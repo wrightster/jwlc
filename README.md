@@ -50,7 +50,7 @@ Red clay + earth + muted gold. Gabarito (display) + Anek Latin (body). All token
 
 ## Deploy
 
-Production is **https://juliewrightlandcompany.com** (apex + www), running on **Coolify** on its own DigitalOcean droplet with zero-downtime rolling deploys. Push to `master` auto-deploys via `.github/workflows/deploy-coolify.yml`. The old Ploi site was deleted on 2026-07-30 — this repo no longer deploys anywhere else. Details in [`deploy/COOLIFY.md`](./deploy/COOLIFY.md).
+Production is **https://juliewrightlandcompany.com** (apex + www), running on **Coolify** on the droplet it shares with JWRG, with rolling deploys (health-gated swap; requests in flight at the swap are not proven safe). Push to `master` auto-deploys via `.github/workflows/deploy-coolify.yml`. The old Ploi site was deleted on 2026-07-30 — this repo no longer deploys anywhere else. Details in [`deploy/COOLIFY.md`](./deploy/COOLIFY.md).
 
 That production hostname is also the `site` value in `astro.config.mjs`, which is what canonical tags and `og:` URLs are built from. Don't derive them from the request origin instead — behind the proxy that's the container's internal host, which is how the SSR listing-detail pages ended up advertising `https://localhost/…`.
 

@@ -12,7 +12,8 @@ name: Deploy to Coolify
 # Only this repo's app uuid is per-repo:
 #   repo variable: COOLIFY_APP_UUID = <jwlc's Coolify app uuid>  (also the enable gate)
 #
-# Fleet prereq (already set for jwrg): Coolify API Allowed-IPs = 100.64.0.0/10.
+# Also: in Coolify Settings → API, leave "Allowed IPs for API Access" EMPTY.
+# A range there (even the tailnet's) 403s every deploy — see jwrg/deploy/COOLIFY-PILOT.md.
 
 on:
   push:

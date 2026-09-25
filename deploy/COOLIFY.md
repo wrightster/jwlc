@@ -1,7 +1,8 @@
 # jwlc on Coolify
 
 jwlc runs on the shared **Coolify** droplet (same box as jwrg), migrated off Ploi
-2026-07. Zero-downtime rolling deploys. The canonical, fully-annotated runbook is
+2026-07. Rolling deploys (health-gated swap; requests in flight at the swap are not
+proven safe). The canonical, fully-annotated runbook is
 **`../../jwrg/deploy/COOLIFY-PILOT.md`** — this file only notes jwlc-specifics.
 
 ## jwlc-specific facts
