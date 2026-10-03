@@ -42,6 +42,8 @@ src/
 
 Talks to `https://office.jwrgnc.com/api/v1`, filtered by `?site=jwlc`. The shared contract (and rules that apply to **both** JWRG and JWLC) is documented in [`SHARED_FRONTEND_GUIDE.md`](https://github.com/wrightster/jwrg-workspace/blob/main/SHARED_FRONTEND_GUIDE.md). When changing the API client, update **both** sites' `src/lib/api.ts` in the same session.
 
+Listing addresses link to the visitor's map app (`@jw/shared` `MapsLink`), and real street addresses lead the listing page title and meta description. Placeholder lines like "Brassfield Road" keep the marketing title. Rules: `SHARED_FRONTEND_GUIDE.md` § Addresses & directions links.
+
 ## Brand
 
 Red clay + earth + muted gold. Gabarito (display) + Anek Latin (body). All tokens and component classes (`.btn-primary`, `.section-heading`, etc.) live in `src/styles/global.css`. Muted text steps were darkened for WCAG AA contrast in the shared `@jw/shared` v0.7.5 tokens.
