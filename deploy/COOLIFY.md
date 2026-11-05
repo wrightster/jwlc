@@ -29,7 +29,7 @@ Project `julie-wright-sites`, server `localhost` (`ibuz0zh31a8fy00sshxp2ou7`),
 environment `production`. App **`jwlc`** uuid **`ax0tzvzncr2owidrd96mlkw8`** —
 this is the value for the `COOLIFY_APP_UUID` repo variable that lights up
 auto-deploy. Deploy manually via
-`GET http://100.94.121.24:8000/api/v1/deploy?uuid=ax0tzvzncr2owidrd96mlkw8&force=false`
+`POST http://100.94.121.24:8000/api/v1/deploy?uuid=ax0tzvzncr2owidrd96mlkw8&force=false`
 (Tailscale + the `coolify-token` helper), or just push to `master` (the var is
 set → auto-deploy).
 
