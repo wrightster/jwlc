@@ -63,3 +63,7 @@ Locally, `npm run start` binds `127.0.0.1:4321`; the container binds `0.0.0.0:43
 - [`CLAUDE.md`](./CLAUDE.md) — guidance for Claude Code sessions in this repo
 - [`plan/audit.md`](./plan/audit.md) — site-audit punch list
 - [`../SHARED_FRONTEND_GUIDE.md`](../SHARED_FRONTEND_GUIDE.md) — cross-site rules (lives in the workspace meta repo)
+
+## Public statuses
+
+Listings show only **Available**, **Pending** or **Sold** (coming soon → Available, under contract → Pending), via `normalizeListingLabel` in `@jw/shared`; see `../SHARED_FRONTEND_GUIDE.md` § Status / labeling.
