@@ -123,7 +123,7 @@ Full red and gold palettes (50–950) are defined in `global.css` for use when l
 - `.cta-btn-row` — `flex flex-wrap justify-center gap-4 mt-8`
 
 **Badges**
-- `.listing-status-badge[data-status="available|pending|sold"]` — color-coded status pill
+- `.listing-status-badge[data-status="..."]` — color-coded status pill. Public sites show only **Available / Pending / Sold**: every listing goes through `normalizeListingLabel()` (`@jw/shared` ≥ v0.12.0), and the listings filter offers those three, matching on `publicStatus(listing.status)` (see `../SHARED_FRONTEND_GUIDE.md`)
 - `.team-tag` — small pill tag for broker specialties
 
 ---

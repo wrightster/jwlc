@@ -12,7 +12,7 @@
 // DOM-querying controller must stay on the host page.
 import ListingCard from './ListingCard.astro';
 import ListingRow from './ListingRow.astro';
-import { fetchAllListings, type ApiListing } from '../lib/api';
+import { fetchAllListings, publicStatus, type ApiListing } from '../lib/api';
 
 let apiError = false;
 let listings: ApiListing[] = [];
@@ -89,10 +89,8 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
             </button>
             <ul class="custom-select-list" role="listbox">
               <li class="custom-select-option is-selected" data-value="all" role="option" aria-selected="true">All Statuses</li>
-              <li class="custom-select-option" data-value="active" role="option" aria-selected="false">Available</li>
-              <li class="custom-select-option" data-value="coming_soon" role="option" aria-selected="false">Coming Soon</li>
+              <li class="custom-select-option" data-value="available" role="option" aria-selected="false">Available</li>
               <li class="custom-select-option" data-value="pending" role="option" aria-selected="false">Pending</li>
-              <li class="custom-select-option" data-value="under_contract" role="option" aria-selected="false">Under Contract</li>
               <li class="custom-select-option" data-value="sold" role="option" aria-selected="false">Sold</li>
             </ul>
           </div>
@@ -166,7 +164,7 @@ const cities   = [...new Set(listings.map(l => l.city))].sort();
           class="listing-item"
           data-county={listing.county}
           data-city={listing.city}
-          data-status={listing.status}
+          data-status={publicStatus(listing.status)}
           data-price={Math.round(parseFloat(listing.list_price))}
           data-acres={listing.lot_size_acres ? parseFloat(listing.lot_size_acres) : 0}
           id={listing.slug}
