@@ -123,7 +123,7 @@ Full red and gold palettes (50–950) are defined in `global.css` for use when l
 - `.cta-btn-row` — `flex flex-wrap justify-center gap-4 mt-8`
 
 **Badges**
-- `.listing-status-badge[data-status="..."]` — color-coded status pill. Public sites show only **Available / Pending / Sold**: every listing goes through `normalizeListingLabel()` (`@jw/shared` ≥ v0.12.0; pinned at v0.12.1 since 2026-11-17 — v0.12.1: the lightbox shows the whole photo, never crops wide/tall shots), and the listings filter offers those three, matching on `publicStatus(listing.status)` (see `../SHARED_FRONTEND_GUIDE.md`)
+- `.listing-status-badge[data-status="..."]` — color-coded status pill. Public sites show only **Available / Pending / Sold**: every listing goes through `normalizeListingLabel()` (`@jw/shared` ≥ v0.12.0; pinned at v0.12.2 since 2026-11-18 — v0.12.1: the lightbox shows the whole photo, never crops wide/tall shots; v0.12.2: the inline 16:9 gallery hero letterboxes photos wider than 16:9 instead of cropping them), and the listings filter offers those three, matching on `publicStatus(listing.status)` (see `../SHARED_FRONTEND_GUIDE.md`)
 - `.team-tag` — small pill tag for broker specialties
 
 ---
