@@ -42,7 +42,7 @@ src/
 
 Talks to `https://office.jwrgnc.com/api/v1`, filtered by `?site=jwlc`. The shared contract (and rules that apply to **both** JWRG and JWLC) is documented in [`SHARED_FRONTEND_GUIDE.md`](https://github.com/wrightster/jwrg-workspace/blob/main/SHARED_FRONTEND_GUIDE.md). When changing the API client, update **both** sites' `src/lib/api.ts` in the same session.
 
-Listing photos open in a lightbox (`@jw/shared` `ListingGallery`) that always shows the whole photo. Panoramas are letterboxed, not cropped.
+Listing photos open in a lightbox (`@jw/shared` `ListingGallery`) that always shows the whole photo. Panoramas are letterboxed, not cropped, in the lightbox and in the main photo on the page.
 
 Listing addresses link to the visitor's map app (`@jw/shared` `MapsLink`), and real street addresses lead the listing page title and meta description. Placeholder lines like "Brassfield Road" keep the marketing title. Rules: `SHARED_FRONTEND_GUIDE.md` § Addresses & directions links.
 
